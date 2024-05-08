@@ -1,10 +1,13 @@
 
 import React from 'react'
 
-const Home = () => {
+const Dashboard = () => {
   return (
-    <div>Home</div>
+    <div>
+      <h1 className='text-3xl font-semibold'>Home Page</h1>
+    </div>
   )
+  
 }
 
-export default Home
+export default Dashboard
