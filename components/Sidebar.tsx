@@ -3,7 +3,9 @@
 import { SidebarItems } from '@/types'
 import SidebarDesktop from './SidebarDesktop'
 import { Bell, Bookmark, Home, List, Mail, MoreHorizontal, User, Users } from 'lucide-react'
-import SidebarButton from './SidebarButton'
+import { SidebarButton } from './SidebarButton'
+import { useMediaQuery } from 'usehooks-ts'
+import SidebarMobile from './SidebarMobile'
 
 const sidebarItems:SidebarItems = {
   links: [
@@ -28,9 +30,15 @@ const sidebarItems:SidebarItems = {
 }
 
 const Sidebar = () => {
-  return (
-    <SidebarDesktop sidebarItems={sidebarItems}  />
-  )
+  const isDesktop = useMediaQuery('(min-width: 640px)', {
+    initializeWithValue: false,
+  })
+
+  if (isDesktop) {
+    return <SidebarDesktop sidebarItems={sidebarItems}  />
+  }
+
+  return <SidebarMobile sidebarItems={sidebarItems} />
 }
 
 export default Sidebar

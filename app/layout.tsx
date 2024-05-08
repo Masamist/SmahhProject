@@ -25,7 +25,7 @@ export default function RootLayout({
           </div>
         </nav> */}
       <Sidebar />
-      <main className="ml-[290px] mt-3 max-w-6xl w-full">
+      <main className="mx-5 mt-14 sm:ml-[290px] sm:mt-3">
         {children}
       </main>
       </body>

@@ -1,15 +1,14 @@
 "use client"
 
-import SidebarButton from './SidebarButton'
+import { SidebarButton } from './SidebarButton'
 import { SidebarItems } from '@/types'
-import { PopoverTrigger } from '@radix-ui/react-popover'
-import { Separator } from '@radix-ui/react-separator'
 import Link from 'next/link'
-import { Popover, PopoverContent } from './ui/popover'
+import { Popover, PopoverTrigger, PopoverContent } from './ui/popover'
 import { Button } from './ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { LogOut, MoreHorizontal, Settings } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { Separator } from './ui/separator'
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems
@@ -35,7 +34,7 @@ const SidebarDesktop = (props: SidebarDesktopProps) => {
             {props.sidebarItems.extras}
           </div>
           <div className='absolute left-0 bottom-3 w-full px-3'>
-            <Separator className='absolute -top-3 left-0 w-full' />
+            <Separator className='absolute -top-3 left-0 w-full'  />
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant='ghost' className='w-full justify-start'>
@@ -52,7 +51,7 @@ const SidebarDesktop = (props: SidebarDesktopProps) => {
                 </Button>
               </PopoverTrigger>
 
-              <PopoverContent className='mb-2 w-56 p-3 rounded-[1rem'>
+              <PopoverContent className='mb-2 w-56 p-3 rounded-[1rem]'>
                 <div className='space-y-1'>
                   <Link href="/">
                     <SidebarButton size='sm' icon={Settings} className="w-full">
