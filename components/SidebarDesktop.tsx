@@ -17,15 +17,14 @@ interface SidebarDesktopProps {
 const SidebarDesktop = (props: SidebarDesktopProps) => {
   const pathname = usePathname()
   return (
-    <aside className='w-[270px] max-w-xs h-screen fixed left-0 top-11 z-40 border-r bg-gray-800' >
-      <div className='h-full px-3 py-4'>
-        <h3 className='mx-3 text-lg font-semibold text-foreground'>Twitter</h3>
+    <aside className='w-[250px] max-w-xs h-screen fixed left-0 top-14 z-40 border-r bg-sky-950' >
+      <div className='h-full px-3'>
         <div className='mt-5'>
           <div className='flex flex-col gap-1 w-full'>
             {props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href}>
                 <SidebarButton
-                  variant={pathname=== link.href ? 'secondary': 'ghost'}
+                  variant={pathname=== link.href ? 'default': 'ghost'}
                   icon={link.icon}>
                   {link.label}
                 </SidebarButton>

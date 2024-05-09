@@ -27,8 +27,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="px-5 py-3 w-full z-20 bg-white">
-            <div className="max-w-6xl w-full">
+          <nav className="w-full pt-3 px-6">
+            <div className="w-full">
               <MainNav />
             </div>
           </nav>

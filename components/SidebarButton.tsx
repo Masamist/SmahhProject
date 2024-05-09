@@ -10,9 +10,10 @@ interface SidebarButtonProps extends ButtonProps {
 
 export function SidebarButton ({ icon: Icon, className, children, ...props }: SidebarButtonProps){
   return (
-    <Button variant='ghost' className={cn('gap-2 justify-start w-full')} {...props}>
+    <Button 
+      variant='ghost' 
+      className={cn('gap-2 justify-start w-full text-white active:text-gray-600 hover:bg-gray-400 ')} {...props}>
       {Icon && <Icon size={20} />}
-      
       <span>{children}</span>
     </Button>
   )
