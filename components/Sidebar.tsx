@@ -2,7 +2,7 @@
 
 import { SidebarItems } from '@/types'
 import SidebarDesktop from './SidebarDesktop'
-import { Bookmark, BookUser, LayoutDashboard,MoreHorizontal, Settings, Ticket, User, Users, UsersRound } from 'lucide-react'
+import { BookUser, LayoutDashboard,MoreHorizontal, Settings, Ticket, User, UsersRound } from 'lucide-react'
 import { SidebarButton } from './SidebarButton'
 import { useMediaQuery } from 'usehooks-ts'
 import SidebarMobile from './SidebarMobile'
@@ -21,9 +21,9 @@ const sidebarItems:SidebarItems = {
       <SidebarButton icon={MoreHorizontal} className='w-full'>
         More
       </SidebarButton>
-      <SidebarButton className='w-full justify-center' variant='default'>
+      {/* <SidebarButton className='w-full justify-center' variant='default'>
         Tweet
-      </SidebarButton>
+      </SidebarButton> */}
     </div>
   )
 }
