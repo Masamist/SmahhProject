@@ -17,15 +17,14 @@ interface SidebarDesktopProps {
 const SidebarDesktop = (props: SidebarDesktopProps) => {
   const pathname = usePathname()
   return (
-    <aside className='w-[270px] max-w-xs h-screen fixed left-0 top-0 z-40 border-r' >
-      <div className='h-full px-3 py-4'>
-        <h3 className='mx-3 text-lg font-semibold text-foreground'>Twitter</h3>
+    <aside className='w-[250px] max-w-xs h-screen fixed left-0 top-14 z-40 border-r bg-sky-950' >
+      <div className='h-full px-3'>
         <div className='mt-5'>
           <div className='flex flex-col gap-1 w-full'>
             {props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href}>
                 <SidebarButton
-                  variant={pathname=== link.href ? 'secondary': 'ghost'}
+                  variant={pathname=== link.href ? 'default': 'ghost'}
                   icon={link.icon}>
                   {link.label}
                 </SidebarButton>
@@ -33,7 +32,7 @@ const SidebarDesktop = (props: SidebarDesktopProps) => {
             ))}
             {props.sidebarItems.extras}
           </div>
-          <div className='absolute left-0 bottom-3 w-full px-3'>
+          <div className='absolute left-0 bottom-12 w-full px-3'>
             <Separator className='absolute -top-3 left-0 w-full'  />
             <Popover>
               <PopoverTrigger asChild>
