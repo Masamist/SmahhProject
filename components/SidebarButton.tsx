@@ -12,7 +12,7 @@ export function SidebarButton ({ icon: Icon, className, children, ...props }: Si
   return (
     <Button 
       variant='ghost' 
-      className={cn('gap-2 justify-start w-full text-white active:text-gray-600 hover:bg-gray-400 ')} {...props}>
+      className={cn('gap-2 justify-start w-full sm:text-stone-600 md:text-white active:text-gray-600 hover:bg-gray-400 ')} {...props}>
       {Icon && <Icon size={20} />}
       <span>{children}</span>
     </Button>

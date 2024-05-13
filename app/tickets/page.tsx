@@ -2,6 +2,8 @@ import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import React from 'react'
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '@/firebase';
 
 interface CategoryProps{
   searchParams: {
@@ -12,37 +14,36 @@ interface CategoryProps{
 
 const Tickets = ({searchParams}: CategoryProps) => {
 
-  let currentTab = searchParams.tab ?? 'gallery'
+  let currentTab = searchParams.tab ?? 'yours'
   const title = searchParams.title
-  if(currentTab !== 'messages' && currentTab !== 'settings' ){
-    currentTab = 'gallery'
+  if(currentTab !== 'anassigned' && currentTab !== 'all' ){
+    currentTab = 'yours'
   }
 
   return (
     <div className='container max-w-screen-lg mt5'>
-      <h2>Tickets List</h2>
-      <h1>Search Params</h1>
+      <h1 className='text-3xl'>Tickets List</h1>
       <Searchbar />
       <Tabs defaultValue={currentTab}>
         <TabsList className='w-full'>
-          <TabsTrigger value='gallery' className='w-full' asChild>
-            <Link href={{ query: { ...searchParams, tab: 'gallery'} }}>Gallery</Link>
+          <TabsTrigger value='yours' className='w-full' asChild>
+            <Link href={{ query: { ...searchParams, tab: 'yours'} }}>Your Tickets</Link>
           </TabsTrigger>
-          <TabsTrigger value='messages' className='w-full' asChild>
-            <Link href={{ query: { ...searchParams, tab: 'messages'} }}>Messages</Link>
+          <TabsTrigger value='unassigned' className='w-full' asChild>
+            <Link href={{ query: { ...searchParams, tab: 'unassigned'} }}>Unassigned</Link>
           </TabsTrigger>
-          <TabsTrigger value='settings' className='w-full' asChild>
-            <Link href={{ query: { ...searchParams, tab: 'settings'} }}>Settings</Link>
+          <TabsTrigger value='all' className='w-full' asChild>
+            <Link href={{ query: { ...searchParams, tab: 'all'} }}>All</Link>
           </TabsTrigger>    
         </TabsList>
         <TabsContent value='gallery'>
-          <h2 className='test-center text-2xl font-semibold mt-10'>Gallery {title}</h2>
+          <h2 className='test-center text-2xl font-semibold mt-10'>Your {title}</h2>
         </TabsContent>
-        <TabsContent value='messages'>
-          <h2 className='test-center text-2xl font-semibold mt-10'>Messages {title}</h2>
+        <TabsContent value='unassigned'>
+          <h2 className='test-center text-2xl font-semibold mt-10'>Unassigned Tickets{title}</h2>
         </TabsContent>
-        <TabsContent value='settings'>
-          <h2 className='test-center text-2xl font-semibold mt-10'>Settings {title}</h2>
+        <TabsContent value='all'>
+          <h2 className='test-center text-2xl font-semibold mt-10'>All Tickets {title}</h2>
         </TabsContent>
       </Tabs>
     </div>

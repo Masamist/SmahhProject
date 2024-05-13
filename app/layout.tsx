@@ -27,15 +27,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="w-full py-2 pl-5 pr-3">
-            <div className="w-full">
+          <nav>
+            <div>
               <MainNav />
             </div>
           </nav>
-          <Separator />
           <div>
             <Sidebar />
-            <main className="mx-5 mt-14 sm:ml-[290px] sm:mt-3">
+            <main className="px-5 pt-14 sm:pl-[290px] sm:pt-3 h-screen bg-gray-50">
               {children}
             </main>
           </div>
