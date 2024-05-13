@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MainNav from "@/components/MainNav";
 import Sidebar from "@/components/Sidebar";
-import { Separator } from "@/components/ui/separator";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -28,9 +27,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <nav>
-            <div>
               <MainNav />
-            </div>
           </nav>
           <div>
             <Sidebar />

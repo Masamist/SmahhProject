@@ -2,8 +2,6 @@ import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import React from 'react'
-import { collection, addDoc } from "firebase/firestore";
-import { db } from '@/firebase';
 
 interface CategoryProps{
   searchParams: {

@@ -11,7 +11,7 @@ import { SidebarButton } from './SidebarButton'
 const NavUserinfoDesktop = () => {
   return (
     <div 
-      className='flex flex-row px-3 py-2 absolute top-0 left-0 w-full
+      className='flex flex-row px-3 py-2 w-full
         justify-between items-center bg-white'>
       <div>
         <Link href="/">
