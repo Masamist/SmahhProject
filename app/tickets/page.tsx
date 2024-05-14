@@ -1,8 +1,9 @@
 import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from './DataTable'
+import { buttonVariants } from '@/components/ui/button'
 
 interface CategoryProps{
   searchParams: {
@@ -11,7 +12,13 @@ interface CategoryProps{
   }
 }
 
-const Tickets = ({searchParams}: CategoryProps) => {
+// export interface SearchParams {
+//   status: Status
+//   page: string
+//   orderBy: keyof Ticket 
+// }
+
+const Tickets = ({searchParams}: CategoryProps) => {  
 
   let currentTab = searchParams.tab ?? 'yours'
   const title = searchParams.title
@@ -19,10 +26,18 @@ const Tickets = ({searchParams}: CategoryProps) => {
     currentTab = 'yours'
   }
 
+
   return (
     <div className='container max-w-screen-lg mt5'>
-      <h1 className='text-3xl'>Tickets List</h1>
-      <Searchbar />
+      <div className='flex flex-row w-full gap-5'>
+        <h1 className='text-3xl'>Tickets List</h1>
+        <div className='w-50'>
+          <Searchbar />
+        </div>
+        
+        <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link>
+        </div>
+      
       <Tabs defaultValue={currentTab}>
         <TabsList className='w-full'>
           <TabsTrigger value='yours' className='w-full' asChild>
@@ -47,7 +62,6 @@ const Tickets = ({searchParams}: CategoryProps) => {
       </Tabs>
 
       <div className='flex flex-col items-center justify-center'>
-        <h1>Tickets</h1>
         <DataTable />
       </div>
     </div>
