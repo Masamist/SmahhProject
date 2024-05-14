@@ -5,8 +5,7 @@ import Link from 'next/link'
 
 const NavMobile = () => {
   return (
-    <div className='py-2 flex flex-row justify-center'>
-    <div>
+    <div className='py-2 flex flex-row justify-center fixed top-0 w-full bg-white'>
       <Link href="/">
         <Image 
         src={logo}
@@ -15,7 +14,6 @@ const NavMobile = () => {
         alt="Smahh Logo"
         />
       </Link>
-    </div>
   </div>
   )
 }

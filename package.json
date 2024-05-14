@@ -24,6 +24,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
     "easymde": "^2.18.0",
     "firebase": "^10.11.1",
     "firebaseui": "^6.1.0",

@@ -31,7 +31,7 @@ export default function RootLayout({
           </nav>
           <div>
             <Sidebar />
-            <main className="px-5 pt-14 sm:pl-[290px] sm:pt-3 h-screen bg-gray-50">
+            <main className="md:mt-[50px] px-5 pt-14 sm:pl-[290px] sm:pt-3 h-screen bg-gray-50">
               {children}
             </main>
           </div>

@@ -2,6 +2,7 @@ import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import React from 'react'
+import DataTable from './DataTable'
 
 interface CategoryProps{
   searchParams: {
@@ -44,6 +45,11 @@ const Tickets = ({searchParams}: CategoryProps) => {
           <h2 className='test-center text-2xl font-semibold mt-10'>All Tickets {title}</h2>
         </TabsContent>
       </Tabs>
+
+      <div className='flex flex-col items-center justify-center'>
+        <h1>Tickets</h1>
+        <DataTable />
+      </div>
     </div>
   )
 }
