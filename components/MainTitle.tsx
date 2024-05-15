@@ -1,0 +1,27 @@
+import React from 'react'
+import Searchbar from '@/components/Searchbar'
+import Link from 'next/link'
+import { buttonVariants } from '@/components/ui/button'
+
+const MainTitle = () => {
+  return (
+    <div className='flex flex-row justify-between w-full'>
+      <div>
+        <h1 className='text-4xl'>Tickets</h1>
+      </div>
+      <div className='flex flex-row gap-2'>
+        <div>
+          <Searchbar />
+        </div>
+        <div className=''>
+          <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  )
+}
+
+export default MainTitle

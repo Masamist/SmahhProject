@@ -5,7 +5,7 @@ import { useMediaQuery } from 'usehooks-ts'
 import NavDesktop from './NavDesktop'
 import NavMobile from './NavMobile'
 
-const MainNav = () => {
+const Nav = () => {
 
   const isDesktop = useMediaQuery('(min-width: 640px)', {
     initializeWithValue: false,
@@ -17,4 +17,4 @@ const MainNav = () => {
   
 }
 
-export default MainNav
+export default Nav

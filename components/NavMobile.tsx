@@ -5,11 +5,11 @@ import Link from 'next/link'
 
 const NavMobile = () => {
   return (
-    <div className='py-2 flex flex-row justify-center fixed top-0 w-full bg-white'>
+    <div className='py-1.5 flex flex-row justify-center fixed top-0 w-full bg-white'>
       <Link href="/">
         <Image 
         src={logo}
-        width={180}
+        width={145}
         priority
         alt="Smahh Logo"
         />

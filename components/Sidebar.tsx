@@ -10,8 +10,8 @@ import SidebarMobile from './SidebarMobile'
 const sidebarItems:SidebarItems = {
   links: [
     {label:'Dashboard', href:'/', icon: LayoutDashboard },
-    {label:'Ticket', href:'/tickets', icon: Ticket },
-    {label:'Client', href:'/users', icon: BookUser },
+    {label:'Tickets', href:'/tickets', icon: Ticket },
+    {label:'Clients', href:'/users', icon: BookUser },
     {label:'Staff', href:'/staff', icon: UsersRound },
     {label:'Profile', href:'/item/profile', icon: UserRound },
     {label:'Settings', href:'/Settings', icon: Settings },

@@ -11,13 +11,13 @@ import { SidebarButton } from './SidebarButton'
 const NavUserinfoDesktop = () => {
   return (
     <div 
-      className='flex flex-row px-3 py-2 w-full fixed top-0
+      className='flex flex-row px-3 pt-2 w-full fixed top-0 left-0 h-12
         justify-between items-center bg-white'>
       <div>
         <Link href="/">
           <Image 
           src={logo}
-          width={220}
+          width={180}
           priority
           alt="Smahh Logo"
           />
@@ -29,18 +29,18 @@ const NavUserinfoDesktop = () => {
             <Button variant='ghost'>
               <div className='flex justify-between items-center'>
                 <div className='flex gap-2'>
-                  <Avatar className='h-7 w-7'>
+                  <Avatar className='h-8 w-8'>
                     <AvatarImage src='https://avatar.iran.liara.run/public/75' />
                     <AvatarFallback>Masami Stonebridge</AvatarFallback>
                   </Avatar>
-                  <span className='pt-1 pr-2'>Masami Stonebridge</span>
+                  <span className='pt-1.5 pr-2'>Masami Stonebridge</span>
                 </div>
                 <MoreHorizontal size={20} />             
               </div>
             </Button>
           </PopoverTrigger>
 
-          <PopoverContent className='mb-2 w-56 p-3 rounded-[1rem] bg-sky-950'>
+          <PopoverContent className='mb-2 w-56 p-3 rounded-[.5rem] bg-sky-950'>
             <div className='space-y-1'>
               <Link href="/">
                 <SidebarButton size='sm' icon={Settings} className="w-full">

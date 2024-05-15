@@ -1,9 +1,10 @@
 import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import DataTable from './DataTable'
 import { buttonVariants } from '@/components/ui/button'
+import MainTitle from '@/components/MainTitle'
 
 interface CategoryProps{
   searchParams: {
@@ -29,14 +30,7 @@ const Tickets = ({searchParams}: CategoryProps) => {
 
   return (
     <div className='container max-w-screen-lg mt5'>
-      <div className='flex flex-row w-full gap-5'>
-        <h1 className='text-3xl'>Tickets List</h1>
-        <div className='w-50'>
-          <Searchbar />
-        </div>
-        
-        <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link>
-        </div>
+      <MainTitle />
       
       <Tabs defaultValue={currentTab}>
         <TabsList className='w-full'>

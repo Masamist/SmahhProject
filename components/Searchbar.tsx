@@ -27,7 +27,6 @@ const Searchbar = () => {
   return (
     <Input 
       placeholder='Search title here...' 
-      className='my-5' 
       onChange={(e) => debaunced(e.target.value)}
       defaultValue={title}
       />

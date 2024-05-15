@@ -22,7 +22,7 @@ const SidebarMobile = (props: SidebarDesktopProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size='icon' variant='ghost' className='fixed top-1.5 left-3'>
+        <Button size='icon' variant='ghost' className='fixed top-.9 left-3'>
           <Menu size={20} />
         </Button>
       </SheetTrigger>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MainNav from "@/components/MainNav";
+import Nav from "@/components/Nav";
 import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -27,11 +27,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <nav>
-              <MainNav />
+              <Nav />
           </nav>
           <div>
             <Sidebar />
-            <main className="md:mt-[50px] px-5 pt-14 sm:pl-[290px] sm:pt-3 h-screen bg-gray-50">
+            <main className="md:pt-[100px] px-5 pt-2 pl-[290px] h-screen bg-gray-100">
               {children}
             </main>
           </div>
