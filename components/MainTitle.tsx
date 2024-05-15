@@ -2,6 +2,7 @@ import React from 'react'
 import Searchbar from '@/components/Searchbar'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
+import FormDialog from './FormDialog'
 
 const MainTitle = () => {
   return (
@@ -14,11 +15,10 @@ const MainTitle = () => {
           <Searchbar />
         </div>
         <div className=''>
-          <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link>
+          {/* <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link> */}
+          <FormDialog />
         </div>
       </div>
-      
-      
       
     </div>
   )

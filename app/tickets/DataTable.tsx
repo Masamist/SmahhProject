@@ -5,7 +5,6 @@ import { getDocs, collection } from 'firebase/firestore'
 import { Ticket } from '@/Interface/ticket'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
-import { ArrowDown } from "lucide-react"
 
 // import { SearchParams } from "./page"
 
@@ -71,7 +70,10 @@ const DataTable = () => {
                 </div>
               </TableHead>
               <TableHead>
-              <p>Severity</p>
+                <p>Severity</p>
+              </TableHead>
+              <TableHead>
+                <p>CreatedBy</p>
               </TableHead>
               {/* <TableHead>
               <p>Time</p>
@@ -101,8 +103,9 @@ const DataTable = () => {
                       {/* <TicketPriority priority={ticket.priority} /> */}
                     </div>
                   </TableCell>
-                  {/* <TableCell>
-                    {ticket.createdAt.toLocaleDateString("en-US", {
+                  <TableCell>
+                    {typeof ticket.createdAt === 'string'?ticket.createdAt
+                    : ticket.createdAt?.toDate().toLocaleDateString("en-US", {
                       year: "2-digit",
                       month: "2-digit",
                       day: "2-digit",
@@ -110,7 +113,7 @@ const DataTable = () => {
                       minute: "2-digit",
                       hour12: true,
                     })}
-                  </TableCell> */}
+                  </TableCell>
                 </TableRow>
               )
             }): null}

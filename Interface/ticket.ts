@@ -1,12 +1,18 @@
+import { Timestamp } from "firebase/firestore"
+
 export interface Ticket {
   id: string
   title: string
-  client: string,
-  category: string,
-  severity: string,
-  status: string,
-  owner: string,
-  description: string, 
+  client: string
+  category: string
+  severity: string
+  status: string
+  assignedAgent: string
+  description: string 
+  createdAt?: string | Timestamp
+  updatedAt?: string | Timestamp
+  closedAt?: string | Timestamp
+  messages?: string
 }
 
 export enum Status {
@@ -14,7 +20,7 @@ export enum Status {
   CLOSED
 }
 
-enum Priority {
+export enum Severity {
   LOW,
   MEDIUM,
   HIGH
