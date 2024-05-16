@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import {
   Dialog,
@@ -8,9 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
-import TicketForm from './TicketForm'
 import { Button, buttonVariants } from './ui/button'
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import dynamic from 'next/dynamic'
+
+const TicketForm = dynamic(() => import("@/components/TicketForm"), {
+  ssr:false,
+})
+
+
 
 const FormDialog = () => {
   return (
@@ -18,13 +23,10 @@ const FormDialog = () => {
         <DialogTrigger>
           <Button className={buttonVariants({variant: 'default'})}>Create Ticket</Button>
         </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Ticket Form</DialogTitle>
-            <DialogDescription>
-              <TicketForm />
-            </DialogDescription>
-          </DialogHeader>
+        <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
+        <ScrollArea>
+          <TicketForm />
+        </ScrollArea>
         </DialogContent>
     </Dialog>
   )

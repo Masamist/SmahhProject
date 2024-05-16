@@ -6,7 +6,7 @@ import FormDialog from './FormDialog'
 
 const MainTitle = () => {
   return (
-    <div className='flex flex-row justify-between w-full'>
+    <div className='flex flex-row justify-between w-full pb-5'>
       <div>
         <h1 className='text-4xl'>Tickets</h1>
       </div>
@@ -14,7 +14,7 @@ const MainTitle = () => {
         <div>
           <Searchbar />
         </div>
-        <div className=''>
+        <div>
           {/* <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link> */}
           <FormDialog />
         </div>

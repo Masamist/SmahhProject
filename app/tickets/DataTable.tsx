@@ -1,43 +1,16 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { db } from '@/firebaseConfig'
-import { getDocs, collection } from 'firebase/firestore'
+import React from 'react'
 import { Ticket } from '@/Interface/ticket'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
 
 // import { SearchParams } from "./page"
-
-
 interface Props {
   tickets: Ticket[]
-  // searchParams: SearchParams
 }
 
+const DataTable = ({tickets}: Props) => {
 
-
-const DataTable = () => {
-
-  async function fetchDataFromFirestore(): Promise<Ticket[]>{
-    const querySnapshot = await getDocs(collection(db, "tickets"))
   
-    const tickets: Ticket[] = []
-    querySnapshot.forEach((doc) => {
-      tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
-    })
-    return tickets
-  }
-
-  const [ticketData, setTicketData] = useState<Ticket[]>([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetchDataFromFirestore()
-      setTicketData(data)
-    }
-    fetchData()
-  }, [])
-
   return (
     // <div>
     //   { ticketData.map((ticket) => (
@@ -50,7 +23,7 @@ const DataTable = () => {
     //   ))}
     // </div>
       <div className="w-full mt-5">
-      <div className="rounded-md sm:border">
+      <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
             <TableRow>
@@ -73,7 +46,10 @@ const DataTable = () => {
                 <p>Severity</p>
               </TableHead>
               <TableHead>
-                <p>CreatedBy</p>
+                <p>Assigned By</p>
+              </TableHead>
+              <TableHead>
+                <p>Created At</p>
               </TableHead>
               {/* <TableHead>
               <p>Time</p>
@@ -81,7 +57,7 @@ const DataTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {ticketData ? ticketData.map((ticket) => {
+            {tickets ? tickets.map((ticket) => {
               return (
                 <TableRow key={ticket.id} data-href='/'>
                   <TableCell><Link href={`/tickets/${ticket.id}`}>{ticket.title}</Link></TableCell>
@@ -100,6 +76,12 @@ const DataTable = () => {
                   <TableCell>
                     <div className="flex justify-center">
                       <p>{ticket.severity}</p>
+                      {/* <TicketPriority priority={ticket.priority} /> */}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex justify-center">
+                      <p>{ticket.assignedAgent}</p>
                       {/* <TicketPriority priority={ticket.priority} /> */}
                     </div>
                   </TableCell>

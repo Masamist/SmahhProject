@@ -1,10 +1,15 @@
+'use client'
+import React, { useEffect, useState } from 'react'
+import { db } from '@/firebaseConfig'
+import { getDocs, collection } from 'firebase/firestore'
+import { Ticket } from '@/Interface/ticket'
 import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import React from 'react'
 import DataTable from './DataTable'
 import { buttonVariants } from '@/components/ui/button'
 import MainTitle from '@/components/MainTitle'
+// export const dynamic = 'force-dynamic'
 
 interface CategoryProps{
   searchParams: {
@@ -21,6 +26,27 @@ interface CategoryProps{
 
 const Tickets = ({searchParams}: CategoryProps) => {  
 
+  async function fetchDataFromFirestore(): Promise<Ticket[]>{
+    const querySnapshot = await getDocs(collection(db, "tickets"))
+  
+    const tickets: Ticket[] = []
+    querySnapshot.forEach((doc) => {
+      tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
+    })
+    return tickets
+  }
+
+  const [ticketData, setTicketData] = useState<Ticket[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchDataFromFirestore()
+      setTicketData(data)
+    }
+    fetchData()
+  }, [])
+
+  
   let currentTab = searchParams.tab ?? 'yours'
   const title = searchParams.title
   if(currentTab !== 'anassigned' && currentTab !== 'all' ){
@@ -29,7 +55,7 @@ const Tickets = ({searchParams}: CategoryProps) => {
 
 
   return (
-    <div className='container max-w-screen-lg mt5'>
+    <div className='container max-w-screen-lg'>
       <MainTitle />
       
       <Tabs defaultValue={currentTab}>
@@ -56,7 +82,7 @@ const Tickets = ({searchParams}: CategoryProps) => {
       </Tabs>
 
       <div className='flex flex-col items-center justify-center'>
-        <DataTable />
+        <DataTable tickets={ticketData} />
       </div>
     </div>
   )
