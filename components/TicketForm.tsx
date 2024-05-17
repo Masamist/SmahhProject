@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { ticketSchema } from '@/ValidationSchemas/ticket'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Ticket } from '@/Interface/ticket'
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 // UI components
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
 import { Input } from './ui/input'
@@ -21,15 +22,19 @@ import {
 import { Button } from './ui/button'
 import SimpleMDE from "react-simplemde-editor"
 import "easymde/dist/easymde.min.css"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
  type TicketFormData = z.infer<typeof ticketSchema>
 
  interface Props {
   ticket?: Ticket
+  ticketId: string
 }
 
-const TicketForm = ({ticket}: Props) => {
+const TicketForm = ({ticket, ticketId}: Props) => {
+
+  const [ticketData, setTicketData] = useState()
+
+  
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
@@ -74,9 +79,11 @@ const TicketForm = ({ticket}: Props) => {
 
   return (
     <div className='frounded-md w-full py-2'>
-      <ScrollArea>
           <Form {...form}>
+          
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+            <ScrollArea className='h-[600px] rounded-md'>
+      <ScrollBar orientation="vertical" />
               <FormField 
                 control={form.control}
                 name="title"
@@ -195,11 +202,11 @@ const TicketForm = ({ticket}: Props) => {
                 )} />
             </div>
             <Button type="submit" disabled={isSubmitting}>{ticket ? "Update Ticket" : "Creaet Ticket"}</Button>
+            </ScrollArea>
             </form>
           </Form>
-          <ScrollBar orientation="vertical" />
-        </ScrollArea>
       <p className="text-destructive">{error}</p>
+      
     </div>
   )
 }

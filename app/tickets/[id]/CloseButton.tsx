@@ -37,7 +37,7 @@ const CloseButton = ({ticketId}: {ticketId: string}) => {
         <AlertDialogTrigger className={buttonVariants({
           variant: "destructive",
         })}>
-          Delete Ticket
+          Close Ticket
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

@@ -13,9 +13,12 @@ import {
 // import TicketStatusBadge from '@/components/TicketStatusBadge'
 // import TicketPriority from '@/components/TicketPriority'
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
+import { Pencil } from 'lucide-react'
+import FormDialog from '@/components/FormDialog'
+
 // import AssignTicket from '@/components/AssignTicket'
 
 interface TicketProps{
@@ -23,56 +26,65 @@ interface TicketProps{
 }
 
 const TicketDetail = ({ticket}: TicketProps) => {
+
+  const details = [
+    {label: "Assigned Agent:", detail: ticket.assignedAgent},
+    {label: "Category:", detail: ticket?.category},
+    {label: "Client:", detail: ticket?.client},
+    {label: "Severity:", detail: ticket?.severity},
+    // {label: "Created At", detail: ticket?.createdAt}, 
+  ]
   return (
-    <div className='lg:grid lg:grid-cols-4'>
-      <Card className='mx-4 mb-4 lg:col-span-3 ls:mr-4'>
-        <CardHeader>
-          <div className='flex justify-between mb-3'>
-            {/* <TicketStatusBadge status={ticket.status} /> */}
-            {/* <TicketPriority priority={ticket.priority} /> */}
+    <Card className='lg:col-span-2 ls:mr-4'>
+      <CardHeader>
+        <CardDescription>
+          <div className='flex flex-row justify-between'>
+            <div className='text-2xl text-cyan-500'>Ticket Details</div>
+            <div className='text-xs'>
+              <Button variant='ghost'>
+                <FormDialog type={'edit'} id={ticket.id} />
+              </Button>
+            </div>
           </div>
-          <CardTitle>{ticket.title}</CardTitle>
-          <CardDescription>
-            Created At: { ticket.createdAt?.toString() }
-            {/* Created At: { ticket.createdAt?.toDate().toDateString() } */}
-            {/* {ticket.createdAt?(
-              new Date(ticket.createdAt).toLocaleDateString("en-US", {
-              year: "2-digit",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true
-            })) : ('undefined')
-            } */}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='prose dark:prose-invert'>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className='prose dark:prose-inver'>
+        <div className='flex flex-row flex-wrap'>
+          { details.map((item, index) => (
+            <div className='flex flex-col w-1/2 py-3' key={index}>
+              <span className='inline-block text-xs text-cyan-500'>{item.label}</span>
+              <span className='inline-block'>{item.detail}</span>
+            </div>
+          ))}
+        </div>
+        <div className='py-3'>
+          <span className='inline-block text-xs text-cyan-500'>Descriotion:</span>
           <ReactMarkDown>{ticket.description}</ReactMarkDown>
-        </CardContent>
-        {/* <CardFooter>
-          <p>
-          Updated: {""}
-            {ticket.updatedAt?.toLocaleDateString("en-US", {
-              year: "2-digit",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true,
+        </div>
+        <div className='py-3'>
+          <span className='inline-block text-xs text-cyan-500'>Created At:</span>
+          <span className='block'>
+            {typeof ticket.createdAt === 'string'?ticket.createdAt
+              : ticket.createdAt?.toDate().toLocaleDateString("en-GB", {
+                year: "2-digit",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true,
             })}
-          </p>
-        </CardFooter> */}
-      </Card>
-      <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
-        {/* <AssignTicket ticket={ticket} users={users} /> */}
-        <p>{ticket.assignedAgent}</p>
-        <Link href={`/tickets/edit/${ticket.id}`} className={`${buttonVariants({
-          variant: "default"
-        })}`}>Edit Ticket</Link>
-        <CloseButton ticketId={ticket.id} />
-      </div>
-    </div>
+          </span>
+        </div>
+      </CardContent>
+      <CardFooter>
+        <div className="flex flex-col lg:flex-row lg:mx-0 gap-2">
+        <Link href={`/tickets`} className={`${buttonVariants({
+              variant: "default"
+            })}`}>Go Back</Link> 
+          <CloseButton ticketId={ticket.id} />
+        </div>
+      </CardFooter>
+    </Card>
   )
 }
 

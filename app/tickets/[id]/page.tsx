@@ -5,6 +5,7 @@ import { getDoc, doc } from 'firebase/firestore'
 import { Ticket } from '@/Interface/ticket'
 import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'
+import TicketMessages from './TicketMessages'
 
 interface Props {
   params: {id: string},
@@ -31,36 +32,21 @@ const SingleTicket = ({params: {id}}: Props) => {
     };
     fetchData();
   }, [id]);
-  // async function fetchSingleDataFromFirestore(): Promise<Ticket>{
-  //       const docSnap = await getDoc(doc(db, "tickets", id));
-  //       const ticketData = { id: docSnap.id, ...docSnap.data() } as Ticket
-  //       return ticketData
-  //   }
-
-  // const [ticket, setTicket] = useState<Ticket | null>(null)
-  // //const [error, setError] = useState<string>('')
-
-  // useEffect(() => {
-  //   async function fetchSingleData() {
-  //     const data = await fetchSingleDataFromFirestore()
-  //     if(!data){
-  //       console.log('no data')
-  //     }else{
-  //       setTicket(data)
-  //     }
-      
-  //   }
-  // fetchSingleData();
-  // }, [id])
-
   
   return (
     <div className='container max-w-screen-lg mt5'>
       <MainTitle />
-      {
-        ticket?<TicketDetail ticket={ticket}  />: (<p>Ticket is not Found!</p>)
-      }
-      
+      {ticket?
+        <div className='flex flex-col lg:flex-row gap-5'>
+          <div className='w-full lg:w-5/12'>
+            <TicketDetail ticket={ticket}  />
+          </div>
+          <div className='w-full lg:w-7/12'>
+            <TicketMessages />
+          </div> 
+        </div>
+        
+        : (<p>Ticket is not Found!</p>)}
     </div>
   )
 }

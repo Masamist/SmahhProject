@@ -12,16 +12,6 @@ const DataTable = ({tickets}: Props) => {
 
   
   return (
-    // <div>
-    //   { ticketData.map((ticket) => (
-    //     <div key={ticket.id} className='mb-4'>
-    //       <p className='text-xl font-bold'>{ticket.title}</p>
-    //       <p>{ticket.status}</p>
-    //       <p>{ticket.createdBy}</p>
-    //       <p>{ticket.severity}</p>
-    //     </div>
-    //   ))}
-    // </div>
       <div className="w-full mt-5">
       <div className="rounded-md border bg-white">
         <Table>

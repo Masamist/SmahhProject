@@ -10,6 +10,7 @@ import DataTable from './DataTable'
 import { buttonVariants } from '@/components/ui/button'
 import MainTitle from '@/components/MainTitle'
 // export const dynamic = 'force-dynamic'
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 interface CategoryProps{
   searchParams: {

@@ -16,7 +16,7 @@ const MainTitle = () => {
         </div>
         <div>
           {/* <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link> */}
-          <FormDialog />
+          <FormDialog type={'create'} id={'undefined'}  />
         </div>
       </div>
       
