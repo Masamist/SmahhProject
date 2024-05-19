@@ -1,5 +1,9 @@
 // "use client"
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { db } from '@/firebaseConfig'
+import { doc, updateDoc } from 'firebase/firestore'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { buttonVariants } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
+
 
 const CloseButton = ({ticketId}: {ticketId: string}) => {
   const router = useRouter()
@@ -22,7 +26,8 @@ const CloseButton = ({ticketId}: {ticketId: string}) => {
   const closeTicket = async() => {
     try{
       setIsClosing(true)
-      // await axios.delete("/api/tickets/" + ticketId)
+      const docRef = doc(db, "tickets", ticketId)
+        await updateDoc(docRef, { status: "CLOSED" })
       console.log("Test Close")
       router.push("/tickets")
       router.refresh()
@@ -54,7 +59,7 @@ const CloseButton = ({ticketId}: {ticketId: string}) => {
             disabled={isClosing}
             onClick={closeTicket}
             >
-              Close
+              Close Ticket
           </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

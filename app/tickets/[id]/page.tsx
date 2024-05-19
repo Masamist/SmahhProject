@@ -16,22 +16,20 @@ const SingleTicket = ({params: {id}}: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (typeof window !== 'undefined') { // Ensure this code runs only in the browser
-        try {
-          const docSnap = await getDoc(doc(db, "tickets", id));
-          if (docSnap.exists()) {
-            const ticketData = { id: docSnap.id, ...docSnap.data() } as Ticket;
-            setTicket(ticketData);
-          } else {
-            console.log(`Document with ID ${id} does not exist`);
-          }
-        } catch (error) {
-          console.error('Error fetching document:', error);
+      try {
+        const docSnap = await getDoc(doc(db, "tickets", id))
+        if (docSnap.exists()) {
+          const ticketData = { id: docSnap.id, ...docSnap.data() } as Ticket
+          setTicket(ticketData);
+        } else {
+          console.log(`Document with ID ${id} does not exist`)
         }
+      } catch (error) {
+        console.error('Error fetching document:', error)
       }
-    };
-    fetchData();
-  }, [id]);
+    }
+    fetchData()
+  }, [id])
   
   return (
     <div className='container max-w-screen-lg mt5'>
@@ -45,7 +43,6 @@ const SingleTicket = ({params: {id}}: Props) => {
             <TicketMessages />
           </div> 
         </div>
-        
         : (<p>Ticket is not Found!</p>)}
     </div>
   )

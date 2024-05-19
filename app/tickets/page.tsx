@@ -9,8 +9,8 @@ import Link from 'next/link'
 import DataTable from './DataTable'
 import { buttonVariants } from '@/components/ui/button'
 import MainTitle from '@/components/MainTitle'
+import DataCard from './DataCard'
 // export const dynamic = 'force-dynamic'
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 interface CategoryProps{
   searchParams: {
@@ -81,10 +81,11 @@ const Tickets = ({searchParams}: CategoryProps) => {
           <h2 className='test-center text-2xl font-semibold mt-10'>All Tickets {title}</h2>
         </TabsContent>
       </Tabs>
-
-      <div className='flex flex-col items-center justify-center'>
-        <DataTable tickets={ticketData} />
+      
+      <div className='p-5 bg-white rounded-md'>
+        <DataCard tickets={ticketData} />
       </div>
+      
     </div>
   )
 }

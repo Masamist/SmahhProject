@@ -1,6 +1,6 @@
 'use client'
 import { db } from '@/firebaseConfig'
-import { addDoc, collection, Timestamp } from 'firebase/firestore'
+import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
@@ -27,15 +27,9 @@ import "easymde/dist/easymde.min.css"
 
  interface Props {
   ticket?: Ticket
-  ticketId: string
 }
 
-const TicketForm = ({ticket, ticketId}: Props) => {
-
-  const [ticketData, setTicketData] = useState()
-
-  
-
+const TicketForm = ({ticket}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -48,24 +42,23 @@ const TicketForm = ({ticket, ticketId}: Props) => {
     try {
       setIsSubmitting(true)
       setError("")
-      console.log("Part1")
-
       if(ticket){
-        // await addDoc(collection (db, "tickets"), { values })
-        console.log("For patch")
-        // await axios.post("/api/tickets", values)
+        const updatedAt = Timestamp.fromDate(new Date())
+        const data = {
+          ...values,
+          updatedAt
+        }
+        const docRef = doc(db, "tickets", ticket.id)
+        await updateDoc(docRef, { ...data })
+        console.log("Document updated")
       }else{
         const createdAt = Timestamp.fromDate(new Date())
-        // const data = { ...values, createdAt:createdAt }
-        //values.push(createdAt)
-        //values = {...values + createdAt}
-        // values['createdAt']: Ticket = Timestamp.fromDate(new Date())
         const data = {
           ...values,
           createdAt
         }
         await addDoc(collection (db, "tickets"), { ...data })
-        console.log("Document written")
+        console.log("Document created")
       }
       setIsSubmitting(false)
       router.push("/tickets")
@@ -79,22 +72,21 @@ const TicketForm = ({ticket, ticketId}: Props) => {
 
   return (
     <div className='frounded-md w-full py-2'>
-          <Form {...form}>
-          
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-            <ScrollArea className='h-[600px] rounded-md'>
-      <ScrollBar orientation="vertical" />
-              <FormField 
-                control={form.control}
-                name="title"
-                defaultValue={ticket?.title}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Ticket Title</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Ticket Title..." {...field} />
-                    </FormControl>
-                  </FormItem>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+          <ScrollArea className='h-[600px] rounded-md'>
+            <ScrollBar orientation="vertical" />
+            <FormField 
+              control={form.control}
+              name="title"
+              defaultValue={ticket?.title}
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>Ticket Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ticket Title..." {...field} />
+                  </FormControl>
+                </FormItem>
                 )}
               />
 

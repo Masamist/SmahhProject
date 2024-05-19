@@ -13,7 +13,7 @@ const SidebarDesktop = (props: SidebarDesktopProps) => {
   const pathname = usePathname()
   return (
     <aside className='w-[170px] lg:w-[250px] max-w-xs h-screen fixed left-0 top-12 z-40 border-r bg-sky-950' >
-      <div className='h-full pl-3'>
+      <div className='h-full px-3'>
         <div className='mt-5'>
             {props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href}>

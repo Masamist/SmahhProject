@@ -19,7 +19,7 @@ export default function RootLayout({
 //   children: React.ReactNode;
 // }>) {
   return (
-    <html lang="en">
+    <html lang="en"  suppressHydrationWarning={true}>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -32,7 +32,7 @@ export default function RootLayout({
           </nav>
           <div>
             <Sidebar />
-            <main className="pt-16 md:pt-[100px] md:pl-[170px] lg:pl-[250px] h-screen bg-gray-100">
+            <main className="pt-16 pb-10 md:pt-[100px] md:pl-[170px] lg:pl-[250px] min-h-screen bg-gray-100">
               {children}
             </main>
           </div>
