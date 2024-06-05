@@ -10,7 +10,7 @@ const sidebarItems:SidebarItems = {
   links: [
     {label:'Dashboard', href:'/', icon: LayoutDashboard },
     {label:'Tickets', href:'/tickets', icon: Ticket },
-    {label:'Clients', href:'/users', icon: BookUser },
+    {label:'Clients', href:'/clients', icon: BookUser },
     {label:'Staff', href:'/staff', icon: UsersRound },
     {label:'Profile', href:'/item/profile', icon: UserRound },
     {label:'Settings', href:'/Settings', icon: Settings },

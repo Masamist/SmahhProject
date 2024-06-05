@@ -17,7 +17,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
 import { Pencil } from 'lucide-react'
-import FormDialog from '@/components/FormDialog'
+import FormDialog from '@/components/FormDialogTicket'
 
 // import AssignTicket from '@/components/AssignTicket'
 

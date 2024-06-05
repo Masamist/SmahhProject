@@ -3,10 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { db } from '@/firebaseConfig'
 import { getDocs, collection } from 'firebase/firestore'
 import { Ticket } from '@/Interface/ticket'
-import Searchbar from '@/components/Searchbar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import DataTable from './DataTable'
 import { buttonVariants } from '@/components/ui/button'
 import MainTitle from '@/components/MainTitle'
 import DataCard from './DataCard'
@@ -56,8 +54,8 @@ const Tickets = ({searchParams}: CategoryProps) => {
 
 
   return (
-    <div className='container max-w-screen-lg'>
-      <MainTitle />
+    <main className='container max-w-screen-lg'>
+      <MainTitle title='Tickets' />
       
       <Tabs defaultValue={currentTab}>
         <TabsList className='w-full'>
@@ -86,7 +84,7 @@ const Tickets = ({searchParams}: CategoryProps) => {
         <DataCard tickets={ticketData} />
       </div>
       
-    </div>
+    </main>
   )
 }
 

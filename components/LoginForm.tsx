@@ -1,30 +1,29 @@
 "use client"
 import React, { useState } from 'react'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { z } from 'zod'
 import { userSchema } from '@/ValidationSchemas/users'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Input } from './ui/input'
-import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 import { 
   Select,
   SelectContent, 
   SelectItem,
   SelectTrigger,
   SelectValue,
- } from './ui/select'
-import { Button } from './ui/button'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { User } from '@/Interface/users'
+ } from '@/components/ui/select'
+ import { User } from '@/Interface/users'
+
+ interface Props {
+  user?: User
+}
 
 type UserFormData = z.infer<typeof userSchema>
 
-interface Props {
-  user?: User
-}
-const UserForm = ({user}: Props) => {
-
+const LoginForm = ({user}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -38,11 +37,11 @@ const UserForm = ({user}: Props) => {
       setIsSubmitting(true)
       setError("")
 
-      if(user){
-        await axios.patch("/api/users/" + user.id, values)
-      }else {
-        await axios.post("/api/users", values)
-      }
+      // if(user){
+      //   await axios.patch("/api/users/" + user.id, values)
+      // }else {
+      //   await axios.post("/api/users", values)
+      // }
       setIsSubmitting(false)
       router.push("/tickets")
       router.refresh()
@@ -65,38 +64,24 @@ const UserForm = ({user}: Props) => {
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Name..." {...field} />
+                  <Input placeholder="Enter Users Full Name..." {...field} />
                 </FormControl>
               </FormItem>
             )}
           />
-          {/* <FormField 
-            control={form.control}
-            name="surname"
-            defaultValue={user?.surname}
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>Surname</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Surname..." {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
           <FormField 
             control={form.control}
-            name="email"
-            defaultValue={user?.email}
+            name="username"
+            defaultValue={user?.username}
             render={({field}) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Email..." {...field} />
+                  <Input placeholder="Enter a Username..." {...field} />
                 </FormControl>
               </FormItem>
             )}
-          /> */}
+          />
 
           <FormField 
             control={form.control}
@@ -127,8 +112,8 @@ const UserForm = ({user}: Props) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="USER">User</SelectItem>
-                    <SelectItem value="TECH">Tech</SelectItem>
+                    <SelectItem value="AGENT">Agent</SelectItem>
+                    <SelectItem value="CLIENT">Client</SelectItem>
                     <SelectItem value="ADMIN">Admin</SelectItem>
                   </SelectContent>
                 </Select>
@@ -143,4 +128,4 @@ const UserForm = ({user}: Props) => {
   )
 }
 
-export default UserForm
+export default LoginForm
