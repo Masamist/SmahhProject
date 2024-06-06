@@ -2,7 +2,7 @@ import React from 'react'
 import Searchbar from '@/components/Searchbar'
 // import Link from 'next/link'
 // import { buttonVariants } from '@/components/ui/button'
-import FormDialog from './FormDialogTicket'
+import FormDialog from '@/components/FormDialog'
 
 interface Prop{
   title: string|undefined

@@ -12,7 +12,7 @@ const Staff = async() => {
     <main className='container max-w-screen-lg'>
       <MainTitle title='Smahh Staff' />
       <Link href='/staff/create/'>Create New Staff</Link>
-      <FormDialog type={'create'} />
+      <FormDialog formType={'createUser'} />
     </main>
   )
 }

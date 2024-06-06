@@ -2,7 +2,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { buttonVariants } from '@/components/ui/button'
 import { Pencil } from 'lucide-react'
-import { User } from '@/Interface/users'
+import { User } from '@/interface/users'
 import {
   Dialog,
   DialogContent,

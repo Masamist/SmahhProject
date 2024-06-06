@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
  } from '@/components/ui/select'
- import { User } from '@/Interface/users'
+ import { User } from '@/interface/users'
 
  interface Props {
   user?: User

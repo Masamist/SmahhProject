@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '@/firebaseConfig'
 import { getDoc, doc } from 'firebase/firestore'
-import { Ticket } from '@/Interface/ticket'
+import { Ticket } from '@/interface/ticket'
 import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'
 import TicketMessages from './TicketMessages'
@@ -33,7 +33,7 @@ const SingleTicket = ({params: {id}}: Props) => {
   
   return (
     <div className='container max-w-screen-lg mt5'>
-      <MainTitle />
+      <MainTitle title='Tickets' />
       {ticket?
         <div className='flex flex-col lg:flex-row gap-5'>
           <div className='w-full lg:w-5/12'>

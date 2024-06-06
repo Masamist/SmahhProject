@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '@/firebaseConfig'
 import { getDocs, collection } from 'firebase/firestore'
-import { Ticket } from '@/Interface/ticket'
+import { Ticket } from '@/interface/ticket'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'

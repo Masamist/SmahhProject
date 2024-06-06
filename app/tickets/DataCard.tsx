@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Ticket } from '@/Interface/ticket'
+import { Ticket } from '@/interface/ticket'
 import Link from 'next/link'
 
 interface Props {

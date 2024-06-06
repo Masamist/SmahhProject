@@ -16,7 +16,7 @@ import {
 import { Button } from './ui/button'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { User } from '@/Interface/users'
+import { User } from '@/interface/users'
 
 type UserFormData = z.infer<typeof userSchema>
 

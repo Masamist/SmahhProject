@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ticketSchema } from '@/ValidationSchemas/ticket'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Ticket } from '@/Interface/ticket'
+import { Ticket } from '@/interface/ticket'
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 // UI components
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'

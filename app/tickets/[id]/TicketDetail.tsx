@@ -1,7 +1,7 @@
 import React from 'react'
 import { db } from '@/firebaseConfig'
 import { getDocs, collection } from 'firebase/firestore'
-import { Ticket } from '@/Interface/ticket'
+import { Ticket } from '@/interface/ticket'
 import {
   Card,
   CardContent,
@@ -16,8 +16,7 @@ import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
-import { Pencil } from 'lucide-react'
-import FormDialog from '@/components/FormDialogTicket'
+import FormDialog from '@/components/FormDialog'
 
 // import AssignTicket from '@/components/AssignTicket'
 
@@ -40,7 +39,7 @@ const TicketDetail = ({ticket}: TicketProps) => {
         <div className='flex flex-row justify-between'>
           <h2 className='text-2xl text-cyan-500'>Ticket Details</h2>
           <div>
-            <FormDialog type={'edit'} ticket={ticket} />
+            <FormDialog formType={'editTicket'} ticket={ticket} />
           </div>
         </div>
       </CardHeader>

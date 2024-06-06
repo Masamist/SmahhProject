@@ -1,5 +1,5 @@
 import React from 'react'
-import { Ticket } from '@/Interface/ticket'
+import { Ticket } from '@/interface/ticket'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
 
