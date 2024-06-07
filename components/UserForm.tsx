@@ -1,11 +1,17 @@
 "use client"
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { db } from '@/firebaseConfig'
+import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { z } from 'zod'
 import { userSchema } from '@/ValidationSchemas/users'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { Input } from './ui/input'
-import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
+import { Controller, useForm } from 'react-hook-form'
+import { User } from '@/interface/users'
+import { SignUp } from '@/app/api/auth/signUp'
+// UI components
+import { Input } from '@/components/ui/input'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { 
   Select,
   SelectContent, 
@@ -13,10 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
  } from './ui/select'
-import { Button } from './ui/button'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { User } from '@/interface/users'
+import { Button } from '@/components/ui/button'
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+
 
 type UserFormData = z.infer<typeof userSchema>
 
@@ -24,7 +29,6 @@ interface Props {
   user?: User
 }
 const UserForm = ({user}: Props) => {
-
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -37,105 +41,182 @@ const UserForm = ({user}: Props) => {
     try{
       setIsSubmitting(true)
       setError("")
-
       if(user){
-        await axios.patch("/api/users/" + user.id, values)
-      }else {
-        await axios.post("/api/users", values)
+        const updatedAt = Timestamp.fromDate(new Date())
+        const data = {
+          ...values,
+          updatedAt
+        }
+        const docRef = doc(db, "users", user.id)
+        await updateDoc(docRef, { ...data })
+        console.log("Document updated")
+      }else{
+        const createdAt = Timestamp.fromDate(new Date())
+        const data = {
+          ...values,
+          createdAt
+        }
+        const email = data.email
+        const password = data.password
+        let uid: string | null = null
+        if (password) {
+          const result = await SignUp({ email, password })
+          uid = result ? result.uid : null
+        }
+        console.log(uid)
+        const modifyData = {
+          ...data,
+          uid: uid
+        }
+        delete modifyData.password
+        await addDoc(collection (db, "users"), { ...modifyData })
+        console.log("Document created")
       }
       setIsSubmitting(false)
-      router.push("/tickets")
+      router.push("/staff")
       router.refresh()
 
     }catch(error){
+      console.log("Error adding document", error)
       setError("Unknown Error Occured.")
       setIsSubmitting(false)
     }
   }
 
   return (
-    <div className='frounded-md border w-full p-4'>
+    <div className='frounded-md w-full p-3'>
+      <h2 className='text-xl text-center px-2 py-5'>{user? 'Update User Details': 'Register a New User'}</h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-          <FormField 
-            control={form.control}
-            name="name"
-            defaultValue={user?.name}
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Name..." {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          {/* <FormField 
-            control={form.control}
-            name="surname"
-            defaultValue={user?.surname}
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>Surname</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Surname..." {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full pr-2">
+          <ScrollArea className='h-[600px] rounded-md'>
+            <ScrollBar orientation="vertical" />
+            <div className='flex flex-col space-y-5'>
+              <FormField 
+                control={form.control}
+                name="name"
+                defaultValue={user?.name}
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Name..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField 
+                control={form.control}
+                name="surname"
+                defaultValue={user?.surname}
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Surname</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Surname..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-          <FormField 
-            control={form.control}
-            name="email"
-            defaultValue={user?.email}
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Email..." {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          /> */}
+              <FormField 
+                control={form.control}
+                name="password"
+                defaultValue=""
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" required={user? false: true} placeholder="Enter Password..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-          <FormField 
-            control={form.control}
-            name="password"
-            defaultValue=""
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" required={user? false: true} placeholder="Enter Password..." {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+              <FormField 
+                control={form.control}
+                name="email"
+                defaultValue={user?.email}
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Email..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-          <div className='flex w-full space-x-4'>
-            <FormField 
-              control={form.control} 
-              name="role"
-              defaultValue={user?.role}
-              render={({field}) => (
-              <FormItem>
-                <FormLabel>Role</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Role..." defaultValue={user?.role} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="USER">User</SelectItem>
-                    <SelectItem value="TECH">Tech</SelectItem>
-                    <SelectItem value="ADMIN">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )} />
-          </div>
-          <Button type="submit" disabled={isSubmitting}>{user ? "Update User" : "Create User"}</Button>
+              <FormField 
+                control={form.control}
+                name="mobile"
+                defaultValue={user?.mobile}
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Mobile</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Mobile Number..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <div className='flex w-full space-x-4'>
+                <FormField 
+                  control={form.control} 
+                  name="role"
+                  defaultValue={user?.role}
+                  render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Role</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Role..." defaultValue={user?.role} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="USER">User</SelectItem>
+                        <SelectItem value="TECH">Tech</SelectItem>
+                        <SelectItem value="ADMIN">Admin</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )} 
+              />
+
+              <FormField 
+                control={form.control}
+                name="company"
+                defaultValue=""
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Company Name</FormLabel>
+                    <FormControl>
+                    <Input placeholder="Enter Company Name ..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField 
+                control={form.control}
+                name="jobTitle"
+                defaultValue=""
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Job Title</FormLabel>
+                    <FormControl>
+                    <Input placeholder="Enter Job Title ..." {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+
+            </div>
+            <Button type="submit" disabled={isSubmitting}>{user ? "Update User" : "Create User"}</Button>
+          </ScrollArea>
         </form>
       </Form>
       <p className='text-destructive'>{error}</p>

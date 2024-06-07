@@ -19,8 +19,7 @@ const MainTitle = ({title}: Prop) => {
           <Searchbar />
         </div>
         <div>
-          {/* <Link href='/tickets/create' className={buttonVariants({variant: 'default'})}>Create Ticket</Link> */}
-          <FormDialog type={'create'} />
+          <FormDialog formType={'createTicket'} />
         </div>
       </div>
       

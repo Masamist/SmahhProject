@@ -1,10 +1,11 @@
- import React from 'react'
+import React from 'react'
+import MainTitle from '@/components/MainTitle'
 
 const Dashboard = () => {
   return (
-    <div >
-      <h1 className='text-3xl font-semibold'>Dashboard</h1>
-    </div>
+    <main className='container max-w-screen-lg'>
+      <MainTitle title='Dashboard' />
+    </main>
   )
   
 }

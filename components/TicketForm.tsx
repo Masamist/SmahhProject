@@ -1,15 +1,15 @@
 'use client'
+import React, { useState } from 'react'
 import { db } from '@/firebaseConfig'
 import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
-import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ticketSchema } from '@/ValidationSchemas/ticket'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Ticket } from '@/interface/ticket'
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 // UI components
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
 import { Input } from './ui/input'
 import { 
@@ -197,8 +197,7 @@ const TicketForm = ({ticket}: Props) => {
             </ScrollArea>
             </form>
           </Form>
-      <p className="text-destructive">{error}</p>
-      
+      <p className="text-destructive">{error}</p>     
     </div>
   )
 }

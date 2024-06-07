@@ -5,10 +5,8 @@ import { getDocs, collection } from 'firebase/firestore'
 import { Ticket } from '@/interface/ticket'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
 import MainTitle from '@/components/MainTitle'
 import DataCard from './DataCard'
-// export const dynamic = 'force-dynamic'
 
 interface CategoryProps{
   searchParams: {
