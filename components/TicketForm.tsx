@@ -27,9 +27,10 @@ import "easymde/dist/easymde.min.css"
 
  interface Props {
   ticket?: Ticket
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TicketForm = ({ticket}: Props) => {
+const TicketForm = ({ticket, setOpen}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()

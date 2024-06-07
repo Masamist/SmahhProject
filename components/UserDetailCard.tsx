@@ -4,13 +4,14 @@ import {
   CardContent
 } from "@/components/ui/card"
 import { User } from '@/interface/users'
-
+import FormDialog from '@/components/FormDialog'
 
 interface Props {
   user: User | undefined
+  page: string
 }
 
-const SingleUserDetailCard = ({user}: Props) => {
+const SingleUserDetailCard = ({user, page}: Props) => {
   return (
     <div className='shadow-md'>
       {user?(
@@ -28,12 +29,22 @@ const SingleUserDetailCard = ({user}: Props) => {
                   <h5 className='text-sm text-gray-400'>Mobile</h5>
                   <p className='text-sm'>{user.mobile}</p>
                 </div>
+                { page === 'CLIENT'? 
+                  (
+                    <div>
+                      <h5 className='text-sm text-gray-400'>Company</h5>
+                      <p className='text-sm'>{user.company}</p>
+                    </div>
+                  ) : null
+                }
                 <div>
                   <h5 className='text-sm text-gray-400'>Job Title</h5>
                   <p className='text-sm'>{user.jobTitle}</p>
                 </div>
               </div>
-             
+              <div className='flex w-full justify-end'>
+                <FormDialog formType={'editUser'} user={user} />
+              </div>
             </CardContent>
           </Card>
         ) : null

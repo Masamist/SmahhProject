@@ -1,24 +1,16 @@
 import React from 'react'
-import { db } from '@/firebaseConfig'
-import { getDocs, collection } from 'firebase/firestore'
 import { Ticket } from '@/interface/ticket'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
-// import TicketStatusBadge from '@/components/TicketStatusBadge'
-// import TicketPriority from '@/components/TicketPriority'
 import Link from 'next/link'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
 import FormDialog from '@/components/FormDialog'
-
-// import AssignTicket from '@/components/AssignTicket'
 
 interface TicketProps{
   ticket: Ticket
@@ -31,7 +23,6 @@ const TicketDetail = ({ticket}: TicketProps) => {
     {label: "Category:", detail: ticket?.category},
     {label: "Client:", detail: ticket?.client},
     {label: "Severity:", detail: ticket?.severity},
-    // {label: "Created At", detail: ticket?.createdAt}, 
   ]
   return (
     <Card className='lg:col-span-2 ls:mr-4'>

@@ -22,13 +22,13 @@ import {
 import { Button } from '@/components/ui/button'
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
-
 type UserFormData = z.infer<typeof userSchema>
 
 interface Props {
   user?: User
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-const UserForm = ({user}: Props) => {
+const UserForm = ({user, setOpen}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -49,7 +49,6 @@ const UserForm = ({user}: Props) => {
         }
         const docRef = doc(db, "users", user.id)
         await updateDoc(docRef, { ...data })
-        console.log("Document updated")
       }else{
         const createdAt = Timestamp.fromDate(new Date())
         const data = {
@@ -70,10 +69,10 @@ const UserForm = ({user}: Props) => {
         }
         delete modifyData.password
         await addDoc(collection (db, "users"), { ...modifyData })
-        console.log("Document created")
+        setOpen(false)
       }
       setIsSubmitting(false)
-      router.push("/staff")
+      // router.push("/staff")
       router.refresh()
 
     }catch(error){
@@ -175,8 +174,8 @@ const UserForm = ({user}: Props) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="USER">User</SelectItem>
-                        <SelectItem value="TECH">Tech</SelectItem>
+                        <SelectItem value="CLIENT">Client</SelectItem>
+                        <SelectItem value="AGENT">Agent</SelectItem>
                         <SelectItem value="ADMIN">Admin</SelectItem>
                       </SelectContent>
                     </Select>
@@ -187,7 +186,7 @@ const UserForm = ({user}: Props) => {
               <FormField 
                 control={form.control}
                 name="company"
-                defaultValue=""
+                defaultValue={user?.company}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Company Name</FormLabel>
@@ -201,7 +200,7 @@ const UserForm = ({user}: Props) => {
               <FormField 
                 control={form.control}
                 name="jobTitle"
-                defaultValue=""
+                defaultValue={user?.jobTitle}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Job Title</FormLabel>
@@ -212,7 +211,6 @@ const UserForm = ({user}: Props) => {
                 )}
               />
             </div>
-            
 
             </div>
             <Button type="submit" disabled={isSubmitting}>{user ? "Update User" : "Create User"}</Button>

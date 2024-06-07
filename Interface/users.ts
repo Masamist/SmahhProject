@@ -8,8 +8,8 @@ export interface User {
   email: string,
   mobile: string,
   role: string,
-  company: string | null,
-  jobTitle: string | null,
+  company: string,
+  jobTitle: string,
   createdAt: Timestamp,
   updatedAt: Timestamp,
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { buttonVariants } from '@/components/ui/button'
 import { Pencil, UserRoundPlus } from 'lucide-react'
@@ -18,7 +18,6 @@ const UserForm = dynamic(() => import("@/components/UserForm"), {
   ssr:false,
 })
 
-
 type FormSwitchType = 'createTicket' | 'editTicket' | 'createUser' | 'editUser'
 
 interface Props{
@@ -28,6 +27,8 @@ interface Props{
 }
 
 const FormDialog = ({formType, ticket, user}: Props) => {
+  const [open, setOpen] = useState(false)
+
   const formSwitch = (type: FormSwitchType): JSX.Element | string => {
     switch(type){
       case 'createTicket':
@@ -35,40 +36,46 @@ const FormDialog = ({formType, ticket, user}: Props) => {
           <>
             <DialogTrigger className={buttonVariants({variant: "default"})}>Create Ticket</DialogTrigger>
             <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
-              <TicketForm />
+              <TicketForm setOpen={setOpen} />
             </DialogContent>
           </>
         )
       case 'editTicket':
         return (
           <>
-            <DialogTrigger className="text-sm">
+            <DialogTrigger className="text-sm text-gray-600 hover:text-midnight-300">
               Edit<Pencil className='inline w-4 h-4' />
             </DialogTrigger>
             <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
-              {ticket?<TicketForm ticket={ticket} />:null}
+              {ticket?<TicketForm ticket={ticket} setOpen={setOpen} />:null}
             </DialogContent>
           </>
         )
       case 'createUser':
         return (
           <>
-            <DialogTrigger className="text-sm">
-              <span className='font-medium pr-2'>Register a New Staff</span><UserRoundPlus className='inline w-5 h-5 text-gray-600' />
+            <DialogTrigger className="text-sm text-gray-600 hover:text-midnight-300">
+              <span className='font-medium pr-2'>
+                Register a New Staff
+              </span>
+              <UserRoundPlus className='inline w-5 h-5' />
             </DialogTrigger>
             <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
-              <UserForm />
+              <UserForm setOpen={setOpen} />
             </DialogContent>
           </>
         )
       case 'editUser':
         return (
           <>
-            <DialogTrigger className="text-sm">
-              Update Details<Pencil className='inline w-4 h-4' />
+            <DialogTrigger className="text-sm text-gray-600 hover:text-midnight-300">
+              <span className='font-medium pr-1'>
+                Update Details
+              </span>
+              <Pencil className='inline w-5 h-5' />
             </DialogTrigger>
             <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
-              {user?<UserForm user={user} />:null}
+              {user?<UserForm user={user} setOpen={setOpen} />:null}
             </DialogContent>
           </>
         )
@@ -76,9 +83,8 @@ const FormDialog = ({formType, ticket, user}: Props) => {
         return <></>
     }
   }
-
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       {formType ? formSwitch(formType):<></>}
     </Dialog>
   )
