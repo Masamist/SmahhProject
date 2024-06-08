@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useContext, createContext, ReactNode } from 'react'
 import { getAuth, onAuthStateChanged, User as FirebaseUser } from 'firebase/auth'
 import { User } from '@/interface/users'
+import { db } from '@/firebase/config'
+import { getDocs, collection, query, where } from 'firebase/firestore'
 
 interface AuthContextType {
   currentUser: User | null
@@ -36,19 +38,27 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
 
   async function initializeUser(user: FirebaseUser | null): Promise<void> {
     if (user) {
-      const userData: User = {
-        id: user.uid,
-        name: user.displayName || '',
-        surname: '',
-        email: user.email || '',
-        mobile: '',
-        role: '',
-        company: '',
-        jobTitle: '',
-        password: null,
-        createdAt: new Date(user.metadata.creationTime || Date.now()) as any,
-        updatedAt: new Date(user.metadata.lastSignInTime || Date.now()) as any,
-      }
+      const q = query(collection(db, 'users'), where("uid", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+      let userData: User | null = null;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        userData = {
+          id: data.id,
+          name: data.name,
+          surname: data.surname,
+          email: data.email,
+          mobile: data.mobile,
+          role: data.role,
+          company: data.company,
+          jobTitle: data.jobTitle,
+          password: data.password,
+          createdAt: data.createdAt,
+          updatedAt: data.updatedAt,
+        }
+      })
+      
       setCurrentUser(userData)
       setUserLoggedIn(true)
     } else {

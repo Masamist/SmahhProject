@@ -1,7 +1,7 @@
 // "use client"
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { db } from '@/app/firebase/config'
+import { db } from '@/firebase/config'
 import { doc, updateDoc } from 'firebase/firestore'
 
 import {

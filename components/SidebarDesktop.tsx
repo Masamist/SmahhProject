@@ -1,7 +1,7 @@
 "use client"
 
 import { SidebarButton } from './SidebarButton'
-import { SidebarItems } from '@/types'
+import { SidebarItems } from '@/interface/sidebarItems'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 

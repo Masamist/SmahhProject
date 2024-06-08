@@ -1,0 +1,22 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(221, 221, 221);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 
+.moduleContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 00 10px 0 rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+} */

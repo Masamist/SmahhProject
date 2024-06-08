@@ -1,14 +1,14 @@
 "use client"
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { db } from '@/app/firebase/config'
+import { db } from '@/firebase/config'
 import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { z } from 'zod'
 import { userSchema } from '@/ValidationSchemas/users'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { User } from '@/interface/users'
-import { SignUp } from '@/app/api/auth/signUp'
+import { SignUp } from '@/lib/auth/signUp'
 // UI components
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'

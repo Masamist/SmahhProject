@@ -23,6 +23,7 @@ const config = {
           300: '#6F95CF',
           900: '#122440',
         },
+        customGray: '#26292c',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

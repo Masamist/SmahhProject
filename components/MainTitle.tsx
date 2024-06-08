@@ -12,7 +12,7 @@ const MainTitle = ({title}: Prop) => {
   return (
     <div className='flex flex-row justify-between w-full pb-5'>
       <div>
-        <h1 className='text-4xl'>{title? title:null}</h1>
+        <h1 className='text-4xl text-customGray'>{title? title:null}</h1>
       </div>
       <div className='flex flex-row gap-2'>
         <div>

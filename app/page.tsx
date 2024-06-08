@@ -6,7 +6,6 @@ const Dashboard = () => {
       <MainTitle title='Dashboard' />
     </main>
   )
-  
 }
 
 export default Dashboard

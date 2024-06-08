@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { db } from '@/app/firebase/config'
+import { db } from '@/firebase/config'
 import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
