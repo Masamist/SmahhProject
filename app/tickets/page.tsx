@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { db } from '@/firebaseConfig'
+import { db } from '@/app/firebase/config'
 import { getDocs, collection } from 'firebase/firestore'
 import { Ticket } from '@/interface/ticket'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'

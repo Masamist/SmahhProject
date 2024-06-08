@@ -9,8 +9,8 @@ export const userSchema = z.object({
   password: z.string().min(6, "Password must be at leaset 6 characters.")
     .max(255).optional().or(z.literal("")),
   role: z.string().min(3, "Role is required.").max(10),
-  company: z.string().min(1, "Company name is required.").max(50).optional(),
-  jobTitle: z.string().min(3, "Company name is required.").max(50).optional(),
+  company: z.string().min(1, "Company name is required.").max(50),
+  jobTitle: z.string().min(3, "Company name is required.").max(50),
   createdAt: z.string().datetime().optional()
 })
 
@@ -23,7 +23,7 @@ export const userPatchSchema = z.object({
   password: z.string().min(6, "Password must be at leaset 6 characters.")
     .max(255).optional().or(z.literal("")),
   role: z.string().min(3, "Role is required.").max(10),
-  company: z.string().min(1, "Company name is required.").max(50).optional(),
-  jobTitle: z.string().min(3, "Company name is required.").max(50).optional(),
+  company: z.string().min(1, "Company name is required.").max(50),
+  jobTitle: z.string().min(3, "Company name is required.").max(50),
   updatedAt: z.string().datetime().optional()
 })

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { db } from '@/firebaseConfig'
+import { db } from '@/app/firebase/config'
 import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
@@ -62,6 +62,7 @@ const TicketForm = ({ticket, setOpen}: Props) => {
         console.log("Document created")
       }
       setIsSubmitting(false)
+      setOpen(false)
       router.push("/tickets")
       router.refresh()  
     } catch (error){

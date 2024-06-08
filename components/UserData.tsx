@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { db } from '@/firebaseConfig'
+import { db } from '@/app/firebase/config'
 import { getDocs, collection, query, where } from 'firebase/firestore'
 import { User } from '@/interface/users'
 import FormDialog from '@/components/FormDialog'

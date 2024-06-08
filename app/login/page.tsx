@@ -1,19 +1,27 @@
-import React from 'react'
+// import { useRouter } from 'next/navigation'
+// import { useAuth } from '@/contexts/authContext'
 import Image from 'next/image'
-import SmahhLogo from '@/assets/smahhLogo.png'
+import SmahhLogo from '@/assets/smahhLoginLogo.png'
+import LoginForm from './LoginForm'
+
 
 const Login = () => {
+  // const { userLoggedIn } = useAuth()
+  // const router = useRouter()
   return (
-    <main className="flex items-center justify-center md:h-screen">
-      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-          <div className="w-32 text-white md:w-36">
-            <Image src={SmahhLogo} alt='Smahh Logo' />
+    <>
+      {/* {userLoggedIn && (router.replace('/'))} */}
+      <main className="absolute bg-gray-600 z-50 w-screen h-screen flex items-center justify-center md:h-auto">
+        <div className="flex flex-col w-full max-w-[450px] justify-center 
+        rounded-lg bg-white px-20 pt-5 pb-20 border border-gray-300 shadow">
+          <div className="flex justify-center py-16">
+            <Image src={SmahhLogo} alt='Smahh Logo' width={200} height={80} />
           </div>
+          <h3 className='text-2xl text-center pb-5'>System Login</h3>
+          <LoginForm />
         </div>
-        {/* <LoginForm /> */}
-      </div>
-    </main>
+      </main>
+    </> 
   )
 }
 

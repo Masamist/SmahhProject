@@ -1,7 +1,9 @@
 'use client'
-
-import { SidebarItems } from '@/types'
 import React from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/contexts/authContext'
+import { doSignOut } from '@/app/api/auth/firebaseAuth'
+import { SidebarItems } from '@/types'
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from './ui/sheet'
 import { Button } from './ui/button'
 import { LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react'
@@ -18,6 +20,8 @@ interface SidebarDesktopProps {
 }
 
 const SidebarMobile = (props: SidebarDesktopProps) => {
+  const { currentUser } = useAuth()
+  const router = useRouter()
   const pathname = usePathname()
   return (
     <Sheet>
@@ -72,7 +76,10 @@ const SidebarMobile = (props: SidebarDesktopProps) => {
                       Account Settings
                     </SidebarButton>
                   </Link>
-                  <SidebarButton size='sm' icon={LogOut} className="w-full">
+                  <SidebarButton 
+                    size='sm' icon={LogOut} className="w-full"
+                    onClick={() => { doSignOut().then(() => { router.push('/login')})}}
+                  >
                     Log Out
                   </SidebarButton>
                 </div>
