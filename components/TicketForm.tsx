@@ -1,13 +1,15 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { db } from '@/firebase/config'
 import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
+import { fetchAllTicketData } from '@/actions/ticket-actions'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ticketSchema } from '@/ValidationSchemas/ticket'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Ticket } from '@/interface/ticket'
+import { User } from '@/interface/users'
 // UI components
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
@@ -22,6 +24,7 @@ import {
 import { Button } from './ui/button'
 import SimpleMDE from "react-simplemde-editor"
 import "easymde/dist/easymde.min.css"
+import { fetchUserDataByGroup } from '@/actions/user-action'
 
  type TicketFormData = z.infer<typeof ticketSchema>
 
@@ -34,6 +37,18 @@ const TicketForm = ({ticket, setOpen}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
+  const [ticketData, setTicketData] = useState<Ticket[]>([])
+  const [ agents, setAgents ] = useState<User[]>([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchAllTicketData()
+      setTicketData(data)
+      const agentsData = await fetchUserDataByGroup('AGENT')
+      setAgents(agentsData)
+    }
+    fetchData()
+  }, [])
 
   const form = useForm<TicketFormData>({
     resolver: zodResolver(ticketSchema)
@@ -45,8 +60,10 @@ const TicketForm = ({ticket, setOpen}: Props) => {
       setError("")
       if(ticket){
         const updatedAt = Timestamp.fromDate(new Date())
+        const assigned = values.assignedAgent? true: false
         const data = {
           ...values,
+          assigned,
           updatedAt
         }
         const docRef = doc(db, "tickets", ticket.id)
@@ -139,11 +156,11 @@ const TicketForm = ({ticket, setOpen}: Props) => {
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Severity..." defaultValue={ticket?.severity} />
+                          <SelectValue placeholder="Severity..." />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                      <SelectItem value="LOW">LOW</SelectItem>
+                        <SelectItem value="LOW">LOW</SelectItem>
                         <SelectItem value="MEDIUM">MEDIUM</SelectItem>
                         <SelectItem value="HIGH">HIGH</SelectItem>
                       </SelectContent>
@@ -171,21 +188,30 @@ const TicketForm = ({ticket, setOpen}: Props) => {
                     </Select>
                   </FormItem>
                 )} />
-
+              
               <FormField 
-                control={form.control}
-                name="assignedAgent"
-                defaultValue={ticket?.assignedAgent}
-                render={({field}) => (
+                  control={form.control} 
+                  name="assignedAgent"
+                  defaultValue={ticket?.assignedAgent}
+                  render={({field}) => (
                   <FormItem>
                     <FormLabel>Assigned Agent</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Ticket Owner..." {...field} />
-                    </FormControl>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Ticket Owner..." defaultValue={ticket?.assignedAgent} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        { agents?.map((agent) => (
+                          <SelectItem key={agent.id} value={agent.id}>{agent.name + " " + agent.surname}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormItem>
-                )}
-              />
+                )} />
             </div>
+
             <div>
               <Controller 
                   name="description" 

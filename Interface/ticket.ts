@@ -8,6 +8,7 @@ export interface Ticket {
   severity: string
   status: string
   assignedAgent: string
+  assigned?: boolean
   description: string 
   createdAt?: string | Timestamp
   updatedAt?: string | Timestamp

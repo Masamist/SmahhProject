@@ -10,6 +10,7 @@ const NavMobile = () => {
         <Image 
         src={logo}
         width={145}
+        height={10}
         priority
         alt="Smahh Logo"
         />

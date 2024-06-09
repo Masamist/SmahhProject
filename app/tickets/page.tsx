@@ -1,11 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { db } from '@/firebase/config'
-import { getDocs, collection } from 'firebase/firestore'
-import { Ticket } from '@/interface/ticket'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
+import { fetchAllTicketData } from '@/actions/ticket-actions'
+import { Ticket } from '@/interface/ticket'
 import MainTitle from '@/components/MainTitle'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import OpenCloseDropdown from './OpenCloseDropdown'
+import { SortedBySelect } from './SortedBySelect'
 import DataCard from './DataCard'
 
 interface CategoryProps{
@@ -23,21 +24,11 @@ interface CategoryProps{
 
 const Tickets = ({searchParams}: CategoryProps) => {  
 
-  async function fetchDataFromFirestore(): Promise<Ticket[]>{
-    const querySnapshot = await getDocs(collection(db, "tickets"))
-  
-    const tickets: Ticket[] = []
-    querySnapshot.forEach((doc) => {
-      tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
-    })
-    return tickets
-  }
-
-  const [ticketData, setTicketData] = useState<Ticket[]>([]);
+  const [ticketData, setTicketData] = useState<Ticket[]>([])
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetchDataFromFirestore()
+      const data = await fetchAllTicketData()
       setTicketData(data)
     }
     fetchData()
@@ -50,11 +41,9 @@ const Tickets = ({searchParams}: CategoryProps) => {
     currentTab = 'yours'
   }
 
-
   return (
     <main className='container max-w-screen-lg'>
       <MainTitle title='Tickets' />
-      
       <Tabs defaultValue={currentTab}>
         <TabsList className='w-full'>
           <TabsTrigger value='yours' className='w-full' asChild>
@@ -79,9 +68,14 @@ const Tickets = ({searchParams}: CategoryProps) => {
       </Tabs>
       
       <div className='p-5 bg-white rounded-md'>
-        <DataCard tickets={ticketData} />
+        <div className='flex flex-col gap-3'>
+          <div className='flex flex-row justify-between'>
+            <OpenCloseDropdown />
+            <SortedBySelect />
+          </div>
+          <DataCard tickets={ticketData} />
+        </div>
       </div>
-      
     </main>
   )
 }

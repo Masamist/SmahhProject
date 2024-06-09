@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import { Ticket } from '@/interface/ticket'
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import { Ticket } from '@/interface/ticket'
+
 
 interface Props {
   tickets: Ticket[]
@@ -12,10 +13,10 @@ interface Props {
 
 const DataCard = ({tickets}: Props) => {
   return (
-    <div className='flex flex-col gap-3'>
+    <>
       {tickets? tickets.map((ticket) => {
         return(
-        <>
+        <div key={ticket.id}>
           <Link href={`/tickets/${ticket.id}`}>
             <Card key={ticket.id}>
               <CardContent>
@@ -41,9 +42,9 @@ const DataCard = ({tickets}: Props) => {
               </CardContent>
             </Card>
           </Link>
-        </>
+        </div>
       )}): null}
-    </div>
+    </>
   )
 }
 

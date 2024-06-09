@@ -22,6 +22,7 @@ const NavUserinfoDesktop = () => {
           <Image 
           src={logo}
           width={180}
+          height={15}
           priority
           alt="Smahh Logo"
           />

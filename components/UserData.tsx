@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { db } from '@/firebase/config'
-import { getDocs, collection, query, where } from 'firebase/firestore'
+import { fetchUserDataByGroup } from '@/actions/user-action'
 import { User } from '@/interface/users'
 import FormDialog from '@/components/FormDialog'
 import UserDetailCard from '@/components/UserDetailCard'
@@ -16,25 +15,9 @@ const UserData = ({page}:PageProp) => {
   const [userId, setUserId] = useState<string | undefined>(undefined)
   const [singleUserData, setSingleUserData] = useState<User | undefined>(undefined)
 
-  async function fetchDataFromFirestore(): Promise<User[]>{
-    let q
-    let querySnapshot
-    if(page==='STAFF'){
-      q = query(collection(db, "users"), where("role", "==", "AGENT"))
-    }else{
-      q = query(collection(db, "users"), where("role", "==", "CLIENT"))
-    }
-    querySnapshot = await getDocs(q)
-    const users: User[] = []
-    querySnapshot.forEach((doc) => {
-      users.push({ id: doc.id, ...(doc.data() as Omit<User, 'id'>) })
-    })
-    return users
-  }
-
   useEffect(() => {
     async function fetchData() {
-      const data = await fetchDataFromFirestore()
+      const data = await fetchUserDataByGroup(page)
       setUserData(data)
     }
     fetchData()
