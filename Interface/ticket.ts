@@ -4,10 +4,11 @@ export interface Ticket {
   id: string
   title: string
   client: string
+  company?: string
   category: string
   severity: string
   status: string
-  assignedAgent: string
+  assignedAgent?: string | null | undefined
   assigned?: boolean
   description: string 
   createdAt?: string | Timestamp
@@ -16,13 +17,13 @@ export interface Ticket {
   messages?: string
 }
 
-export enum Status {
-  OPEN,
-  CLOSED
-}
+// export enum Status {
+//   OPEN,
+//   CLOSED
+// }
 
-export enum Severity {
-  LOW,
-  MEDIUM,
-  HIGH
-}
+// export enum Severity {
+//   LOW,
+//   MEDIUM,
+//   HIGH
+// }

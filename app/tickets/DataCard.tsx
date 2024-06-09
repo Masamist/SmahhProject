@@ -6,7 +6,6 @@ import {
   CardContent,
 } from "@/components/ui/card"
 
-
 interface Props {
   tickets: Ticket[]
 }
@@ -24,7 +23,7 @@ const DataCard = ({tickets}: Props) => {
                   {ticket.title}
                 </div>
                 <div className='flex flex-row'>
-                  <p className='w-1/5 text-sm'>{ticket.client}</p>
+                  <p className='w-1/5 text-sm'>{ticket.company}</p>
                   <p className='w-1/5 text-sm'>{ticket.category}</p>
                   <p className='w-1/5 text-sm'>{ticket.severity}</p>
                   <p className='w-1/5 text-sm'>{ticket.status}</p>

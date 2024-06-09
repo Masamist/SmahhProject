@@ -6,6 +6,7 @@ import { Ticket } from '@/interface/ticket'
 import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'
 import TicketMessages from './TicketMessages'
+import { fetchSingleTicketData } from '@/actions/ticket-actions'
 
 interface Props {
   params: {id: string},
@@ -15,17 +16,10 @@ const SingleTicket = ({params: {id}}: Props) => {
   const [ticket, setTicket] = useState<Ticket | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const docSnap = await getDoc(doc(db, "tickets", id))
-        if (docSnap.exists()) {
-          const ticketData = { id: docSnap.id, ...docSnap.data() } as Ticket
-          setTicket(ticketData);
-        } else {
-          console.log(`Document with ID ${id} does not exist`)
-        }
-      } catch (error) {
-        console.error('Error fetching document:', error)
+    async function fetchData() {
+      const data = await fetchSingleTicketData(id)
+      if(data){
+        setTicket(data)
       }
     }
     fetchData()

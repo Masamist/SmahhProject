@@ -39,6 +39,7 @@ const TicketForm = ({ticket, setOpen}: Props) => {
   const router = useRouter()
   const [ticketData, setTicketData] = useState<Ticket[]>([])
   const [ agents, setAgents ] = useState<User[]>([])
+  const [ clients, setClients ] = useState<User[]>([])
 
   useEffect(() => {
     async function fetchData() {
@@ -46,24 +47,38 @@ const TicketForm = ({ticket, setOpen}: Props) => {
       setTicketData(data)
       const agentsData = await fetchUserDataByGroup('AGENT')
       setAgents(agentsData)
+      const clientsData = await fetchUserDataByGroup('CLIENT')
+      setClients(clientsData)
     }
     fetchData()
   }, [])
 
   const form = useForm<TicketFormData>({
-    resolver: zodResolver(ticketSchema)
+    resolver: zodResolver(ticketSchema),
+    defaultValues: {
+      title: ticket?.title ?? '',
+      client: ticket?.client ?? '',
+      category: ticket?.category ?? '',
+      severity: ticket?.severity ?? '',
+      status: ticket?.status ?? '',
+      assignedAgent: ticket?.assignedAgent ?? null,
+      description: ticket?.description ?? '',
+    }
   })
 
   async function onSubmit(values: z.infer<typeof ticketSchema>) {
+
     try {
       setIsSubmitting(true)
       setError("")
+      const assigned = values.assignedAgent? true: false
+      const company = clients.find((item) => item.id === values.client)?.company
       if(ticket){
         const updatedAt = Timestamp.fromDate(new Date())
-        const assigned = values.assignedAgent? true: false
         const data = {
           ...values,
           assigned,
+          company,
           updatedAt
         }
         const docRef = doc(db, "tickets", ticket.id)
@@ -73,15 +88,17 @@ const TicketForm = ({ticket, setOpen}: Props) => {
         const createdAt = Timestamp.fromDate(new Date())
         const data = {
           ...values,
-          createdAt
+          assigned,
+          company,
+          createdAt,
         }
         await addDoc(collection (db, "tickets"), { ...data })
         console.log("Document created")
       }
       setIsSubmitting(false)
-      setOpen(false)
       router.push("/tickets")
-      router.refresh()  
+      router.refresh()
+      setOpen(false)
     } catch (error){
       console.log("Error adding document", error)
       setError("Unknown Error Occured.")
@@ -90,116 +107,129 @@ const TicketForm = ({ticket, setOpen}: Props) => {
   }
 
   return (
-    <div className='frounded-md w-full py-2'>
+    <div className='pl-2 py-2'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-          <ScrollArea className='h-[600px] rounded-md'>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <ScrollArea className='h-[600px] pr-5'>
             <ScrollBar orientation="vertical" />
-            <FormField 
-              control={form.control}
-              name="title"
-              defaultValue={ticket?.title}
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>Ticket Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Ticket Title..." {...field} />
-                  </FormControl>
-                </FormItem>
-                )}
-              />
-
+            <div className='space-y-5'>
               <FormField 
                 control={form.control}
-                name="client"
-                defaultValue={ticket?.client}
+                name="title"
+                defaultValue={ticket?.title}
                 render={({field}) => (
                   <FormItem>
-                    <FormLabel>Client</FormLabel>
+                    <FormLabel>Ticket Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Client..." {...field} />
+                      <Input placeholder="Ticket Title..." {...field} />
                     </FormControl>
                   </FormItem>
-                )}
-              />
-
-              <div className='flex w-full space-x-4'>
-                <FormField 
-                  control={form.control} 
-                  name="category"
-                  defaultValue={ticket?.category} 
-                  render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Category..." defaultValue={ticket?.category} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="CYBERSECURITY">Cybersecurity</SelectItem>
-                        <SelectItem value="NETWORK">Network</SelectItem>
-                        <SelectItem value="IT">IT Suport</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )} />
+                  )}
+                />
 
                 <FormField 
-                  control={form.control} 
-                  name="severity"
-                  defaultValue={ticket?.severity} 
-                  render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Severity</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Severity..." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="LOW">LOW</SelectItem>
-                        <SelectItem value="MEDIUM">MEDIUM</SelectItem>
-                        <SelectItem value="HIGH">HIGH</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )} />
+                    control={form.control} 
+                    name="client"
+                    defaultValue={ticket?.client}
+                    render={({field}) => (
+                    <FormItem className='w-full'>
+                      <FormLabel>Client</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Client..." defaultValue={ticket?.client} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          { clients?.map((client) => (
+                            <SelectItem key={client.id} value={client.id}>
+                              {`${client.name} ${client.surname} (${client.company})`}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )} />
 
-                <FormField 
-                  control={form.control} 
-                  name="status"
-                  defaultValue={ticket?.status}
-                  render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Status</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Status..." defaultValue={ticket?.status} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="OPEN">Open</SelectItem>
-                        <SelectItem value="CLOSED">Closed</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )} />
-              
+                <div className='flex flex-row w-full justify-between gap-5'>
+                  <FormField 
+                    control={form.control} 
+                    name="category"
+                    defaultValue={ticket?.category} 
+                    render={({field}) => (
+                    <FormItem className='w-1/3'>
+                      <FormLabel>Category</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Category..." defaultValue={ticket?.category} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="CYBERSECURITY">Cyber Security</SelectItem>
+                          <SelectItem value="DATA">Data Security</SelectItem>
+                          <SelectItem value="NETWORK">Network Security</SelectItem>
+                          <SelectItem value="IT">IT Suport</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )} />
+
+                  <FormField 
+                    control={form.control} 
+                    name="severity"
+                    defaultValue={ticket?.severity} 
+                    render={({field}) => (
+                    <FormItem className='w-1/3'>
+                      <FormLabel>Severity</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Severity..." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="LOW">LOW</SelectItem>
+                          <SelectItem value="MEDIUM">MEDIUM</SelectItem>
+                          <SelectItem value="HIGH">HIGH</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )} />
+
+                  <FormField 
+                    control={form.control} 
+                    name="status"
+                    defaultValue={ticket?.status}
+                    render={({field}) => (
+                    <FormItem className='w-1/3'>
+                      <FormLabel>Status</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Status..." defaultValue={ticket?.status} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="OPEN">OPEN</SelectItem>
+                          <SelectItem value="CLOSED">CLOSED</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )} />
+              </div>
+
               <FormField 
                   control={form.control} 
                   name="assignedAgent"
                   defaultValue={ticket?.assignedAgent}
                   render={({field}) => (
-                  <FormItem>
+                  <FormItem className='w-full'>
                     <FormLabel>Assigned Agent</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value ?? undefined}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Ticket Owner..." defaultValue={ticket?.assignedAgent} />
+                          <SelectValue placeholder="Assigned Agent..." defaultValue={ticket?.assignedAgent ?? undefined} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -210,19 +240,22 @@ const TicketForm = ({ticket, setOpen}: Props) => {
                     </Select>
                   </FormItem>
                 )} />
+
+              <div className='pt-1'>
+                <p className='text-sm font-medium'>Description</p>
+                <Controller 
+                    name="description" 
+                    control={form.control}
+                    defaultValue={ticket?.description}
+                    render={({field}) => (
+                    <SimpleMDE placeholder="Description" {...field} />
+                  )} />
+              </div>
             </div>
 
-            <div>
-              <Controller 
-                  name="description" 
-                  control={form.control}
-                  defaultValue={ticket?.description}
-                  render={({field}) => (
-                  <SimpleMDE placeholder="Description" {...field} />
-                )} />
-            </div>
             <Button type="submit" disabled={isSubmitting}>{ticket ? "Update Ticket" : "Creaet Ticket"}</Button>
             </ScrollArea>
+            
             </form>
           </Form>
       <p className="text-destructive">{error}</p>     

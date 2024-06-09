@@ -1,5 +1,5 @@
 'use client'
-import { SidebarItems } from '@/types'
+import { SidebarItems } from '@/interface/sidebarItems'
 import SidebarDesktop from './SidebarDesktop'
 import { BookUser, LayoutDashboard,MoreHorizontal, Settings, Ticket, UserRound, UsersRound } from 'lucide-react'
 import { SidebarButton } from './SidebarButton'
@@ -11,7 +11,7 @@ const sidebarItems:SidebarItems = {
     {label:'Dashboard', href:'/', icon: LayoutDashboard },
     {label:'Tickets', href:'/tickets', icon: Ticket },
     {label:'Clients', href:'/clients', icon: BookUser },
-    {label:'Staff', href:'/staff', icon: UsersRound },
+    {label:'Agents', href:'/agents', icon: UsersRound },
     {label:'Profile', href:'/item/profile', icon: UserRound },
     {label:'Settings', href:'/Settings', icon: Settings },
   ],
