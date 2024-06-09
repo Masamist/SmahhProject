@@ -62,21 +62,18 @@ const UserForm = ({user, setOpen}: Props) => {
           const result = await SignUp({ email, password })
           uid = result ? result.uid : null
         }
-        console.log(uid)
         const modifyData = {
           ...data,
           uid: uid
         }
         delete modifyData.password
         await addDoc(collection (db, "users"), { ...modifyData })
-        setOpen(false)
       }
       setIsSubmitting(false)
-      // router.push("/staff")
       router.refresh()
+      setOpen(false)
 
     }catch(error){
-      console.log("Error adding document", error)
       setError("Unknown Error Occured.")
       setIsSubmitting(false)
     }

@@ -1,7 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { db } from '@/firebase/config'
-import { getDoc, doc } from 'firebase/firestore'
 import { Ticket } from '@/interface/ticket'
 import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'

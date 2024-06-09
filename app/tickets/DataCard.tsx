@@ -17,9 +17,9 @@ const DataCard = ({tickets}: Props) => {
         return(
         <div key={ticket.id}>
           <Link href={`/tickets/${ticket.id}`}>
-            <Card key={ticket.id}>
+            <Card key={ticket.id} className='hover:bg-gray-100'>
               <CardContent>
-                <div className='w-full text-xl font-semibold pt-4 pb-2'>
+                <div className='w-full text-lg font-semibold pt-4 pb-2'>
                   {ticket.title}
                 </div>
                 <div className='flex flex-row'>

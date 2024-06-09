@@ -83,7 +83,6 @@ const TicketForm = ({ticket, setOpen}: Props) => {
         }
         const docRef = doc(db, "tickets", ticket.id)
         await updateDoc(docRef, { ...data })
-        console.log("Document updated")
       }else{
         const createdAt = Timestamp.fromDate(new Date())
         const data = {
@@ -93,7 +92,6 @@ const TicketForm = ({ticket, setOpen}: Props) => {
           createdAt,
         }
         await addDoc(collection (db, "tickets"), { ...data })
-        console.log("Document created")
       }
       setIsSubmitting(false)
       router.push("/tickets")

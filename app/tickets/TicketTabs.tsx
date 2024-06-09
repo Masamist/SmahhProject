@@ -1,14 +1,8 @@
 import Link from 'next/link'
+import { Search } from '@/interface/search'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-interface CategoryProps{
-  searchParams: {
-    tab?: string
-    title?: string
-  }
-}
-
-const TicketTubs = ({searchParams}: CategoryProps) => {
+const TicketTubs = ({searchParams}: Search) => {
   let currentTab = searchParams.tab ?? 'yours'
   const title = searchParams.title
   if(currentTab !== 'anassigned' && currentTab !== 'all' ){
@@ -28,15 +22,6 @@ const TicketTubs = ({searchParams}: CategoryProps) => {
             <Link href={{ query: { ...searchParams, tab: 'all'} }}>All</Link>
           </TabsTrigger>    
         </TabsList>
-        <TabsContent value='yours'>
-          <h2 className='test-center text-2xl font-semibold mt-10'>Your {title}</h2>
-        </TabsContent>
-        <TabsContent value='unassigned'>
-          <h2 className='test-center text-2xl font-semibold mt-10'>Unassigned Tickets{title}</h2>
-        </TabsContent>
-        <TabsContent value='all'>
-          <h2 className='test-center text-2xl font-semibold mt-10'>All Tickets {title}</h2>
-        </TabsContent>
       </Tabs>
   )
 }

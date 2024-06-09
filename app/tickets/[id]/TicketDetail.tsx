@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { Ticket } from '@/interface/ticket'
 import {
   Card,
@@ -6,7 +7,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card"
-import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'

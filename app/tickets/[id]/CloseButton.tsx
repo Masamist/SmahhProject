@@ -28,7 +28,6 @@ const CloseButton = ({ticketId}: {ticketId: string}) => {
       setIsClosing(true)
       const docRef = doc(db, "tickets", ticketId)
         await updateDoc(docRef, { status: "CLOSED" })
-      console.log("Test Close")
       router.push("/tickets")
       router.refresh()
     }catch(error){

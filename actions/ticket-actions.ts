@@ -1,5 +1,5 @@
 import { db } from '@/firebase/config'
-import { getDocs, collection, query, where, getDoc, doc } from 'firebase/firestore'
+import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint } from 'firebase/firestore'
 import { Ticket } from '@/interface/ticket'
 
 export async function fetchAllTicketData(): Promise<Ticket[]>{
@@ -8,7 +8,6 @@ export async function fetchAllTicketData(): Promise<Ticket[]>{
   querySnapshot.forEach((doc) => {
     tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
   })
-  console.log('I should not be here')
   return tickets
 }
 
@@ -22,35 +21,60 @@ export async function fetchTicketsDataByUser(id: string|undefined){
   return tickets
 }
 
-export async function fetchTicketsDataByTab(tab: string, id: string|undefined): Promise<Ticket[]>{
-  let q
-  let querySnapshot
-  switch(tab) { 
-    case 'yours': { 
-      q = query(collection(db, "tickets"), where("assignedAgent", "==", id))
-      break
+export async function fetchTicketsDataByTab(
+  tab: string,
+  sortedBy?: string | null,
+  id?: string
+): Promise<Ticket[]> {
+
+  const getSortOrder = (): QueryConstraint[] => {
+    switch (sortedBy) {
+      case 'asc':
+        return [orderBy('title', 'asc')]
+      case 'desc':
+        return [orderBy('title', 'desc')]
+      case 'latest':
+        return [orderBy('createdAt', 'desc')]
+      case 'oldest':
+        return [orderBy('createdAt', 'asc')]
+      // case 'cybersecurity':
+      //   return [where('category', '==', 'CYBERSECURITY')]
+      // case 'network':
+      //   return [where('category', '==', 'NETWORK')]
+      // case 'data':
+      //   return [where('category', '==', 'DATA')]
+      // case 'IT':
+      //   return [where('category', '==', 'IT')]
+      default:
+        return [orderBy('createdAt', 'desc')] // No sorting
     }
-    case 'unassigned': { 
-      q = query(collection(db, "tickets"), where("assigned", "==", false))
+  };
+
+  const sortOrder = getSortOrder()
+  let queryConstraints: QueryConstraint[] = [];
+
+  switch (tab) {
+    case 'yours':
+      queryConstraints = [where('assignedAgent', '==', id), ...sortOrder]
       break
-    }
-    case 'all': {
-      q = collection(db, "tickets")
+    case 'unassigned':
+      queryConstraints = [where('assigned', '==', false), ...sortOrder]
       break
-   } 
-    default: { 
-      console.log('No ticket exists!')
+    case 'all':
+      queryConstraints = [...sortOrder];
       break
-    } 
- }
- const tickets: Ticket[] = []
- if(q){
-  querySnapshot = await getDocs(q)
+    default:
+      throw new Error('Invalid tab specified')
+  }
+  const q = query(collection(db, 'tickets'), ...queryConstraints)
+
+  const querySnapshot = await getDocs(q);
+  const tickets: Ticket[] = [];
   querySnapshot.forEach((doc) => {
     tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
   })
- }
-  return tickets
+
+  return tickets;
 }
 
 export async function fetchSingleTicketData(id: string){
