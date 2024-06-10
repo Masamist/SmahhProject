@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Search } from '@/interface/search'
-import { fetchAllTicketData, fetchTicketsDataByTab, fetchTicketsDataByUser } from '@/actions/ticket-actions'
+import {  fetchTicketsDataByTab, fetchTicketsDataByUser } from '@/actions/ticket-actions'
 import { Ticket } from '@/interface/ticket'
 import { useAuth } from '@/contexts/authContext'
 import MainTitle from '@/components/MainTitle'
