@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Ticket } from '@/interface/ticket'
+import { fetchSingleUserData } from '@/actions/user-action' 
 import {
   Card,
   CardContent,
@@ -24,6 +25,11 @@ const TicketDetail = ({ticket}: TicketProps) => {
     {label: "Client:", detail: ticket?.client},
     {label: "Severity:", detail: ticket?.severity},
   ]
+
+  const FindUserDetailById = (id: string) => {
+    fetchSingleUserData(id)
+  }
+
   return (
     <Card className='lg:col-span-2 ls:mr-4'>
       <CardHeader>
