@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Ticket } from '@/interface/ticket'
-import { fetchSingleUserData } from '@/actions/user-action' 
+import TicketDetailUser from './TicketDetailUser'
 import {
   Card,
   CardContent,
@@ -26,10 +26,6 @@ const TicketDetail = ({ticket}: TicketProps) => {
     {label: "Severity:", detail: ticket?.severity},
   ]
 
-  const FindUserDetailById = (id: string) => {
-    fetchSingleUserData(id)
-  }
-
   return (
     <Card className='lg:col-span-2 ls:mr-4'>
       <CardHeader>
@@ -42,12 +38,28 @@ const TicketDetail = ({ticket}: TicketProps) => {
       </CardHeader>
       <CardContent className='prose dark:prose-inver'>
         <div className='flex flex-row flex-wrap'>
-          { details.map((item, index) => (
-            <div className='flex flex-col w-1/2 py-3' key={index}>
-              <p className='text-xs text-cyan-500'>{item.label}</p>
-              <p>{item.detail}</p>
-            </div>
-          ))}
+          <div className='flex flex-col w-1/2 py-3'>
+            {ticket.assignedAgent?
+              <TicketDetailUser id={ticket.assignedAgent} title="Aassigned Agent" />
+              : (
+                <>
+                  <p className='text-xs text-cyan-500'>Assigned Agent</p>
+                  <p className='test-gray-400'>Unssigned</p>
+                </>
+              )
+            }
+          </div>
+          <div className='flex flex-col w-1/2 py-3'>
+            <p className='text-xs text-cyan-500'>Category</p>
+            <p>{ticket.category}</p>
+          </div>
+          <div className='flex flex-col w-1/2 py-3'>
+            <TicketDetailUser id={ticket.client} title="Client" />
+          </div>
+          <div className='flex flex-col w-1/2 py-3'>
+            <p className='text-xs text-cyan-500'>Severity</p>
+            <p>{ticket.severity}</p>
+          </div>
         </div>
         <div className='py-3'>
           <p className='text-xs text-cyan-500'>Descriotion:</p>
