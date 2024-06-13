@@ -17,13 +17,13 @@ export interface Ticket {
   messages?: string
 }
 
-// export enum Status {
-//   OPEN,
-//   CLOSED
-// }
+export enum Status {
+  OPEN,
+  CLOSED
+}
 
-// export enum Severity {
-//   LOW,
-//   MEDIUM,
-//   HIGH
-// }
+export enum Severity {
+  LOW,
+  MEDIUM,
+  HIGH
+}

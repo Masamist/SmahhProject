@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card"
+import TicketSeverity from '@/components/TicketSeverity'
 
 interface Props {
   tickets: Ticket[]
@@ -25,7 +26,7 @@ const DataCard = ({tickets}: Props) => {
                 <div className='flex flex-row'>
                   <p className='w-1/5 text-sm'>{ticket.company}</p>
                   <p className='w-1/5 text-sm'>{ticket.category}</p>
-                  <p className='w-1/5 text-sm'>{ticket.severity}</p>
+                  <TicketSeverity severity={ticket.severity} /><span className='w-1/5 text-sm'>{ticket.severity}</span>
                   <p className='w-1/5 text-sm'>{ticket.status}</p>
                   <p className='w-1/5 text-sm'>{typeof ticket.createdAt === 'string'?ticket.createdAt
                     : ticket.createdAt?.toDate().toLocaleDateString("en-US", {
