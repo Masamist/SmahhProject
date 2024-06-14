@@ -5,12 +5,12 @@ interface Props {
 }
 
 const severitySwitch = (severity: string) => {
-  if("LOW"){
-    return <div className={`${severity === 'LOW' ? 'bg-green-500' : 'text-muted'} w-4 h-4 rounded-full`}></div>
-  } else if ("MEDIUM"){
-    return <div className={`${severity === 'MEDIUM' ? 'bg-yellow-500' : 'text-muted'}  w-4 h-4 rounded-full`}></div>
-  } else if ("HIGH"){
-    return <div className={`${severity === 'HIGH' ? 'bg-red-500' : 'text-muted'}  w-4 h-4 rounded-full`}></div>
+  if(severity === "LOW"){
+    return <div className='bg-green-500 w-4 h-4 rounded-full'></div>
+  } else if (severity === "MEDIUM"){
+    return <div className='bg-yellow-500 w-4 h-4 rounded-full'></div>
+  } else if (severity === "HIGH"){
+    return <div className='bg-red-500 w-4 h-4 rounded-full'></div>
   }else {
     <p> Error</p>
   }
@@ -20,7 +20,6 @@ const TicketSeverity = ({severity}: Props) => {
   return (
     <>
       { severitySwitch(severity) }
-      
     </>
   )
 }
