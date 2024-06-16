@@ -18,12 +18,21 @@ export async function fetchUserDataByGroup(page: string): Promise<User[]>{
   return users
 }
 
-export async function fetchSingleUserData(id: string){
-  const docSnap = await getDoc(doc(db, "users", id))
+export async function fetchSingleUserId(uid: string){
+  const docSnap = await getDoc(doc(db, "users", uid))
   if (docSnap.exists()) {
     const userData = { id: docSnap.id, ...docSnap.data() } as User
     return userData
   } else {
-    console.log(`Document with ID ${id} does not exist`)
+  }
+}
+
+export async function fetchSingleUserData(userData: User){
+  const docSnap = await getDoc(doc(db, "users", userData.id))
+  if (docSnap.exists()) {
+    const userData = { id: docSnap.id, ...docSnap.data() } as User
+    return userData
+  } else {
+    console.log(`Document with ID ${userData.id} does not exist`)
   }
 }

@@ -25,7 +25,7 @@ const SingleTicket = ({params: {id}}: Props) => {
   
   return (
     <div className='container max-w-screen-lg mt5'>
-      <MainTitle title='Tickets' />
+      <MainTitle ticketTitle={ticket?.title} />
       {ticket?
         <div className='flex flex-col lg:flex-row gap-5'>
           <div className='w-full lg:w-5/12'>

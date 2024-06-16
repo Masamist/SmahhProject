@@ -4,15 +4,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const TicketTubs = ({searchParams}: Search) => {
   let currentTab = searchParams.tab ?? 'yours'
-  const title = searchParams.title
-  if(currentTab !== 'anassigned' && currentTab !== 'all' ){
+  //const title = searchParams.title
+  if(currentTab !== 'unassigned' && currentTab !== 'all' ){
     currentTab = 'yours'
   }
 
   return (
     <Tabs defaultValue={currentTab}>
         <TabsList className='w-full'>
-          <TabsTrigger value='your' className='w-full' asChild>
+          <TabsTrigger value='yours' className='w-full' asChild>
             <Link href={{ query: { ...searchParams, tab: 'yours'} }}>Your Tickets</Link>
           </TabsTrigger>
           <TabsTrigger value='unassigned' className='w-full' asChild>

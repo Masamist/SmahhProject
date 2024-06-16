@@ -9,9 +9,25 @@ import TicketTabs from './TicketTabs'
 import OpenCloseDropdown from './OpenCloseDropdown'
 import { SortedBySelect } from './SortedBySelect'
 import DataCard from './DataCard'
+import { fetchSingleUserData, fetchSingleUserId } from '@/actions/user-action'
 
 const Tickets = ({searchParams}: Search) => {
   const { currentUser } = useAuth()
+  const [ currentUserId, setCurrentUserId ] = useState<string>('')
+  // This parts should be sorted in the database to store the uid for user auth within  User correction 
+  useState(() => {
+    async function fetchUserId() {
+      if(currentUser){
+        const userId = await fetchSingleUserId(currentUser.id)
+        if(userId){
+          setCurrentUserId(userId)
+          console.log(currentUserId)
+        }
+      }
+      ///////////////////have to fix here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    fetchUserId()
+  }, )
   const [ticketData, setTicketData] = useState<Ticket[]>([])
   useEffect(() => {
     async function fetchData() {
@@ -22,13 +38,12 @@ const Tickets = ({searchParams}: Search) => {
           currentUser?.id)
         setTicketData(data)
       } else {
-        const data = await fetchTicketsDataByUser(currentUser?.id)
+        const data = await fetchTicketsDataByUser(currentUserId)
         setTicketData(data)
       }
-      
     }
     fetchData()
-  }, [currentUser?.id, searchParams.tab, searchParams.sortedBy])
+  }, [ searchParams.tab, searchParams.sortedBy, currentUserId])
 
   return (
     <main className='container max-w-screen-lg'>

@@ -31,15 +31,15 @@ const TicketDetail = ({ticket}: TicketProps) => {
     <Card className='lg:col-span-2 ls:mr-4'>
       <CardHeader>
         <div className='flex flex-row justify-between'>
-          <h2 className='text-2xl text-midnight-300'>Ticket Details</h2>
+          <h2 className='text-xl text-midnight-300'>Ticket Details</h2>
           <div>
             <FormDialog formType={'editTicket'} ticket={ticket} />
           </div>
         </div>
       </CardHeader>
       <CardContent className='prose dark:prose-inver'>
-        <div className='flex flex-row flex-wrap'>
-          <div className='flex flex-col w-1/2 py-3'>
+        <div className='flex flex-row flex-wrap pb-5'>
+          <div className='flex flex-col w-1/2 pb-5'>
             {ticket.assignedAgent?
               <TicketDetailUser id={ticket.assignedAgent} title="Aassigned Agent" />
               : (
@@ -50,14 +50,14 @@ const TicketDetail = ({ticket}: TicketProps) => {
               )
             }
           </div>
-          <div className='w-1/2 py-3'>
+          <div className='w-1/2 pb-5'>
             <p className='text-xs text-midnight-300'>Category</p>
             <p>{ticket.category}</p>
           </div>
-          <div className='w-1/2 py-3'>
+          <div className='w-1/2 pb-5'>
             <TicketDetailUser id={ticket.client} title="Client" />
           </div>
-          <div className='w-1/2 py-3'>
+          <div className='w-1/2 pb-2'>
             <p className='text-xs text-midnight-300'>Severity</p>
             <div className='flex flex-row'>
               <TicketSeverity severity={ticket.severity} /><span className='pl-1.5'>{ticket.severity}</span>
@@ -65,11 +65,11 @@ const TicketDetail = ({ticket}: TicketProps) => {
             
           </div>
         </div>
-        <div className='py-3'>
+        <div className='pb-5'>
           <p className='text-xs text-midnight-300'>Descriotion:</p>
           <ReactMarkDown>{ticket.description}</ReactMarkDown>
         </div>
-        <div className='py-3'>
+        <div className='pb-2'>
           <p className='text-xs text-midnight-300'>Created At:</p>
           <p>
             {typeof ticket.createdAt === 'string'?ticket.createdAt
