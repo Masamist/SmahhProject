@@ -12,6 +12,7 @@ import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
 import FormDialog from '@/components/FormDialog'
+import TicketSeverity from '@/components/TicketSeverity'
 
 interface TicketProps{
   ticket: Ticket
@@ -30,7 +31,7 @@ const TicketDetail = ({ticket}: TicketProps) => {
     <Card className='lg:col-span-2 ls:mr-4'>
       <CardHeader>
         <div className='flex flex-row justify-between'>
-          <h2 className='text-2xl text-cyan-500'>Ticket Details</h2>
+          <h2 className='text-2xl text-midnight-300'>Ticket Details</h2>
           <div>
             <FormDialog formType={'editTicket'} ticket={ticket} />
           </div>
@@ -43,30 +44,33 @@ const TicketDetail = ({ticket}: TicketProps) => {
               <TicketDetailUser id={ticket.assignedAgent} title="Aassigned Agent" />
               : (
                 <>
-                  <p className='text-xs text-cyan-500'>Assigned Agent</p>
+                  <p className='text-xs text-midnight-300'>Assigned Agent</p>
                   <p className='test-gray-400'>Unssigned</p>
                 </>
               )
             }
           </div>
-          <div className='flex flex-col w-1/2 py-3'>
-            <p className='text-xs text-cyan-500'>Category</p>
+          <div className='w-1/2 py-3'>
+            <p className='text-xs text-midnight-300'>Category</p>
             <p>{ticket.category}</p>
           </div>
-          <div className='flex flex-col w-1/2 py-3'>
+          <div className='w-1/2 py-3'>
             <TicketDetailUser id={ticket.client} title="Client" />
           </div>
-          <div className='flex flex-col w-1/2 py-3'>
-            <p className='text-xs text-cyan-500'>Severity</p>
-            <p>{ticket.severity}</p>
+          <div className='w-1/2 py-3'>
+            <p className='text-xs text-midnight-300'>Severity</p>
+            <div className='flex flex-row'>
+              <TicketSeverity severity={ticket.severity} /><span className='pl-1.5'>{ticket.severity}</span>
+            </div>
+            
           </div>
         </div>
         <div className='py-3'>
-          <p className='text-xs text-cyan-500'>Descriotion:</p>
+          <p className='text-xs text-midnight-300'>Descriotion:</p>
           <ReactMarkDown>{ticket.description}</ReactMarkDown>
         </div>
         <div className='py-3'>
-          <p className='text-xs text-cyan-500'>Created At:</p>
+          <p className='text-xs text-midnight-300'>Created At:</p>
           <p>
             {typeof ticket.createdAt === 'string'?ticket.createdAt
               : ticket.createdAt?.toDate().toLocaleDateString("en-GB", {

@@ -28,13 +28,13 @@ const Tickets = ({searchParams}: Search) => {
       
     }
     fetchData()
-  }, [searchParams.tab, searchParams.sortedBy])
+  }, [currentUser?.id, searchParams.tab, searchParams.sortedBy])
 
   return (
     <main className='container max-w-screen-lg'>
       <MainTitle title='Tickets' />
       <TicketTabs searchParams={searchParams} />    
-      <div className='p-5 bg-white rounded-md'>
+      <div className='p-5 bg-white rounded-b-md'>
         <div className='flex flex-col gap-3'>
           <div className='flex flex-row justify-between'>
             <OpenCloseDropdown />

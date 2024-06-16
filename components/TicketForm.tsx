@@ -108,7 +108,7 @@ const TicketForm = ({ticket, setOpen}: Props) => {
     <div className='pl-2 py-2'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <ScrollArea className='h-[600px] pr-5'>
+          <ScrollArea className='h-[600px] max-h-[70vh] pr-5'>
             <ScrollBar orientation="vertical" />
             <div className='space-y-5'>
               <FormField 
@@ -167,7 +167,7 @@ const TicketForm = ({ticket, setOpen}: Props) => {
                           <SelectItem value="CYBERSECURITY">Cyber Security</SelectItem>
                           <SelectItem value="DATA">Data Security</SelectItem>
                           <SelectItem value="NETWORK">Network Security</SelectItem>
-                          <SelectItem value="IT">IT Suport</SelectItem>
+                          <SelectItem value="IT SUPPORT">IT Support</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormItem>

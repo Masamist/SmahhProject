@@ -80,138 +80,144 @@ const UserForm = ({user, setOpen}: Props) => {
   }
 
   return (
-    <div className='frounded-md w-full p-3'>
+    <div className='rounded-md p-3'>
       <h2 className='text-xl text-center px-2 py-5'>{user? 'Update User Details': 'Register a New User'}</h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full pr-2">
-          <ScrollArea className='h-[600px] rounded-md'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="pr-2">
+          <ScrollArea className='h-[600px] max-h-[70vh] pr-5'>
             <ScrollBar orientation="vertical" />
-            <div className='flex flex-col space-y-5'>
-              <FormField 
-                control={form.control}
-                name="name"
-                defaultValue={user?.name}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Name..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField 
-                control={form.control}
-                name="surname"
-                defaultValue={user?.surname}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Surname</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Surname..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField 
-                control={form.control}
-                name="password"
-                defaultValue=""
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" required={user? false: true} placeholder="Enter Password..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField 
-                control={form.control}
-                name="email"
-                defaultValue={user?.email}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Email..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField 
-                control={form.control}
-                name="mobile"
-                defaultValue={user?.mobile}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Mobile</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Mobile Number..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <div className='flex w-full space-x-4'>
+              <div className='space-y-5'>
                 <FormField 
-                  control={form.control} 
-                  name="role"
-                  defaultValue={user?.role}
+                  control={form.control}
+                  name="name"
+                  defaultValue={user?.name}
                   render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Role..." defaultValue={user?.role} />
-                        </SelectTrigger>
+                        <Input placeholder="Enter Name..." {...field} />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="CLIENT">Client</SelectItem>
-                        <SelectItem value="AGENT">Agent</SelectItem>
-                        <SelectItem value="ADMIN">Admin</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )} 
-              />
+                    </FormItem>
+                  )}
+                />
+                <FormField 
+                  control={form.control}
+                  name="surname"
+                  defaultValue={user?.surname}
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Surname</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter Surname..." {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-              <FormField 
-                control={form.control}
-                name="company"
-                defaultValue={user?.company}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Company Name</FormLabel>
-                    <FormControl>
-                    <Input placeholder="Enter Company Name ..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+                <FormField 
+                  control={form.control}
+                  name="password"
+                  defaultValue=""
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" required={user? false: true} placeholder="Enter Password..." {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-              <FormField 
-                control={form.control}
-                name="jobTitle"
-                defaultValue={user?.jobTitle}
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>Job Title</FormLabel>
-                    <FormControl>
-                    <Input placeholder="Enter Job Title ..." {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+                <FormField 
+                  control={form.control}
+                  name="email"
+                  defaultValue={user?.email}
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter Email..." {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField 
+                  control={form.control}
+                  name="mobile"
+                  defaultValue={user?.mobile}
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Mobile</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter Mobile Number..." {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <div className='flex w-full space-x-4'>
+                  <FormField 
+                    control={form.control} 
+                    name="role"
+                    defaultValue={user?.role}
+                    render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Role</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Role..." defaultValue={user?.role} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="CLIENT">Client</SelectItem>
+                          <SelectItem value="AGENT">Agent</SelectItem>
+                          <SelectItem value="ADMIN">Admin</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )} 
+                />
+
+                <FormField 
+                  control={form.control}
+                  name="company"
+                  defaultValue={user?.company}
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Company Name</FormLabel>
+                      <FormControl>
+                      <Input placeholder="Enter Company Name ..." {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField 
+                  control={form.control}
+                  name="jobTitle"
+                  defaultValue={user?.jobTitle}
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Job Title</FormLabel>
+                      <FormControl>
+                      <Input placeholder="Enter Job Title ..." {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
-
-            </div>
-            <Button type="submit" disabled={isSubmitting}>{user ? "Update User" : "Create User"}</Button>
+            <Button 
+              type="submit" 
+              disabled={isSubmitting}
+              className='mt-7'
+            >
+              {user ? "Update User" : "Create User"}
+            </Button>
           </ScrollArea>
+
         </form>
       </Form>
       <p className='text-destructive'>{error}</p>

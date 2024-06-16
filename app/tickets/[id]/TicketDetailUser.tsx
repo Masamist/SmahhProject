@@ -26,7 +26,7 @@ const TicketDetailUser = ({id, title}: Props) => {
   },[])
   return (
     <>
-    <p className='text-xs text-cyan-500'>{title}</p>
+    <p className='text-xs text-midnight-300'>{title}</p>
     <p>{userName}</p>
     </>
   )
