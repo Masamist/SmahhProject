@@ -18,21 +18,43 @@ export async function fetchUserDataByGroup(page: string): Promise<User[]>{
   return users
 }
 
-export async function fetchSingleUserId(uid: string){
-  const docSnap = await getDoc(doc(db, "users", uid))
+export async function fetchSingleUserData(id: string): Promise<User | null>{
+  const docSnap = await getDoc(doc(db, "users", id))
   if (docSnap.exists()) {
     const userData = { id: docSnap.id, ...docSnap.data() } as User
     return userData
-  } else {
+  }else{
+    console.log(`Document with ID ${id} does not exist`)
+    return null
   }
 }
 
-export async function fetchSingleUserData(userData: User){
-  const docSnap = await getDoc(doc(db, "users", userData.id))
-  if (docSnap.exists()) {
-    const userData = { id: docSnap.id, ...docSnap.data() } as User
-    return userData
-  } else {
-    console.log(`Document with ID ${userData.id} does not exist`)
-  }
-}
+// export async function fetchSingleUserId(uid: string): Promise <{id:string} | null>{
+//   const q = query(collection(db, "user"), where("uid", "==", uid))
+//   const docSnap = await getDoc(q)
+//   if (docSnap.exists()) {
+//     const userData = { id: docSnap.id, ...docSnap.data() } as User
+//     return { id:userData.id }
+//   } else {
+//     console.log(`Document with ID ${uid} does not exist`)
+//     return null
+//   }
+// }
+
+// export async function fetchSingleUserData(uid: string): Promise<User | null>{
+//   const user = await fetchSingleUserId(uid)
+//   if(user){
+//     const docSnap = await getDoc(doc(db, "users", user.id))
+//     if (docSnap.exists()) {
+//       const userData = { id: docSnap.id, ...docSnap.data() } as User
+//       return userData
+//     } else {
+//       console.log(`Document with ID ${user.id} does not exist`)
+//       return null
+//     }
+//   }else{
+//     console.log(`Document with ID ${uid} does not exist`)
+//     return null
+//   }
+// }
+

@@ -12,6 +12,7 @@ export interface User {
   jobTitle: string,
   createdAt: Timestamp,
   updatedAt: Timestamp,
+  uid: string,  // authId
 }
 
 export enum Role {

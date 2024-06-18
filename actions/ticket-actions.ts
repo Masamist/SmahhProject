@@ -53,6 +53,7 @@ export async function fetchTicketsDataByTab(
   const sortOrder = getSortOrder()
   let queryConstraints: QueryConstraint[] = [];
 
+
   switch (tab) {
     case 'yours':
       queryConstraints = [where('assignedAgent', '==', id), ...sortOrder]
@@ -63,8 +64,9 @@ export async function fetchTicketsDataByTab(
     case 'all':
       queryConstraints = [...sortOrder];
       break
-    default:
-      throw new Error('Invalid tab specified')
+    default: //currently all the data
+      queryConstraints = [...sortOrder];
+      console.log('all data')
   }
   const q = query(collection(db, 'tickets'), ...queryConstraints)
 

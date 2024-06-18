@@ -44,8 +44,9 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
+        ////////////////sort out uid issue
         userData = {
-          id: data.uid,
+          id: data.id,
           name: data.name,
           surname: data.surname,
           email: data.email,
@@ -56,6 +57,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
           password: data.password,
           createdAt: data.createdAt,
           updatedAt: data.updatedAt,
+          uid: data.uid
         }
       })
       

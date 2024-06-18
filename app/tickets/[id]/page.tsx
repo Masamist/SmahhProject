@@ -5,6 +5,7 @@ import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'
 import TicketMessages from './TicketMessages'
 import { fetchSingleTicketData } from '@/actions/ticket-actions'
+import TicketUnassignedBadge from '@/components/TicketUnassignedBadge'
 
 interface Props {
   params: {id: string},
@@ -25,7 +26,7 @@ const SingleTicket = ({params: {id}}: Props) => {
   
   return (
     <div className='container max-w-screen-lg mt5'>
-      <MainTitle ticketTitle={ticket?.title} />
+      <MainTitle title='Tickets' ticketTitle={ticket?.title} assigned={ticket?.assigned} />
       {ticket?
         <div className='flex flex-col lg:flex-row gap-5'>
           <div className='w-full lg:w-5/12'>
