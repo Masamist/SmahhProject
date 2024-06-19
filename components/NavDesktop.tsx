@@ -6,7 +6,7 @@ import { doSignOut } from '@/actions/auth-actions'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { LogOut, MoreHorizontal, Settings } from 'lucide-react'
+import { CircleUserRound, LogOut, MoreHorizontal, Settings } from 'lucide-react'
 import logo from '@/assets/smahhLogo.png'
 import { SidebarButton } from './SidebarButton'
 
@@ -34,11 +34,12 @@ const NavUserinfoDesktop = () => {
             <Button variant='ghost'>
               <div className='flex justify-between items-center'>
                 <div className='flex gap-2'>
-                  <Avatar className='h-8 w-8'>
+                  {/* <Avatar className='h-10 w-8'>
                     <AvatarImage src='https://avatar.iran.liara.run/public/75' />
-                    {/* <AvatarFallback>Masami Stonebridge</AvatarFallback> */}
-                  </Avatar>
-                  <span className='pt-1.5 pr-2'>
+                    <AvatarFallback>Masami Stonebridge</AvatarFallback>
+                  </Avatar> */}
+                  <CircleUserRound className='w-7 h-7 font-thin text-gray-700' />
+                  <span className='pt-1 pr-2'>
                     {currentUser? currentUser.name + ' ' + currentUser.surname : null}
                   </span>
                 </div>
