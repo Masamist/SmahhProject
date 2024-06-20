@@ -5,7 +5,6 @@ import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'
 import TicketMessages from './TicketMessages'
 import { fetchSingleTicketData } from '@/actions/ticket-actions'
-import TicketUnassignedBadge from '@/components/TicketUnassignedBadge'
 
 interface Props {
   params: {id: string},
