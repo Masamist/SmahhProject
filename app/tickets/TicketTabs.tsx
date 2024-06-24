@@ -4,15 +4,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const TicketTubs = ({searchParams}: Search) => {
 
-  // The bud needs to be fixed (current auth uid => id)
-  // let currentTab = searchParams.tab ?? 'yours'
-  // //const title = searchParams.title
-  // if(currentTab !== 'unassigned' && currentTab !== 'all' ){
-  //   currentTab = 'yours'
-  // }
-  let currentTab = searchParams.tab ?? 'all'
-  if(currentTab !== 'unassigned' && currentTab !== 'yours' ){
-    currentTab = 'all'
+  let currentTab = searchParams.tab ?? 'yours'
+  if(currentTab !== 'unassigned' && currentTab !== 'all' ){
+    currentTab = 'yours'
   }
 
   return (

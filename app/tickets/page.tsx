@@ -12,20 +12,15 @@ import DataCard from './DataCard'
 
 const Tickets = ({searchParams}: Search) => {
   const { currentUser } = useAuth()
-  // This parts should be sorted in the database to store the uid for user auth within  User correction 
-  console.log(`currentUser ID is ${currentUser?.id} and ${currentUser?.uid}`)
   const [ticketData, setTicketData] = useState<Ticket[]>([])
   useEffect(() => {
     async function fetchData() {
-      // auth id bug!!!!!
-      // if(searchParams.tab === 'yours' && !searchParams.sortedBy){
-      //   const data = await fetchTicketsDataByUser(currentUser?.uid)
-      //   console.log(currentUser?.uid)
-      //   setTicketData(data)
-      //   console.log('Fetched data A')
-      // }
-      // else 
-      if(searchParams.tab === 'all' && !searchParams.sortedBy){
+      if(searchParams.tab === 'yours' && !searchParams.sortedBy){
+        const data = await fetchTicketsDataByUser(currentUser?.id)
+        setTicketData(data)
+        console.log('Fetched data A')
+      }
+      else if(searchParams.tab === 'all' && !searchParams.sortedBy){
         const data = await fetchAllTicketData()
         setTicketData(data)
         console.log('Fetched data B')
@@ -36,16 +31,15 @@ const Tickets = ({searchParams}: Search) => {
           searchParams?.sortedBy, 
           currentUser?.id) // Here is bug
         setTicketData(data)
-        console.log(currentUser?.id)
         console.log('Fetched data C')
       } else {
-        const data = await fetchAllTicketData()
+        const data = await fetchTicketsDataByUser(currentUser?.id)
         setTicketData(data)
-        console.log('Fetched data A')
+        console.log('Fetched data D')
       }
     }
     fetchData()
-  }, [ searchParams.tab, searchParams.sortedBy, currentUser?.uid])
+  }, [ searchParams.tab, searchParams.sortedBy, currentUser?.id])
 
   return (
     <main className='container max-w-screen-lg'>

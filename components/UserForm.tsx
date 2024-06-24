@@ -64,7 +64,7 @@ const UserForm = ({user, setOpen}: Props) => {
         }
         const modifyData = {
           ...data,
-          uid: uid
+          authId: uid
         }
         delete modifyData.password
         await addDoc(collection (db, "users"), { ...modifyData })

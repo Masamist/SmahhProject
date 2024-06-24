@@ -38,15 +38,14 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
 
   async function initializeUser(user: FirebaseUser | null): Promise<void> {
     if (user) {
-      const q = query(collection(db, 'users'), where("uid", "==", user.uid));
-      const querySnapshot = await getDocs(q);
-      let userData: User | null = null;
+      const q = query(collection(db, 'users'), where("authId", "==", user.uid))
+      const querySnapshot = await getDocs(q)
+      let userData: User | null = null
 
       querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        ////////////////sort out uid issue
+        const data = doc.data()
         userData = {
-          id: data.id,
+          id: doc.id,
           name: data.name,
           surname: data.surname,
           email: data.email,
@@ -57,10 +56,9 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
           password: data.password,
           createdAt: data.createdAt,
           updatedAt: data.updatedAt,
-          uid: data.uid
+          authId: data.authId
         }
       })
-      
       setCurrentUser(userData)
       setUserLoggedIn(true)
     } else {
