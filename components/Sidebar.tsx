@@ -12,7 +12,7 @@ const sidebarItems:SidebarItems = {
     {label:'Tickets', href:'/tickets', icon: Ticket },
     {label:'Clients', href:'/clients', icon: BookUser },
     {label:'Agents', href:'/agents', icon: UsersRound },
-    {label:'Profile', href:'/item/profile', icon: UserRound },
+    {label:'Profile', href:'/profile', icon: UserRound },
     {label:'Settings', href:'/Settings', icon: Settings },
   ],
   extras: (
