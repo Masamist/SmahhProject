@@ -1,5 +1,5 @@
 import React from 'react'
-import { SidebarButton } from './SidebarButton'
+import { SidebarButton } from './nav/SidebarButton'
 import { doSignOut } from '@/actions/auth-actions'
 import { LogOut } from 'lucide-react'
 

@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { fetchUserDataByGroup } from '@/actions/user-action'
 import { User } from '@/interface/users'
 import { useAuth } from '@/contexts/authContext'
-import FormDialog from '@/components/FormDialog'
-import UserDetailCard from '@/components/UserDetailCard'
-import UserDataCard from '@/components/UserDataCard'
+import FormDialog from '@/components/ticket/TicketFormDialog'
+import UserDetailCard from '@/components/user/UserDetailCard'
+import UserDataCard from '@/components/user/UserDataCard'
 
 interface PageProp{
   page: string

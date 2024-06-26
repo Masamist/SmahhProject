@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import Searchbar from '@/components/Searchbar'
-import FormDialog from '@/components/FormDialog'
+import TicketFormDialog from '@/components/ticket/TicketFormDialog'
 import { ChevronRight } from 'lucide-react'
-import TicketUnassignedBadge from '@/components/TicketUnassignedBadge'
+import TicketUnassignedBadge from '@/components/ticket/TicketUnassignedBadge'
 
 interface Prop{
   title: string|undefined
@@ -39,7 +39,7 @@ const MainTitle = ({title, ticketTitle, assigned}: Prop) => {
           <Searchbar />
         </div>
         <div>
-          <FormDialog formType={'createTicket'} />
+          <TicketFormDialog formType={'createTicket'} />
         </div>
       </div>
       

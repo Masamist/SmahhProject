@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/authContext'
 import { Ticket } from '@/interface/ticket'
+// UI materials
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import TicketSeverity from '@/components/TicketSeverity'
-import TicketUnassignedBadge from '@/components/TicketUnassignedBadge'
-import { TicketDataCardAgentFinder } from './TicketDataCardAgentFinder'
+import TicketSeverity from '@/components/ticket/TicketSeverity'
+import TicketUnassignedBadge from '@/components/ticket/TicketUnassignedBadge'
 
 interface Props {
   tickets: Ticket[],

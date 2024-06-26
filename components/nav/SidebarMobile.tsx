@@ -1,18 +1,19 @@
 import React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/authContext'
 import { doSignOut } from '@/actions/auth-actions'
 import { SidebarItems } from '@/interface/sidebarItems'
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from './ui/sheet'
-import { Button } from './ui/button'
-import { LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react'
-import Link from 'next/link'
-import { SidebarButtonSheet as SidebarButton } from './SidebarButton'
-import { usePathname } from 'next/navigation'
-import { Separator } from './ui/separator'
-import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer'
+// UI components
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
+import { SidebarButtonSheet as SidebarButton } from '@/components/nav/SidebarButton'
+import { Separator } from '@/components/ui/separator'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import { AvatarImage } from '@/components/ui/avatar'
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar'
-import { AvatarImage } from './ui/avatar'
+import { LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react'
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems

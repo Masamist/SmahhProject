@@ -6,21 +6,21 @@ import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestor
 import { z } from 'zod'
 import { userSchema } from '@/ValidationSchemas/users'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { User } from '@/interface/users'
 import { SignUp } from '@/lib/auth/signUp'
 // UI components
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { 
   Select,
   SelectContent, 
   SelectItem,
   SelectTrigger,
   SelectValue,
- } from './ui/select'
-import { Button } from '@/components/ui/button'
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+ } from '@/components/ui/select'
 
 type UserFormData = z.infer<typeof userSchema>
 

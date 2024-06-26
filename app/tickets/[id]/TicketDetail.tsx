@@ -11,8 +11,8 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
-import FormDialog from '@/components/FormDialog'
-import TicketSeverity from '@/components/TicketSeverity'
+import TicketFormDialog from '@/components/ticket/TicketFormDialog'
+import TicketSeverity from '@/components/ticket/TicketSeverity'
 
 interface TicketProps{
   ticket: Ticket
@@ -33,7 +33,7 @@ const TicketDetail = ({ticket}: TicketProps) => {
         <div className='flex flex-row justify-between'>
           <h2 className='text-xl text-midnight-300'>Ticket Details</h2>
           <div>
-            <FormDialog formType={'editTicket'} ticket={ticket} />
+            <TicketFormDialog formType={'editTicket'} ticket={ticket} />
           </div>
         </div>
       </CardHeader>

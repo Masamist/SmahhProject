@@ -6,10 +6,10 @@ import {  fetchAllTicketData, fetchTicketsDataByTab, fetchTicketsDataByUser } fr
 import { Ticket } from '@/interface/ticket'
 import { useAuth } from '@/contexts/authContext'
 import MainTitle from '@/components/MainTitle'
-import TicketsTabs from '@/components/TicketsTabs'
-import OpenCloseDropdown from '@/components/OpenCloseDropdown'
-import { TicketsSortedBySelect } from '@/components/TicketsSortedBySelect'
-import TicketsDataCard from '@/components/TicketsDataCard'
+import TicketsTabs from '@/components/ticket/TicketsTabs'
+import OpenCloseDropdown from '@/components/ui/openCloseDropdown'
+import { TicketsSortedBySelect } from '@/components/ticket/TicketsSortedBySelect'
+import TicketsDataCard from '@/components/ticket/TicketsDataCard'
 
 const Tickets = ({searchParams}: Search) => {
   //const router = useRouter

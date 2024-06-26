@@ -1,30 +1,31 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { db } from '@/firebase/config'
 import { addDoc, collection, doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { fetchAllTicketData } from '@/actions/ticket-actions'
-import { useRouter } from 'next/navigation'
+import { fetchUserDataByGroup } from '@/actions/user-action'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ticketSchema } from '@/ValidationSchemas/ticket'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Ticket } from '@/interface/ticket'
 import { User } from '@/interface/users'
+import SimpleMDE from "react-simplemde-editor"
+import "easymde/dist/easymde.min.css"
+
 // UI components
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
-import { Input } from './ui/input'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { 
   Select,
   SelectContent, 
   SelectItem,
   SelectTrigger,
   SelectValue,
- } from './ui/select'
-import { Button } from './ui/button'
-import SimpleMDE from "react-simplemde-editor"
-import "easymde/dist/easymde.min.css"
-import { fetchUserDataByGroup } from '@/actions/user-action'
+ } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
 
  type TicketFormData = z.infer<typeof ticketSchema>
 

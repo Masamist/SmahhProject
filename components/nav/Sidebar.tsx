@@ -1,11 +1,12 @@
 'use client'
 import React, {useState, useEffect} from 'react'
-import { SidebarItems } from '@/interface/sidebarItems'
-import SidebarDesktop from './SidebarDesktop'
-import { BookUser, LayoutDashboard,MoreHorizontal, Settings, Ticket, UserRound, UsersRound } from 'lucide-react'
-import { SidebarButton } from './SidebarButton'
 import { useMediaQuery } from 'usehooks-ts'
-import SidebarMobile from './SidebarMobile'
+import { SidebarItems } from '@/interface/sidebarItems'
+// UI material
+import { BookUser, LayoutDashboard,MoreHorizontal, Settings, Ticket, UserRound, UsersRound } from 'lucide-react'
+import SidebarDesktop from '@/components/nav/SidebarDesktop'
+import { SidebarButton } from '@/components/nav/SidebarButton'
+import SidebarMobile from '@/components/nav/SidebarMobile'
 import { useAuth } from '@/contexts/authContext'
 
 const extrasItam = 

@@ -1,10 +1,10 @@
 import React from 'react'
+import { User } from '@/interface/users'
+import FormDialog from '@/components/ticket/TicketFormDialog'
 import {
   Card,
   CardContent
 } from "@/components/ui/card"
-import { User } from '@/interface/users'
-import FormDialog from '@/components/FormDialog'
 
 interface Props {
   user: User | undefined

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '@/contexts/authContext'
 import MainTitle from '@/components/MainTitle'
-import UserData from '@/components/UserData'
+import UserData from '@/components/user/UserData'
 import { useRouter } from 'next/navigation'
 
 const Clients = () => {

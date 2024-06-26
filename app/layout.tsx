@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+// UI materials
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Sidebar from "@/components/Sidebar"
+import Nav from "@/components/nav/Nav";
+import Sidebar from "@/components/nav/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/authContext"
 import { ProtectedLayout } from '@/components/protectedLayout'

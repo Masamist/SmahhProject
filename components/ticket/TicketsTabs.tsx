@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Search } from '@/interface/search'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const TicketsTubs = ({searchParams}: Search) => {
 

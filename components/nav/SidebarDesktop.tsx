@@ -1,7 +1,7 @@
-import { SidebarButton } from './SidebarButton'
-import { SidebarItems } from '@/interface/sidebarItems'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { SidebarItems } from '@/interface/sidebarItems'
+import { SidebarButton } from '@/components/nav/SidebarButton'
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems

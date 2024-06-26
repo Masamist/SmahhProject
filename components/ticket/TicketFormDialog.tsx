@@ -1,21 +1,23 @@
 'use client'
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { buttonVariants } from '@/components/ui/button'
-import { Pencil, UserRoundPlus } from 'lucide-react'
 import { Ticket } from '@/interface/ticket'
 import { User } from '@/interface/users'
+//UI materials
+import { buttonVariants } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Pencil, UserRoundPlus } from 'lucide-react'
 
-const TicketForm = dynamic(() => import("@/components/TicketForm"), {
+
+const TicketForm = dynamic(() => import("@/components/ticket/TicketForm"), {
   ssr:false,
 })
 
-const UserForm = dynamic(() => import("@/components/UserForm"), {
+const UserForm = dynamic(() => import("@/components/user/UserForm"), {
   ssr:false,
 })
 
@@ -27,7 +29,7 @@ interface Props{
   user?: User | null
 }
 
-const FormDialog = ({formType, ticket, user}: Props) => {
+const TicketFormDialog = ({formType, ticket, user}: Props) => {
   const [open, setOpen] = useState(false)
 
   const formSwitch = (type: FormSwitchType): JSX.Element | string => {
@@ -35,7 +37,9 @@ const FormDialog = ({formType, ticket, user}: Props) => {
       case 'createTicket':
         return (
           <>
-            <DialogTrigger className={buttonVariants({variant: "default"})}>Create Ticket</DialogTrigger>
+            <DialogTrigger className={buttonVariants({variant: "default"})}>
+                Create Ticket
+            </DialogTrigger>
             <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
               <TicketForm setOpen={setOpen} />
             </DialogContent>
@@ -91,4 +95,4 @@ const FormDialog = ({formType, ticket, user}: Props) => {
   )
 }
 
-export default FormDialog
+export default TicketFormDialog

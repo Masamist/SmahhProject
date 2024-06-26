@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/authContext'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Button } from './ui/button'
-import { CircleUserRound, MoreHorizontal, Settings } from 'lucide-react'
+// UI components
 import logo from '@/assets/smahhLogo.png'
-import { SidebarButton } from './SidebarButton'
-import LogoutButton from './LogoutButton'
+import { Button } from '@/components/ui/button'
+import { SidebarButton } from '@/components/nav/SidebarButton'
+import LogoutButton from '@/components/LogoutButton'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+//import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { CircleUserRound, MoreHorizontal, Settings } from 'lucide-react'
 
 const NavUserinfoDesktop = () => {
   const { currentUser } = useAuth()

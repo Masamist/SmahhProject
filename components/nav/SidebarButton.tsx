@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button, ButtonProps } from './ui/button'
-import { LucideIcon, Sun } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { SheetClose } from './ui/sheet'
+import { SheetClose } from '../ui/sheet'
+import { Button, ButtonProps } from '@/components/ui/button'
+import { LucideIcon } from 'lucide-react'
 
 interface SidebarButtonProps extends ButtonProps {
   icon?: LucideIcon

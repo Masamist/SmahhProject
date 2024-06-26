@@ -1,8 +1,7 @@
 'use Client'
 import React, { useState } from 'react'
-import style from './openCloseDropdown.module.css'
+import style from '@/components/ui/openCloseDropdown.module.css'
 import { ChevronDown } from 'lucide-react'
-
 
 const OpenCloseDropdown = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true)

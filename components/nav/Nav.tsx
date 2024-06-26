@@ -1,9 +1,7 @@
 'use client'
-
-import React from 'react'
 import { useMediaQuery } from 'usehooks-ts'
-import NavDesktop from './NavDesktop'
-import NavMobile from './NavMobile'
+import NavDesktop from '@/components/nav/NavDesktop'
+import NavMobile from '@/components/nav/NavMobile'
 
 const Nav = () => {
 
@@ -13,8 +11,9 @@ const Nav = () => {
   if (isDesktop) {
     return <NavDesktop />
   }
-  return <NavMobile />
-  
+  if(!isDesktop){
+    return <NavMobile />
+  }
 }
 
 export default Nav

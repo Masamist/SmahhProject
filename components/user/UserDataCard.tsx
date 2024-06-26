@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardContent } from "@/components/ui/card"
 import { User } from '@/interface/users'
+import { Card, CardContent } from "@/components/ui/card"
 
 interface Props {
   users: User[]
