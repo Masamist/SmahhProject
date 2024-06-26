@@ -3,5 +3,6 @@ export interface Search{
     tab?: string
     title?: string
     sortedBy?: string
+    isClient: boolean
   }
 }

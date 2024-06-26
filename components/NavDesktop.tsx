@@ -1,18 +1,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/authContext'
-import { doSignOut } from '@/actions/auth-actions'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { CircleUserRound, LogOut, MoreHorizontal, Settings } from 'lucide-react'
+import { CircleUserRound, MoreHorizontal, Settings } from 'lucide-react'
 import logo from '@/assets/smahhLogo.png'
 import { SidebarButton } from './SidebarButton'
+import LogoutButton from './LogoutButton'
 
 const NavUserinfoDesktop = () => {
   const { currentUser } = useAuth()
-  const router = useRouter()
   return (
     <div 
       className='flex flex-row px-3 pt-2 w-full fixed top-0 left-0 h-12
@@ -55,13 +53,7 @@ const NavUserinfoDesktop = () => {
                   Account Settings
                 </SidebarButton>
               </Link>
-              <SidebarButton 
-                size='sm' 
-                icon={LogOut} 
-                className="w-full" 
-                onClick={() => { doSignOut().then(() => { router.push('/login')})}}>
-                Log Out
-              </SidebarButton>
+              <LogoutButton />
             </div>
           </PopoverContent>
         </Popover>

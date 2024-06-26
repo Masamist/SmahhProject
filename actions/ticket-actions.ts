@@ -1,5 +1,5 @@
 import { db } from '@/firebase/config'
-import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint } from 'firebase/firestore'
+import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint, Query } from 'firebase/firestore'
 import { Ticket } from '@/interface/ticket'
 
 export async function fetchAllTicketData(): Promise<Ticket[]>{
@@ -11,9 +11,15 @@ export async function fetchAllTicketData(): Promise<Ticket[]>{
   return tickets
 }
 
-export async function fetchTicketsDataByUser(id: string|undefined){
+export async function fetchTicketsDataByUser(userId: string, isClient: boolean){
   const tickets: Ticket[] = []
-  const q = query(collection(db, "tickets"), where("assignedAgent", "==", id))
+  let q :Query
+  if(!isClient){
+    q = query(collection(db, "tickets"), where("assignedAgent", "==", userId))
+  } else {
+    q = query(collection(db, "tickets"), where("client", "==", userId))
+  }
+  
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
     tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
@@ -22,9 +28,10 @@ export async function fetchTicketsDataByUser(id: string|undefined){
 }
 
 export async function fetchTicketsDataByTab(
-  tab: string,
-  sortedBy?: string | null,
-  id?: string
+  tab?: string | undefined,
+  sortedBy?: string | undefined,
+  userId?: string,
+  isClient?: boolean,
 ): Promise<Ticket[]> {
 
   const getSortOrder = (): QueryConstraint[] => {
@@ -53,20 +60,23 @@ export async function fetchTicketsDataByTab(
   const sortOrder = getSortOrder()
   let queryConstraints: QueryConstraint[] = [];
 
-
-  switch (tab) {
-    case 'yours':
-      queryConstraints = [where('assignedAgent', '==', id), ...sortOrder]
-      break
-    case 'unassigned':
-      queryConstraints = [where('assigned', '==', false), ...sortOrder]
-      break
-    case 'all':
+  if(isClient){
+    queryConstraints = [where('client', '==', userId), ...sortOrder]
+  } else {
+    switch (tab) {
+      case 'yours':
+        // bug there is no yours in client tickets
+          queryConstraints = [where('assignedAgent', '==', userId), ...sortOrder]
+        break
+      case 'unassigned':
+        queryConstraints = [where('assigned', '==', false), ...sortOrder]
+        break
+      case 'all':
+        queryConstraints = [...sortOrder];
+        break
+      default: // return all tickets
       queryConstraints = [...sortOrder];
-      break
-    default: //currently all the data
-      queryConstraints = [...sortOrder];
-      console.log('all data')
+    }
   }
   const q = query(collection(db, 'tickets'), ...queryConstraints)
 

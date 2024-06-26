@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select"
 
  
-export function SortedBySelect({searchParams}: Search) {
+export function TicketsSortedBySelect({searchParams}: Search) {
   const router = useRouter()
 
   const handleValueChange = (value: string) => {

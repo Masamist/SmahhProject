@@ -12,7 +12,7 @@ interface Props {
   tickets: Ticket[]
 }
 
-const DataCard = ({tickets}: Props) => {
+const TicketsDataCard = ({tickets}: Props) => {
   return (
     <>
       {tickets? tickets.map((ticket) => (
@@ -49,4 +49,4 @@ const DataCard = ({tickets}: Props) => {
   )
 }
 
-export default DataCard
+export default TicketsDataCard
