@@ -16,34 +16,48 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Spinner } from '@/components/ui/spinner';
 
 const formSchema = z.object({
   email: z.string().min(1, { message: "Email is required." })
-    .email("This is not a valid email."),
-  password: z.string().min(6, "Password must be at leaset 6 characters.")
-    .max(255).or(z.literal("")),
+    .email("This is not a valid email.").default(""),
+  password: z.string().min(1,{ message: "Password is required" }).default(""),
 })
 
 type LoginFormData = z.infer<typeof formSchema>
 
 const LoginForm = () => {
-  const { userLoggedIn } = useAuth()
   const router = useRouter()
   const [isSigningIn, setIsSigningIn ] = useState(false)
   const [error, setError] = useState("")
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    }
   })
 
-  const onSubmit = async(values: z.infer<typeof formSchema>) => {
+  async function onSubmit(values: z.infer<typeof formSchema>){
     try {
       setError("")
       if(!isSigningIn) {
         setIsSigningIn(true)
-        await doSignInWithEmailAndPassword(values.email, values.password)
+        const credential = await doSignInWithEmailAndPassword(values.email, values.password)
+
+        const idToken = await credential.user.getIdToken();
+
+        await fetch("/api/login", {
+          headers: {
+            Authorization: `Bearer ${idToken}`
+          }
+        })
         router.replace('/')
+        
       }
+      
     } catch (error){
+      setIsSigningIn(false)
       console.log("Error code:", error)
       setError("Login failed.")
     }
@@ -51,7 +65,6 @@ const LoginForm = () => {
 
   return (
     <>
-      {userLoggedIn && (router.push('/'))}
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
@@ -60,7 +73,9 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email" {...field} />
+                <Input 
+                  placeholder="Email" {...field} 
+                  value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,7 +87,10 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder="Password" {...field} />
+                <Input 
+                  type="password" 
+                  placeholder="Password" {...field} 
+                  value={field.value || ''} />
               </FormControl>
               <FormDescription className='text-xs text-right'>
                 Forgot password?
@@ -81,7 +99,10 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className='w-full bg-midnight-900 text-white'>Login</Button>
+        <Button type="submit" className='w-full bg-midnight-900 text-white'>
+          {isSigningIn? <><span><Spinner /></span>Loading</> : "Login"}
+        </Button>
+        <p>{error}</p>
       </form>
     </Form>
     </>

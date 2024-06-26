@@ -9,6 +9,7 @@ interface AuthContextType {
   currentUser: User | null
   userLoggedIn: boolean
   loading: boolean
+  isClient: boolean
 }
 
 interface AuthProviderProps {
@@ -29,6 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
+  const [isClient, setIsClient] = useState<boolean>(true)
 
   useEffect(() => {
     const auth = getAuth()  // Get the auth instance from Firebase
@@ -41,6 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       const q = query(collection(db, 'users'), where("authId", "==", user.uid))
       const querySnapshot = await getDocs(q)
       let userData: User | null = null
+      let userRole: boolean | null = null
 
       querySnapshot.forEach((doc) => {
         const data = doc.data()
@@ -58,9 +61,16 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
           updatedAt: data.updatedAt,
           authId: data.authId
         }
+        userRole = data.role
       })
       setCurrentUser(userData)
       setUserLoggedIn(true)
+      if(userRole){
+        console.log('test: isClient', userRole)
+        const role = userRole==="CLIENT"? true: false
+        setIsClient(role)
+      }
+      
     } else {
       setCurrentUser(null)
       setUserLoggedIn(false)
@@ -71,7 +81,8 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const value: AuthContextType = {
     currentUser,
     userLoggedIn,
-    loading
+    loading,
+    isClient,
   }
 
   return (

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Search } from '@/interface/search'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-const TicketTubs = ({searchParams}: Search) => {
+const TicketsTubs = ({searchParams}: Search) => {
 
   let currentTab = searchParams.tab ?? 'yours'
   if(currentTab !== 'unassigned' && currentTab !== 'all' ){
@@ -26,4 +26,4 @@ const TicketTubs = ({searchParams}: Search) => {
   )
 }
 
-export default TicketTubs
+export default TicketsTubs
