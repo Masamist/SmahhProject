@@ -21,7 +21,7 @@ const StaffDataCard = ({users, setUserId, page }: Props) => {
             onClick={() => handleUserSelect(user.id)}
           >
             <CardContent>
-              <div className='w-full text-xl font-semibold pt-4 pb-2'>
+              <div className='w-full text-lg font-semibold pt-3 pb-2'>
                 {user.name} {user.surname}
               </div>
               {page==='CLIENT'?

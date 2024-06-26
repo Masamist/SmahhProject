@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { fetchUserDataByGroup } from '@/actions/user-action'
 import { User } from '@/interface/users'
+import { useAuth } from '@/contexts/authContext'
 import FormDialog from '@/components/FormDialog'
 import UserDetailCard from '@/components/UserDetailCard'
 import UserDataCard from '@/components/UserDataCard'
@@ -14,6 +15,7 @@ const UserData = ({page}:PageProp) => {
   const [userData, setUserData] = useState<User[]>([])
   const [userId, setUserId] = useState<string | undefined>(undefined)
   const [singleUserData, setSingleUserData] = useState<User | undefined>(undefined)
+  const { isClient } = useAuth()
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +35,7 @@ const UserData = ({page}:PageProp) => {
   return (
     <div className='p-5 bg-white rounded-md'>
       <div className='flex  pb-2 justify-end'>
-        <FormDialog formType={'createUser'} />
+        {!isClient && <FormDialog formType={'createUser'} />}
       </div>
       <div className='flex flex-row gap-3'>
         <div className='w-3/5'>

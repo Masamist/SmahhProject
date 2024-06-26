@@ -29,6 +29,17 @@ export async function fetchSingleUserData(id: string): Promise<User | null>{
   }
 }
 
+export async function fetchAgentUserName(id: string): Promise<string|null>{
+  const docSnap = await getDoc(doc(db, "users", id))
+  if (docSnap.exists()) {
+    const userData = { id: docSnap.id, ...docSnap.data() } as User
+    return userData.name
+  }else{
+    console.log(`Document with ID ${id} does not exist`)
+    return null
+  }
+}
+
 // export async function fetchSingleUserId(uid: string): Promise <{id:string} | null>{
 //   const q = query(collection(db, "user"), where("uid", "==", uid))
 //   const docSnap = await getDoc(q)
