@@ -24,7 +24,7 @@ const config = {
           900: '#122440',
         },
         sun:{
-          500: '#F7B345',
+          500: '#F2A14A',
         },
         customGray: '#26292c',
         border: "hsl(var(--border))",

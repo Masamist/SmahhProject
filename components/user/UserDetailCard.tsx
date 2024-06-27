@@ -1,6 +1,6 @@
 import React from 'react'
 import { User } from '@/interface/users'
-import FormDialog from '@/components/ticket/TicketFormDialog'
+import FormDialog from '@/components/FormDialog'
 import {
   Card,
   CardContent

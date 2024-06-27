@@ -11,7 +11,7 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import CloseButton from './CloseButton'
-import TicketFormDialog from '@/components/ticket/TicketFormDialog'
+import FormDialog from '@/components/FormDialog'
 import TicketSeverity from '@/components/ticket/TicketSeverity'
 
 interface TicketProps{
@@ -28,12 +28,12 @@ const TicketDetail = ({ticket}: TicketProps) => {
   ]
 
   return (
-    <Card className='lg:col-span-2 ls:mr-4'>
+    <Card className='lg:col-span-2 lg:p-3'>
       <CardHeader>
         <div className='flex flex-row justify-between'>
           <h2 className='text-xl text-midnight-300'>Ticket Details</h2>
           <div>
-            <TicketFormDialog formType={'editTicket'} ticket={ticket} />
+            <FormDialog formType={'editTicket'} ticket={ticket} />
           </div>
         </div>
       </CardHeader>
@@ -45,14 +45,14 @@ const TicketDetail = ({ticket}: TicketProps) => {
               : (
                 <>
                   <p className='text-xs text-midnight-300'>Assigned Agent</p>
-                  <p className='test-gray-400'>Unssigned</p>
+                  <p className='text-sm'>Unssigned</p>
                 </>
               )
             }
           </div>
           <div className='w-1/2 pb-5'>
             <p className='text-xs text-midnight-300'>Category</p>
-            <p>{ticket.category}</p>
+            <p  className='text-sm'>{ticket.category}</p>
           </div>
           <div className='w-1/2 pb-5'>
             <TicketDetailUser id={ticket.client} title="Client" />
@@ -60,18 +60,21 @@ const TicketDetail = ({ticket}: TicketProps) => {
           <div className='w-1/2 pb-2'>
             <p className='text-xs text-midnight-300'>Severity</p>
             <div className='flex flex-row'>
-              <TicketSeverity severity={ticket.severity} /><span className='pl-1.5'>{ticket.severity}</span>
+              <TicketSeverity severity={ticket.severity} /><span className='text-sm pl-1.5'>{ticket.severity}</span>
             </div>
             
           </div>
         </div>
         <div className='pb-5'>
           <p className='text-xs text-midnight-300'>Descriotion:</p>
-          <ReactMarkDown>{ticket.description}</ReactMarkDown>
+          <p className='text-sm'>
+            <ReactMarkDown>{ticket.description}</ReactMarkDown>
+          </p>
+          
         </div>
         <div className='pb-2'>
           <p className='text-xs text-midnight-300'>Created At:</p>
-          <p>
+          <p  className='text-sm'>
             {typeof ticket.createdAt === 'string'?ticket.createdAt
               : ticket.createdAt?.toDate().toLocaleDateString("en-GB", {
                 year: "2-digit",

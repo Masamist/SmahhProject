@@ -18,7 +18,6 @@ const Tickets = ({searchParams}: Search) => {
   useEffect(() => {
     async function fetchData() {
       const userId = currentUser?.id
-      console.log(isClient)
       if(!userId ) { return } 
       try {
         let data:Ticket[] = []
@@ -27,7 +26,6 @@ const Tickets = ({searchParams}: Search) => {
           if (!searchParams.sortedBy){
             const data = await fetchTicketsDataByUser(userId, isClient)
             setTicketData(data)
-            console.log('Fetched data A: Client all')
           } else if(searchParams.sortedBy){
             const data = await fetchTicketsDataByTab(
               searchParams.tab,
@@ -35,16 +33,13 @@ const Tickets = ({searchParams}: Search) => {
               userId,
               isClient)
             setTicketData(data)
-            console.log('Fetched data B')
           }
         } else if(searchParams.tab === 'yours' && !searchParams.sortedBy){
           data = await fetchTicketsDataByUser(userId, isClient)
           setTicketData(data)
-          console.log('Fetched data C: Agent')
         } else if(searchParams.tab === 'all' && !searchParams.sortedBy){
           data = await fetchAllTicketData()
           setTicketData(data)
-          console.log('Fetched data D: Agent')
         } else if(searchParams.tab){
           data = await fetchTicketsDataByTab(
             searchParams.tab, 
@@ -53,11 +48,9 @@ const Tickets = ({searchParams}: Search) => {
             isClient
           ) // Here is bug
           setTicketData(data)
-          console.log('Fetched data C')
         } else {
           data = await fetchTicketsDataByUser(userId, isClient)
           setTicketData(data)
-          console.log('Fetched data D')
         }
       }catch(error){
         console.log('Error fetching ticket data:', error)

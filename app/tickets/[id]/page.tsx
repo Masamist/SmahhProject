@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import { fetchSingleTicketData } from '@/actions/ticket-actions'
 import { Ticket } from '@/interface/ticket'
 import MainTitle from '@/components/MainTitle'
 import TicketDetail from './TicketDetail'
-import TicketMessages from './TicketMessages'
-import { fetchSingleTicketData } from '@/actions/ticket-actions'
+import TicketActivities from './TicketActivities'
 
 interface Props {
   params: {id: string},
@@ -32,7 +32,7 @@ const SingleTicket = ({params: {id}}: Props) => {
             <TicketDetail ticket={ticket}  />
           </div>
           <div className='w-full lg:w-7/12'>
-            <TicketMessages />
+            <TicketActivities ticket={ticket}  />
           </div> 
         </div>
         : (<p>Ticket is not Found!</p>)}
