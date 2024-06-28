@@ -5,6 +5,7 @@ export interface Message {
   senderId: string,
   senderName: string
   comment: string,
+  unreadMessage?: boolean
   read?: [],
   createdAt?: Timestamp,
   updatedAt?: Timestamp,

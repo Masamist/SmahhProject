@@ -15,7 +15,6 @@ export interface Ticket {
   updatedAt?: string | Timestamp
   closedAt?: string | Timestamp
   messages?: [] | null
-  unreadMessage?: boolean
 }
 
 export enum Status {

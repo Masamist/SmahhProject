@@ -2,8 +2,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
-import { db } from '@/firebase/config'
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { deleteSingleMessage } from '@/actions/message-action'
 
 import {
   AlertDialog,
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { buttonVariants } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
+
 
 interface Props {
   ticketId: string
@@ -35,11 +35,10 @@ const TicketMessageDeleteButton = ({ticketId, messageId, fetchMessageData}: Prop
   const deleteMessage = async() => {
     try{
       setIsDeleting(true)
-      const docRef = doc(db, "tickets", ticketId, "messages", messageId)
-        await deleteDoc(docRef)
-        fetchMessageData()
-        router.push(pathname)
-        router.refresh()
+      deleteSingleMessage({ticketId, messageId})
+      fetchMessageData()
+      router.push(pathname)
+      router.refresh()
     }catch(error){
       setIsDeleting(false)
         setError("Unknown Error Occured.")

@@ -1,23 +1,24 @@
 import React from 'react'
+import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { useAuth } from '@/contexts/authContext'
 import { formatDistance, subDays , format } from "date-fns"
 import TicketMessageDeleteButton from './TicketMessageDeleteButton'
+import TicketMessageReadChecker from './TicketMessageReadChecker'
 import {
   Card,
   CardContent
 } from "@/components/ui/card"
 import UserAvater from '@/components/ui/userAvatar'
-import { CircleCheckBig } from 'lucide-react'
-
 
 interface Prop {
-  ticketId: string
+  ticket: Ticket
   message: Message
+  latestReadMessage?: string | undefined
   fetchMessageData: () => void
 }
 
-const TicketMessages = ({ticketId, message, fetchMessageData}: Prop) => {
+const TicketMessages = ({ticket, message, latestReadMessage, fetchMessageData}: Prop) => {
   // Fix here
   const messageName= message.senderName.split(" ")
   const avatarName = messageName[0].substring(0,1) + messageName[messageName.length-1].substring(0,1)
@@ -40,14 +41,12 @@ const TicketMessages = ({ticketId, message, fetchMessageData}: Prop) => {
               { currentUser?.id===message.senderId?(
                 <div>
                 <TicketMessageDeleteButton 
-                ticketId={ticketId} 
+                ticketId={ticket.id} 
                 messageId={message.id} 
                 fetchMessageData={fetchMessageData} />
               </div>
               ):null
             }
-              
-              
             </div>
             
             <p className='text-sm pt-2'>{message.comment}</p>
@@ -60,10 +59,10 @@ const TicketMessages = ({ticketId, message, fetchMessageData}: Prop) => {
                   {formattedDate}
                 </span>
               </div>
-              <div className='flex flex-row'>
-                <p className='text-gray-400 text-sm pr-1'>Read</p>
-                <CircleCheckBig width={16} height={16} className='text-green-700' />
-              </div>
+              <TicketMessageReadChecker 
+                ticketId={ticket.id} 
+                message={message} 
+                latestReadMessage={latestReadMessage} />
             </div>
           </div>
         </div>

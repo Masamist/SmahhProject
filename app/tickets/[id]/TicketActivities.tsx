@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import TicketMessages from './TicketMessages'
-import FormDialog from '@/components/FormDialog'
+import { useAuth } from '@/contexts/authContext'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { fetchAllMessage } from '@/actions/message-action'
@@ -13,15 +13,20 @@ interface Prop{
   ticket: Ticket
 }
 const TicketActivities = ({ticket}: Prop) => {
-
+  const { currentUser } = useAuth()
   const [messages, setMessages] = useState<Message[]>([])
   const [open, setOpen] = useState<boolean>(false)
+  const [latestReadMessage, setLatestReadMessage] =useState<string | undefined>()
 
   async function fetchMessageData(){
     const data = await fetchAllMessage(ticket.id)
     if(data) {
       setMessages(data)
     }
+    const latestRead = messages
+      .find((message) => !message.unreadMessage && message.senderId !== currentUser?.id )
+    setLatestReadMessage(latestRead?.id)
+    console.log(latestRead)
   }
 
   useEffect(() => {
@@ -56,17 +61,20 @@ const TicketActivities = ({ticket}: Prop) => {
       </CardHeader>
       <CardContent className='flex flex-col gap-5 px-6'>
         { !messages.length?<p className='text-sm'>There is no message yet.</p>:null}
-        {!open? null : <TicketMessageForm 
+        {!open && <TicketMessageForm 
           ticket={ticket} 
           handleMessageFormToggle={handleMessageFormToggle}
           fetchMessageData={fetchMessageData} />}
         
-        {messages?messages.map((message) => (
+        {messages && messages.map((message) => (
           <div key={message.id}>
-            <TicketMessages ticketId={ticket.id} message={message} fetchMessageData={fetchMessageData} />
+            <TicketMessages 
+              ticket={ticket} 
+              message={message} 
+              latestReadMessage={latestReadMessage} 
+              fetchMessageData={fetchMessageData} />
           </div>
-        )):null}
-        
+        ))}
       </CardContent>
     </Card>
   )

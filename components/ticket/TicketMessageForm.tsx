@@ -42,23 +42,21 @@ const TicketMessageForm = ({message, ticket, handleMessageFormToggle, fetchMessa
       setIsSubmitting(true)
       setError("")
       if(currentUser){
-        
-        const senderId = currentUser.id
+        const senderId = currentUser.id 
         const senderName = currentUser.name + " " + currentUser.surname
         const createdAt = Timestamp.fromDate(new Date())
+        const unreadMessage = true
         const data = {
           ...values,
           senderId,
           senderName,
-          createdAt
+          createdAt,
+          unreadMessage,
         }
         const docRef = doc(db, "tickets", ticket.id)
         const collectionRef = collection(docRef, "messages")
         await addDoc( collectionRef, data)
-        await updateDoc(docRef, { 
-          unreadMessage: true,
-        })
-    }
+      }
       setIsSubmitting(false)
       fetchMessageData()
       handleMessageFormToggle()
