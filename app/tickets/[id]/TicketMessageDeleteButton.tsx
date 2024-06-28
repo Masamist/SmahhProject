@@ -1,8 +1,9 @@
-// "use client"
+"use client"
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { db } from '@/firebase/config'
-import { doc, updateDoc } from 'firebase/firestore'
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
 
 import {
   AlertDialog,
@@ -16,38 +17,45 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { buttonVariants } from '@/components/ui/button'
+import { Trash2 } from 'lucide-react'
+
+interface Props {
+  ticketId: string
+  messageId: string
+  fetchMessageData: () => void
+}
 
 
-const CloseButton = ({ticketId}: {ticketId: string}) => {
+const TicketMessageDeleteButton = ({ticketId, messageId, fetchMessageData}: Props) => {
   const router = useRouter()
+  const pathname = usePathname()
   const [error, setError] = useState("")
-  const [isClosing, setIsClosing] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  const closeTicket = async() => {
+  const deleteMessage = async() => {
     try{
-      setIsClosing(true)
-      const docRef = doc(db, "tickets", ticketId)
-        await updateDoc(docRef, { status: "CLOSED" })
-      router.push("/tickets")
-      router.refresh()
+      setIsDeleting(true)
+      const docRef = doc(db, "tickets", ticketId, "messages", messageId)
+        await deleteDoc(docRef)
+        fetchMessageData()
+        router.push(pathname)
+        router.refresh()
     }catch(error){
-      setIsClosing(false)
+      setIsDeleting(false)
         setError("Unknown Error Occured.")
       }
   }
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger className={buttonVariants({
-          variant: "destructive",
-        })}>
-          Close Ticket
+        <AlertDialogTrigger>
+          <Trash2 className='text-gray-400' />
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure about closing this ticket?</AlertDialogTitle>
+            <AlertDialogTitle>Are you sure about deleting this message?</AlertDialogTitle>
             <AlertDialogDescription>
-              The data will be archived, and you can reopen this ticket at any time.
+              This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -55,10 +63,10 @@ const CloseButton = ({ticketId}: {ticketId: string}) => {
             <AlertDialogAction 
               className={buttonVariants({ variant: "destructive",
             })}
-            disabled={isClosing}
-            onClick={closeTicket}
+            disabled={isDeleting}
+            onClick={deleteMessage}
             >
-              Close Ticket
+              Delete Message
           </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -68,4 +76,4 @@ const CloseButton = ({ticketId}: {ticketId: string}) => {
   )
 }
 
-export default CloseButton
+export default TicketMessageDeleteButton

@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { db } from '@/firebase/config'
 import { addDoc, collection, doc, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import { z } from 'zod'
@@ -11,31 +12,25 @@ import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { useAuth } from '@/contexts/authContext'
 // UI components
-import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { 
-  Select,
-  SelectContent, 
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
- } from '@/components/ui/select'
-import { Textarea } from '../ui/textarea'
-
+import { Textarea } from '@/components/ui/textarea'
+import { Separator } from "@/components/ui/separator"
+import { SendHorizontal } from 'lucide-react'
 
 type MessageFormData = z.infer<typeof messageSchema>
 
 interface Props {
   message?: Message | null
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
   ticket: Ticket
+  handleMessageFormToggle: () => void
+  fetchMessageData: () => void
 }
-const TicketMessageForm = ({message, setOpen, ticket}: Props) => {
+const TicketMessageForm = ({message, ticket, handleMessageFormToggle, fetchMessageData}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
+  const pathname = usePathname()
   const { currentUser } = useAuth()
 
   const form = useForm<MessageFormData>({
@@ -48,7 +43,7 @@ const TicketMessageForm = ({message, setOpen, ticket}: Props) => {
       setError("")
       if(currentUser){
         
-        const senderId = currentUser.authId
+        const senderId = currentUser.id
         const senderName = currentUser.name + " " + currentUser.surname
         const createdAt = Timestamp.fromDate(new Date())
         const data = {
@@ -60,15 +55,16 @@ const TicketMessageForm = ({message, setOpen, ticket}: Props) => {
         const docRef = doc(db, "tickets", ticket.id)
         const collectionRef = collection(docRef, "messages")
         await addDoc( collectionRef, data)
-
         await updateDoc(docRef, { 
           unreadMessage: true,
         })
     }
       setIsSubmitting(false)
+      fetchMessageData()
+      handleMessageFormToggle()
+      router.push(pathname)
       router.refresh()
-      setOpen(false)
-
+      
     }catch(error){
       setError("Unknown Error Occured.")
       setIsSubmitting(false)
@@ -76,44 +72,36 @@ const TicketMessageForm = ({message, setOpen, ticket}: Props) => {
   }
 
   return (
-    <div className='rounded-md p-3'>
-      <h2 className='text-xl text-center px-2 py-5'>{message? 'Update Message': 'Create a Message'}</h2>
+    <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="pr-2">
-          <ScrollArea className='h-[600px] max-h-[40vh] pr-5'>
-            <ScrollBar orientation="vertical" />
-              <div className='space-y-5'>
-                <div>
-                  <h3 className='text-sm font-medium pb-2'>Ticket Name:</h3>
-                  <p className='text-sm'>Cybersecurity Report</p>
-                </div>
-                
-                <FormField 
-                  control={form.control}
-                  name="comment"
-                  defaultValue={message?.comment}
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Enter Message..." {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-            </div>
-            <Button 
-              type="submit" 
-              disabled={isSubmitting}
-              className='mt-7'
-            >
-              {message ? "Update Message" : "Create a Message"}
-            </Button>
-          </ScrollArea>
-
+          <div className='space-y-5'>                
+            <FormField 
+              control={form.control}
+              name="comment"
+              defaultValue={message?.comment}
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>Message:</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Type a Message..." {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className='mt-3'
+          >
+            Send Message
+            <SendHorizontal className='pl-1' strokeWidth={2} />
+          </Button>
         </form>
       </Form>
-      <p className='text-destructive'>{error}</p>
+      <p className='text-destructive py-2'>{error}</p>
+      <Separator className='mt-2' />
     </div>
   )
 }

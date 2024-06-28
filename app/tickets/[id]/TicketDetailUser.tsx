@@ -10,13 +10,11 @@ interface  Props{
 
 const TicketDetailUser = ({id, title}: Props) => {
   const [ userName, setUserName ] = useState<string>()
-  console.log("ID", id)
   useEffect(() =>{
     async function fetchData() {     
       const data = await fetchSingleUserData(id)
       if(data){
         const name = data.name + ' ' + data.surname
-        console.log(name)
         setUserName(name)
       } else {
         console.log('error')

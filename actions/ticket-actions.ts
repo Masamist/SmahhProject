@@ -15,9 +15,9 @@ export async function fetchTicketsDataByUser(userId: string, isClient: boolean){
   const tickets: Ticket[] = []
   let q :Query
   if(!isClient){
-    q = query(collection(db, "tickets"), where("assignedAgent", "==", userId))
+    q = query(collection(db, "tickets"), where("assignedAgent", "==", userId), orderBy('createdAt', 'desc'))
   } else {
-    q = query(collection(db, "tickets"), where("client", "==", userId))
+    q = query(collection(db, "tickets"), where("client", "==", userId), orderBy('createdAt', 'desc'))
   }
   
   const querySnapshot = await getDocs(q)
@@ -72,10 +72,14 @@ export async function fetchTicketsDataByTab(
         queryConstraints = [where('assigned', '==', false), ...sortOrder]
         break
       case 'all':
-        queryConstraints = [...sortOrder];
+        if(sortOrder){
+          queryConstraints = [...sortOrder];
+        } else {
+          queryConstraints = [orderBy('createdAt', 'desc')];
+        }
         break
       default: // return all tickets
-      queryConstraints = [...sortOrder];
+      queryConstraints = [orderBy('createdAt', 'desc')];
     }
   }
   const q = query(collection(db, 'tickets'), ...queryConstraints)

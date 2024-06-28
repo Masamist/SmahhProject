@@ -22,11 +22,7 @@ const UserForm = dynamic(() => import("@/components/user/UserForm"), {
   ssr:false,
 })
 
-const TicketMessageForm = dynamic(() => import("@/components/ticket/TicketMessageForm"), {
-  ssr:false,
-})
-
-type FormSwitchType = 'createTicket' | 'editTicket' | 'createUser' | 'editUser' | 'createMessage' | 'editMessage'
+type FormSwitchType = 'createTicket' | 'editTicket' | 'createUser' | 'editUser'
 
 interface Props{
   formType?: FormSwitchType
@@ -82,34 +78,6 @@ const FormDialog = ({formType, ticket, user, message}: Props) => {
             <DialogTrigger className="text-sm text-gray-600 hover:text-sun-500">
               <span className='font-medium pr-1'>
                 Update Details
-              </span>
-              <Pencil className='inline w-5 h-5' />
-            </DialogTrigger>
-            <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
-              {user?<UserForm user={user} setOpen={setOpen} />:null}
-            </DialogContent>
-          </>
-        )
-      case 'createMessage':
-        return (
-          <>
-            <DialogTrigger className="text-sm text-gray-600 hover:text-sun-500">
-              <span className='font-medium pr-2'>
-                Create a Message
-              </span>
-              <MessageSquareMore className='inline w-5 h-5' />
-            </DialogTrigger>
-            <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
-              {ticket? <TicketMessageForm setOpen={setOpen} ticket={ticket} />:null}
-            </DialogContent>
-          </>
-        )
-      case 'editMessage':
-        return (
-          <>
-            <DialogTrigger className="text-sm text-gray-600 hover:text-sun-500">
-              <span className='font-medium pr-1'>
-                Update Message
               </span>
               <Pencil className='inline w-5 h-5' />
             </DialogTrigger>

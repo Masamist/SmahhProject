@@ -9,10 +9,11 @@ const NavMobile = () => {
       <Link href="/">
         <Image 
         src={logo}
-        width={145}
-        height={10}
+        width="145"
+        height="10"
         priority
         alt="Smahh Logo"
+        style={{ width: '100%', height: 'auto' }}
         />
       </Link>
   </div>

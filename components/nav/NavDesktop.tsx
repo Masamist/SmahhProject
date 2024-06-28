@@ -20,10 +20,11 @@ const NavUserinfoDesktop = () => {
         <Link href="/">
           <Image 
           src={logo}
-          width={180}
-          height={15}
+          width="180"
+          height="15"
           priority
           alt="Smahh Logo"
+          style={{ width: '100%', height: 'auto' }}
           />
         </Link>
       </div>
@@ -37,7 +38,7 @@ const NavUserinfoDesktop = () => {
                     <AvatarImage src='https://avatar.iran.liara.run/public/75' />
                     <AvatarFallback>Masami Stonebridge</AvatarFallback>
                   </Avatar> */}
-                  <CircleUserRound className='w-7 h-7 font-thin text-gray-700' />
+                  <CircleUserRound className='text-gray-700' />
                   <span className='pt-1 pr-2'>
                     {currentUser? currentUser.name + ' ' + currentUser.surname : null}
                   </span>

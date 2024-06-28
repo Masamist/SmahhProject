@@ -38,6 +38,7 @@ const TicketForm = ({ticket, setOpen}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
+
   const [ticketData, setTicketData] = useState<Ticket[]>([])
   const [ agents, setAgents ] = useState<User[]>([])
   const [ clients, setClients ] = useState<User[]>([])

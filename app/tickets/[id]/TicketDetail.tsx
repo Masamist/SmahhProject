@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/card"
 import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
-import CloseButton from './CloseButton'
+import TicketCloseButton from '@/components/ticket/TicketCloseButton'
 import FormDialog from '@/components/FormDialog'
 import TicketSeverity from '@/components/ticket/TicketSeverity'
+import { Undo2 } from 'lucide-react'
 
 interface TicketProps{
   ticket: Ticket
@@ -41,7 +42,7 @@ const TicketDetail = ({ticket}: TicketProps) => {
         <div className='flex flex-row flex-wrap pb-5'>
           <div className='flex flex-col w-1/2 pb-5'>
             {ticket.assignedAgent?
-              <TicketDetailUser id={ticket.assignedAgent} title="Aassigned Agent" />
+              <TicketDetailUser id={ticket.assignedAgent} title="Assigned Agent" />
               : (
                 <>
                   <p className='text-xs text-midnight-300'>Assigned Agent</p>
@@ -60,23 +61,21 @@ const TicketDetail = ({ticket}: TicketProps) => {
           <div className='w-1/2 pb-2'>
             <p className='text-xs text-midnight-300'>Severity</p>
             <div className='flex flex-row'>
-              <TicketSeverity severity={ticket.severity} /><span className='text-sm pl-1.5'>{ticket.severity}</span>
+              <TicketSeverity severity={ticket.severity} />
+              <span className='text-sm pl-1.5'>{ticket.severity}</span>
             </div>
             
           </div>
         </div>
         <div className='pb-5'>
-          <p className='text-xs text-midnight-300'>Descriotion:</p>
-          <p className='text-sm'>
-            <ReactMarkDown>{ticket.description}</ReactMarkDown>
-          </p>
-          
+          <p className='text-xs text-midnight-300'>Description:</p>
+          <ReactMarkDown className='text-sm'>{ticket.description}</ReactMarkDown>
         </div>
         <div className='pb-2'>
-          <p className='text-xs text-midnight-300'>Created At:</p>
+          <p className='text-xs text-midnight-300'>Created at:</p>
           <p  className='text-sm'>
             {typeof ticket.createdAt === 'string'?ticket.createdAt
-              : ticket.createdAt?.toDate().toLocaleDateString("en-GB", {
+              : ticket.createdAt?.toDate().toLocaleDateString("en-NZ", {
                 year: "2-digit",
                 month: "2-digit",
                 day: "2-digit",
@@ -91,8 +90,8 @@ const TicketDetail = ({ticket}: TicketProps) => {
         <div className="flex flex-row lg:mx-0 gap-2">
         <Link href={`/tickets`} className={`${buttonVariants({
               variant: "default"
-            })}`}>Go Back</Link> 
-          <CloseButton ticketId={ticket.id} />
+            })}`}>Go Back <Undo2 width={25} height={25} className='pb-1' /></Link> 
+          <TicketCloseButton ticketId={ticket.id} />
         </div>
       </CardFooter>
     </Card>

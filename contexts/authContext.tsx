@@ -66,7 +66,6 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       setCurrentUser(userData)
       setUserLoggedIn(true)
       if(userRole){
-        console.log('test: isClient', userRole)
         const role = userRole==="CLIENT"? true: false
         setIsClient(role)
       }

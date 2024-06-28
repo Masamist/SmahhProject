@@ -36,7 +36,7 @@ const TicketsDataCard = ({tickets}: Props) => {
                   <TicketSeverity severity={ticket.severity} /><span className='w-1/5 text-sm pl-1.5'>{ticket.severity}</span>
                   <p className='w-1/5 text-sm'>{ticket.status}</p>
                   <p className='w-1/5 text-sm'>{typeof ticket.createdAt === 'string' ? ticket.createdAt
-                    : ticket.createdAt?.toDate().toLocaleDateString("en-US", {
+                    : ticket.createdAt?.toDate().toLocaleDateString("en-NZ", {
                       year: "2-digit",
                       month: "2-digit",
                       day: "2-digit",

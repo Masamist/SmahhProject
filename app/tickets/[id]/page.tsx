@@ -11,7 +11,7 @@ interface Props {
 }
 
 const SingleTicket = ({params: {id}}: Props) => {
-  const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [ticket, setTicket] = useState<Ticket | null>(null)
 
   useEffect(() => {
     async function fetchData() {
@@ -21,6 +21,7 @@ const SingleTicket = ({params: {id}}: Props) => {
       }
     }
     fetchData()
+
   }, [id])
   
   return (
@@ -32,7 +33,7 @@ const SingleTicket = ({params: {id}}: Props) => {
             <TicketDetail ticket={ticket}  />
           </div>
           <div className='w-full lg:w-7/12'>
-            <TicketActivities ticket={ticket}  />
+            <TicketActivities ticket={ticket} />
           </div> 
         </div>
         : (<p>Ticket is not Found!</p>)}
