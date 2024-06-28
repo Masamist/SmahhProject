@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import MainTitle from '@/components/MainTitle'
 import UserData from '@/components/user/UserData'

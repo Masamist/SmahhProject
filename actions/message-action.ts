@@ -1,7 +1,6 @@
 import { db } from '@/firebase/config'
-import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint, Query, deleteDoc, updateDoc } from 'firebase/firestore'
+import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint, Query, deleteDoc, updateDoc, addDoc } from 'firebase/firestore'
 import { Message } from '@/interface/message'
-import { Ticket } from '@/interface/ticket'
 
 
 export async function fetchAllMessage(ticketId:string): Promise<Message[]>{
@@ -33,18 +32,16 @@ interface ReadMessageDataParams {
 }
 
 export async function readMessage({ticketId, message}: ReadMessageDataParams): Promise<void>{
-  //bug
-  const data = {
-    ...message,
-    unreadMessage: false,
-    }
-    const docRef = doc(db, "tickets", ticketId, "massage", message.id)
-    await updateDoc(docRef, { ...data })
+    const docRef = doc(db, "tickets", ticketId, "messages", message.id)   
+    try {
+      const docSnapshot = await getDoc(docRef);
+      if(docSnapshot.exists()){
+        await updateDoc(docRef, { unreadMessage: false })
+      }else{
+        console.log("Document does not exist")
+      }
+    } catch(error) {
+      console.error("Error updating document: ", error);
+      throw error;
+    }  
 }
-
-        // const docRef = doc(db, "tickets", ticket.id)
-        // const collectionRef = collection(docRef, "messages")
-        // await addDoc( collectionRef, data)
-        // await updateDoc(docRef, { 
-        //   unreadMessage: true,
-        // })

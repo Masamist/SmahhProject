@@ -1,11 +1,13 @@
 "use Client"
 import React, {useState, useEffect} from 'react'
+import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import TicketMessages from './TicketMessages'
 import { useAuth } from '@/contexts/authContext'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
-import { fetchAllMessage } from '@/actions/message-action'
+import { fetchAllMessage, readMessage } from '@/actions/message-action'
 import TicketMessageForm from '@/components/ticket/TicketMessageForm'
 import { MessageSquareMore, MessageSquareX } from 'lucide-react'
 
@@ -17,20 +19,51 @@ const TicketActivities = ({ticket}: Prop) => {
   const [messages, setMessages] = useState<Message[]>([])
   const [open, setOpen] = useState<boolean>(false)
   const [latestReadMessage, setLatestReadMessage] =useState<string | undefined>()
+  const [ unReadMessage, setUnReadMessage] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
-  async function fetchMessageData(){
-    const data = await fetchAllMessage(ticket.id)
-    if(data) {
+
+  async function checkRead(data:Message[], ticketId:string) {
+    await Promise.all(
+      data.map(async(message) => {
+        if( message.unreadMessage===true && message.senderId!==currentUser?.id){
+          await readMessage({ticketId, message})
+          console.log("step2")
+        }
+      })
+    )
+  }
+
+  const preFetchMessageDataForCheckRead = async() =>{
+    try{
+      const data = await fetchAllMessage(ticket.id)
+      const ticketId = ticket.id
+      console.log("step1")
+      await checkRead(data, ticketId)
+      }catch(error){
+      console.log(error)  
+    }  
+  }
+
+  const fetchMessageData = async() =>{
+    try{
+      const data = await fetchAllMessage(ticket.id)
       setMessages(data)
-    }
-    const latestRead = messages
-      .find((message) => !message.unreadMessage && message.senderId !== currentUser?.id )
-    setLatestReadMessage(latestRead?.id)
-    console.log(latestRead)
+      console.log("step3")
+      const latestRead = data.find((message) => message.unreadMessage!==true&&message.senderId===currentUser?.id)
+      setLatestReadMessage(latestRead?.id)
+      }catch(error){
+      console.log(error)  
+    }  
   }
 
   useEffect(() => {
-    fetchMessageData()
+    async function messageLoad(){
+      await preFetchMessageDataForCheckRead()
+      await fetchMessageData()
+    }
+    messageLoad()
   }, [])
 
   const handleMessageFormToggle = () => {

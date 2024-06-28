@@ -1,4 +1,5 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { useAuth } from '@/contexts/authContext'
@@ -10,6 +11,10 @@ import {
   CardContent
 } from "@/components/ui/card"
 import UserAvater from '@/components/ui/userAvatar'
+
+// const TicketMessageReadChecker = dynamic(() => import("./TicketMessageReadChecker"), {
+//   ssr:false,
+// })
 
 interface Prop {
   ticket: Ticket
@@ -40,11 +45,11 @@ const TicketMessages = ({ticket, message, latestReadMessage, fetchMessageData}: 
               <h3 className='font-semibold pt-1'>{message.senderName}</h3>
               { currentUser?.id===message.senderId?(
                 <div>
-                <TicketMessageDeleteButton 
-                ticketId={ticket.id} 
-                messageId={message.id} 
-                fetchMessageData={fetchMessageData} />
-              </div>
+                  <TicketMessageDeleteButton 
+                  ticketId={ticket.id} 
+                  messageId={message.id} 
+                  fetchMessageData={fetchMessageData} />
+                </div>
               ):null
             }
             </div>

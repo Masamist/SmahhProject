@@ -21,12 +21,11 @@ import { SendHorizontal } from 'lucide-react'
 type MessageFormData = z.infer<typeof messageSchema>
 
 interface Props {
-  message?: Message | null
   ticket: Ticket
   handleMessageFormToggle: () => void
   fetchMessageData: () => void
 }
-const TicketMessageForm = ({message, ticket, handleMessageFormToggle, fetchMessageData}: Props) => {
+const TicketMessageForm = ({ticket, handleMessageFormToggle, fetchMessageData}: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -77,7 +76,6 @@ const TicketMessageForm = ({message, ticket, handleMessageFormToggle, fetchMessa
             <FormField 
               control={form.control}
               name="comment"
-              defaultValue={message?.comment}
               render={({field}) => (
                 <FormItem>
                   <FormLabel>Message:</FormLabel>

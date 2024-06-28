@@ -15,14 +15,18 @@ interface Props {
 const TicketMessageReadChecker = ({ticketId, message, latestReadMessage}: Props) => {
   const { currentUser } = useAuth()
 
-  useEffect(() => {
-    if(message.senderId!==currentUser?.id){
-      // bug
-      readMessage({ticketId, message})
-    }else{
-      null
-    }
-  },[currentUser?.id, message, ticketId])
+  // useEffect(() => {
+  //   async function CheckRead() {
+  //     console.log("Check1")
+  //     if( message.unreadMessage===true && message.senderId!==currentUser?.id){
+  //     // Maybe bug //////////////////////////////////////////////////
+  //     console.log("check 2")
+  //     console.log(currentUser?.id)
+  //     await readMessage({ticketId, message})
+  //     }
+  //   }
+  //   CheckRead()
+  // },[message])
   
   return (
     <>
@@ -34,7 +38,7 @@ const TicketMessageReadChecker = ({ticketId, message, latestReadMessage}: Props)
       }
       { latestReadMessage===message.id && (
         <div className='flex flex-row'>
-          <p className='text-gray-400 text-sm pr-1'>Read</p>
+          <p className='text-gray-400 text-sm pr-1'>Seen</p>
           <CircleCheckBig width={16} height={16} className='text-green-700' />
         </div>
       )} 
