@@ -32,7 +32,7 @@ const TicketDetail = ({ticket}: TicketProps) => {
     <Card className='lg:col-span-2 lg:p-3'>
       <CardHeader>
         <div className='flex flex-row justify-between'>
-          <h2 className='text-xl text-midnight-300'>Ticket Details</h2>
+          <h2 className='text-xl font-medium text-midnight-300'>Ticket Details</h2>
           <div>
             <FormDialog formType={'editTicket'} ticket={ticket} />
           </div>

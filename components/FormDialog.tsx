@@ -50,8 +50,9 @@ const FormDialog = ({formType, ticket, user, message}: Props) => {
       case 'editTicket':
         return (
           <>
-            <DialogTrigger className="text-sm text-gray-600 hover:text-sun-500">
-              Edit<Pencil className='inline w-4 h-4' />
+            <DialogTrigger className="text-sm text-gray-600 hover:text-sun-500 font-medium">
+              Edit
+              <Pencil width={25} height={25} className='inline pl-2 pb-1' />
             </DialogTrigger>
             <DialogContent className='w-11/12 sm:max-w-xl max-h-full'>
               {ticket?<TicketForm ticket={ticket} setOpen={setOpen} />:null}

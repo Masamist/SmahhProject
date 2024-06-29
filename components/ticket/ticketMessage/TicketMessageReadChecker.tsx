@@ -1,10 +1,7 @@
 "use client"
-import React, { useState, useEffect } from 'react'
-import { useAuth } from '@/contexts/authContext'
-import { Ticket } from '@/interface/ticket'
+import React from 'react'
 import { Message } from '@/interface/message'
 import { CircleCheckBig, SendHorizontal } from 'lucide-react'
-import { readMessage } from '@/actions/message-action'
 
 interface Props {
   ticketId: string
@@ -13,21 +10,6 @@ interface Props {
 }
 
 const TicketMessageReadChecker = ({ticketId, message, latestReadMessage}: Props) => {
-  const { currentUser } = useAuth()
-
-  // useEffect(() => {
-  //   async function CheckRead() {
-  //     console.log("Check1")
-  //     if( message.unreadMessage===true && message.senderId!==currentUser?.id){
-  //     // Maybe bug //////////////////////////////////////////////////
-  //     console.log("check 2")
-  //     console.log(currentUser?.id)
-  //     await readMessage({ticketId, message})
-  //     }
-  //   }
-  //   CheckRead()
-  // },[message])
-  
   return (
     <>
       {message.unreadMessage===true &&

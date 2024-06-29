@@ -1,11 +1,11 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { useAuth } from '@/contexts/authContext'
 import { formatDistance, subDays , format } from "date-fns"
-import TicketMessageDeleteButton from './TicketMessageDeleteButton'
-import TicketMessageReadChecker from './TicketMessageReadChecker'
+import TicketMessageDeleteButton from '@/components/ticket/ticketMessage/TicketMessageDeleteButton'
+import TicketMessageReadChecker from '@/components/ticket/ticketMessage/TicketMessageReadChecker'
 import {
   Card,
   CardContent
@@ -24,7 +24,7 @@ interface Prop {
 }
 
 const TicketMessages = ({ticket, message, latestReadMessage, fetchMessageData}: Prop) => {
-  // Fix here
+  // Fix here for avatar color
   const messageName= message.senderName.split(" ")
   const avatarName = messageName[0].substring(0,1) + messageName[messageName.length-1].substring(0,1)
   const createdAtDate = message.createdAt?.toDate()

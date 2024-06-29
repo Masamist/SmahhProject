@@ -1,13 +1,11 @@
 "use Client"
 import React, {useState, useEffect} from 'react'
-import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import TicketMessages from './TicketMessages'
 import { useAuth } from '@/contexts/authContext'
+import { fetchAllMessage, readMessage } from '@/actions/message-action'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
-import { fetchAllMessage, readMessage } from '@/actions/message-action'
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import TicketMessages from '@/components/ticket/ticketMessage/TicketMessages'
 import TicketMessageForm from '@/components/ticket/TicketMessageForm'
 import { MessageSquareMore, MessageSquareX } from 'lucide-react'
 
@@ -19,17 +17,12 @@ const TicketActivities = ({ticket}: Prop) => {
   const [messages, setMessages] = useState<Message[]>([])
   const [open, setOpen] = useState<boolean>(false)
   const [latestReadMessage, setLatestReadMessage] =useState<string | undefined>()
-  const [ unReadMessage, setUnReadMessage] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
-
 
   async function checkRead(data:Message[], ticketId:string) {
     await Promise.all(
       data.map(async(message) => {
         if( message.unreadMessage===true && message.senderId!==currentUser?.id){
           await readMessage({ticketId, message})
-          console.log("step2")
         }
       })
     )
@@ -39,7 +32,6 @@ const TicketActivities = ({ticket}: Prop) => {
     try{
       const data = await fetchAllMessage(ticket.id)
       const ticketId = ticket.id
-      console.log("step1")
       await checkRead(data, ticketId)
       }catch(error){
       console.log(error)  
@@ -50,7 +42,6 @@ const TicketActivities = ({ticket}: Prop) => {
     try{
       const data = await fetchAllMessage(ticket.id)
       setMessages(data)
-      console.log("step3")
       const latestRead = data.find((message) => message.unreadMessage!==true&&message.senderId===currentUser?.id)
       setLatestReadMessage(latestRead?.id)
       }catch(error){
@@ -74,7 +65,7 @@ const TicketActivities = ({ticket}: Prop) => {
     <Card className='lg:p-3'>
       <CardHeader>
         <div className='flex flex-row justify-between'>
-          <h2 className='text-xl text-midnight-300'>Ticket Activities</h2>
+          <h2 className='text-xl font-medium text-midnight-300'>Ticket Activities</h2>
           <button onClick={handleMessageFormToggle}>
             <div className="text-sm text-gray-600 hover:text-sun-500">
             {!open? (

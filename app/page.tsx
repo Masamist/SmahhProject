@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import MainTitle from '@/components/MainTitle'
 import { clientConfig, serverConfig } from "@/config";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
 
 
 export default async function Dashboard(){
@@ -19,6 +20,7 @@ export default async function Dashboard(){
   return (
     <main className='container max-w-screen-lg'>
       <MainTitle title='Dashboard' />
+      <DashboardLayout />
     </main>
   )
 }
