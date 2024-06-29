@@ -14,7 +14,7 @@ const DashboardTicektActivityMessageCard = () => {
           Sent at:
           <span className='font-semibold pl-2'>2 hours ago </span>(23/Jun/24 12:17) 
         </p>
-        <h3 className='text-lg font-medium py-2'>Man-in-the-meddle attch (MitM)</h3>
+        <h3 className='text-md md:text-lg font-medium py-2'>Man-in-the-meddle attch (MitM)</h3>
         <div className='flex flex-row'>
           <p className='text-sm text-gray-400 font-semibold pr-10'>Cybersecurity</p>
           <p className='text-sm text-gray-400 font-semibold'>High</p> 

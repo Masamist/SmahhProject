@@ -1,6 +1,7 @@
 import React from 'react'
 import DashboardActivity from './DashboardActivity'
 import DashboardUnassignedTicekt from './DashboardUnassignedTicket'
+import DashboardTicketCounts from './DashboardTicketCounts'
 
 const DashboardLayout = () => {
   return (
@@ -12,7 +13,9 @@ const DashboardLayout = () => {
         <div>
           <DashboardUnassignedTicekt />
         </div>
-        <div></div>
+        <div>
+          <DashboardTicketCounts />
+        </div>
         <div></div>
       </div>
     </div>

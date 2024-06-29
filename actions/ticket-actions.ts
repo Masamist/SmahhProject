@@ -93,6 +93,22 @@ export async function fetchTicketsDataByTab(
   return tickets;
 }
 
+export async function fetchUnassignedTickets(): Promise<Ticket[]> {
+  
+  let queryConstraints: QueryConstraint[] = [];
+  queryConstraints = [where('assigned', '==', false), orderBy('title', 'desc')]
+
+  const q = query(collection(db, 'tickets'), ...queryConstraints)
+
+  const querySnapshot = await getDocs(q);
+  const tickets: Ticket[] = [];
+  querySnapshot.forEach((doc) => {
+    tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
+  })
+
+  return tickets;
+}
+
 export async function fetchSingleTicketData(id: string){
       const docSnap = await getDoc(doc(db, "tickets", id))
       if (docSnap.exists()) {

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
-import { deleteSingleMessage } from '@/actions/message-action'
+import { deleteSingleMessage } from '@/actions/message-actions'
 
 import {
   AlertDialog,

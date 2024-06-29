@@ -1,9 +1,10 @@
 "use client"
-import React from 'react'
-// import { useAuth } from '@/contexts/authContext'
-// import { fetchAllMessage, readMessage } from '@/actions/message-action'
-// import { Ticket } from '@/interface/ticket'
-// import { Message } from '@/interface/message'
+import React, { useState, useEffect } from 'react'
+import { useAuth } from '@/contexts/authContext'
+import { fetchTicketsDataByUser } from '@/actions/ticket-actions'
+import { Ticket } from '@/interface/ticket'
+import { Message } from '@/interface/message'
+
 import {
   Card,
   CardContent,
@@ -15,10 +16,15 @@ import DashboardTicektActivityMessageCard from './DashboardTicektActivityMessage
 // import { MessageSquareMore, MessageSquareX } from 'lucide-react'
 
 const DashboardActivity = () => {
-  // const { currentUser } = useAuth()
-  // const [messages, setMessages] = useState<Message[]>([])
-  // const [open, setOpen] = useState<boolean>(false)
-  // const [latestReadMessage, setLatestReadMessage] =useState<string | undefined>()
+  const { currentUser, isClient } = useAuth()
+  const [messages, setMessages] = useState<Message[]>([])
+  const userId = currentUser?.id
+  
+  // useEffect(() => {
+  //   const ticketData = fetchTicketsDataByUser(userId, isClient)
+  //     let messages: Message[] = []
+  //     messages = ticketData.includes('messages')
+  // })
 
   return (
     <Card className='lg:p-3'>

@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import { useAuth } from '@/contexts/authContext'
 import { Ticket } from '@/interface/ticket'
 // UI materials
 import {
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const TicketsDataCard = ({tickets}: Props) => {
-  const { isClient } = useAuth()
   return (
     <>
       {tickets? tickets.map((ticket) => (

@@ -1,20 +1,24 @@
-
-import React from 'react'
-// import { useAuth } from '@/contexts/authContext'
-// import { fetchAllMessage, readMessage } from '@/actions/message-action'
-// import { Ticket } from '@/interface/ticket'
-// import { Message } from '@/interface/message'
+"use client"
+import React, { useState, useEffect } from 'react'
+import { fetchUnassignedTickets } from '@/actions/ticket-actions'
+import { Ticket } from '@/interface/ticket'
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import DashboardUnassignedTicketCard from './DashboardUnassignedTicketCard'
-// import TicketMessages from '@/components/ticket/ticketMessage/TicketMessages'
-// import TicketMessageForm from '@/components/ticket/TicketMessageForm'
-// import { MessageSquareMore, MessageSquareX } from 'lucide-react'
 
 const DashboardUnassignedTicekt = () => {
-  // const { currentUser } = useAuth()
-  // const [messages, setMessages] = useState<Message[]>([])
-  // const [open, setOpen] = useState<boolean>(false)
-  // const [latestReadMessage, setLatestReadMessage] =useState<string | undefined>()
+  const [unassignedTicket, setUnassignedTicket] = useState<Ticket[]>([])
+  
+  useEffect(()=> {
+    async function fetchData() {     
+        const data = await fetchUnassignedTickets()
+        if(data){
+          setUnassignedTicket(data)
+        }else{
+          console.log('unknown error')
+        }
+      }
+      fetchData()
+    },[])
 
   return (
     <Card className='lg:p-3'>
@@ -24,7 +28,12 @@ const DashboardUnassignedTicekt = () => {
         </div>
       </CardHeader>
       <CardContent className='flex flex-col gap-5 px-6'>
-        <DashboardUnassignedTicketCard />
+        {unassignedTicket?.map((ticket) => (
+          <div key={ticket.id}>
+            <DashboardUnassignedTicketCard ticket={ticket} />
+          </div>
+          )
+        )}
       </CardContent>
     </Card>
   )

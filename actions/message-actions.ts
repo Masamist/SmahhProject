@@ -1,12 +1,40 @@
 import { db } from '@/firebase/config'
 import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint, Query, deleteDoc, updateDoc, addDoc } from 'firebase/firestore'
 import { Message } from '@/interface/message'
+import { fetchTicketsDataByUser } from '@/actions/ticket-actions'
 
 
 export async function fetchAllMessage(ticketId:string): Promise<Message[]>{
   const messages: Message[] = []
   let q :Query
   q = query(collection(db, "tickets", ticketId, "messages"), orderBy('createdAt', 'desc'))
+
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    messages.push({ id: doc.id, ...(doc.data() as Omit<Message, 'id'>) })
+  })
+  return messages
+}
+
+export async function fetchUnreadMessageForDashboard(userId: string, isClient: boolean): Promise<Message[]>{
+
+  //get data of the agent/client
+  const ticketData = fetchTicketsDataByUser(userId, isClient)
+
+  //map func to find unread message
+  let messages: Message[] = []
+  messages = ticketData.map((ticket) => {
+  const q = query(collection(db, "tickets", ticket.id, "messages"), where("unreadMessage" === true))
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    messages.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
+  })
+  })
+  
+  // return the message
+
+
+  
 
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {

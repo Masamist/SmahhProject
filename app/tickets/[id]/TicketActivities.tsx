@@ -1,7 +1,7 @@
 "use Client"
 import React, {useState, useEffect} from 'react'
 import { useAuth } from '@/contexts/authContext'
-import { fetchAllMessage, readMessage } from '@/actions/message-action'
+import { fetchAllMessage, readMessage } from '@/actions/message-actions'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
