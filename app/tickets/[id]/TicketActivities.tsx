@@ -1,7 +1,7 @@
 "use Client"
 import React, {useState, useEffect} from 'react'
 import { useAuth } from '@/contexts/authContext'
-import { fetchAllMessage, readMessage } from '@/actions/message-actions'
+import { fetchAllGroupMessage, readMessage } from '@/actions/message-actions'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -30,7 +30,7 @@ const TicketActivities = ({ticket}: Prop) => {
 
   const preFetchMessageDataForCheckRead = async() =>{
     try{
-      const data = await fetchAllMessage(ticket.id)
+      const data = await fetchAllGroupMessage(ticket.id)
       const ticketId = ticket.id
       await checkRead(data, ticketId)
       }catch(error){
@@ -40,7 +40,7 @@ const TicketActivities = ({ticket}: Prop) => {
 
   const fetchMessageData = async() =>{
     try{
-      const data = await fetchAllMessage(ticket.id)
+      const data = await fetchAllGroupMessage(ticket.id)
       setMessages(data)
       const latestRead = data.find((message) => message.unreadMessage!==true&&message.senderId===currentUser?.id)
       setLatestReadMessage(latestRead?.id)

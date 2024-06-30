@@ -25,7 +25,7 @@ const SingleTicket = ({params: {id}}: Props) => {
   }, [id])
   
   return (
-    <div className='container max-w-screen-lg mt5'>
+    <div className='mt5'>
       <MainTitle title='Tickets' ticketTitle={ticket?.title} assigned={ticket?.assigned} />
       {ticket?
         <div className='flex flex-col lg:flex-row gap-5'>

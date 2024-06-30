@@ -61,7 +61,7 @@ const Tickets = ({searchParams}: Search) => {
   }, [ searchParams, currentUser, isClient])
 
   return (
-    <main className='container max-w-screen-lg'>
+    <>
       <MainTitle title='Tickets' />
       {!isClient && <TicketsTabs searchParams={searchParams} />   }
       <div className='p-5 bg-white rounded-b-md'>
@@ -73,7 +73,7 @@ const Tickets = ({searchParams}: Search) => {
           <TicketsDataCard tickets={ticketData} />
         </div>
       </div>
-    </main>
+    </>
   )
 }
 

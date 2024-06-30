@@ -18,10 +18,10 @@ const Clients = () => {
   }
 
   return (
-    <main className='container max-w-screen-lg'>
+    <>
       <MainTitle title='Clients' />
       <UserData page={'CLIENT'} />
-    </main>
+    </>
   )
 }
 

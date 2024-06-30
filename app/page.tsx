@@ -18,9 +18,9 @@ export default async function Dashboard(){
     notFound();
   }
   return (
-    <main className='container max-w-screen-lg'>
+    <>
       <MainTitle title='Dashboard' />
       <DashboardLayout />
-    </main>
+    </>
   )
 }

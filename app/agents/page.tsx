@@ -4,10 +4,10 @@ import UserData from '@/components/user/UserData'
 
 const Agents = () => {
   return (
-    <main className='container max-w-screen-lg'>
+    <>
       <MainTitle title='Smahh Agent' />
       <UserData page={'AGENT'} />
-    </main>
+    </>
   )
 }
 

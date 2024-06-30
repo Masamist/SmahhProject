@@ -35,7 +35,9 @@ export default function RootLayout({
                 <Sidebar />
                 <main className="pt-16 pb-10 md:pt-[100px] md:pl-[170px] lg:pl-[250px] 
                   min-h-screen bg-gray-200">
-                  {children}
+                    <div className="container max-w-screen-xl">
+                      {children}
+                    </div>
                 </main>
               </div>
             </ThemeProvider>

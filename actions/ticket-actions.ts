@@ -96,7 +96,7 @@ export async function fetchTicketsDataByTab(
 export async function fetchUnassignedTickets(): Promise<Ticket[]> {
   
   let queryConstraints: QueryConstraint[] = [];
-  queryConstraints = [where('assigned', '==', false), orderBy('title', 'desc')]
+  queryConstraints = [where('assigned', '==', false), orderBy('createdAt', 'desc')]
 
   const q = query(collection(db, 'tickets'), ...queryConstraints)
 
@@ -105,8 +105,36 @@ export async function fetchUnassignedTickets(): Promise<Ticket[]> {
   querySnapshot.forEach((doc) => {
     tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
   })
+  return tickets
+}
 
-  return tickets;
+export async function getYourTicketCount(userId:string, isClient:boolean): Promise<number> {
+  const tickets: Ticket[] = []
+  let q :Query
+  if(!isClient){
+    q = query(collection(db, "tickets"), where("assignedAgent", "==", userId), orderBy('createdAt', 'desc'))
+  } else {
+    q = query(collection(db, "tickets"), where("client", "==", userId), orderBy('createdAt', 'desc'))
+  }
+  
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
+  })
+  return tickets.length
+}
+
+export async function getAllOpenTicketCount(): Promise<number> {
+  
+  let queryConstraints: QueryConstraint[] = [];
+  queryConstraints = [where('status', '==', "OPEN"),]
+  const q = query(collection(db, 'tickets'), ...queryConstraints)
+  const querySnapshot = await getDocs(q);
+  const tickets: Ticket[] = [];
+  querySnapshot.forEach((doc) => {
+    tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
+  })
+  return tickets.length
 }
 
 export async function fetchSingleTicketData(id: string){

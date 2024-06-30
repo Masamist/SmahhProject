@@ -9,4 +9,5 @@ export interface Message {
   read?: [],
   createdAt?: Timestamp,
   updatedAt?: Timestamp,
+  ticketId?: string,
 }

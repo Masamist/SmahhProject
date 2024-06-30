@@ -11,9 +11,9 @@ export interface Ticket {
   assignedAgent?: string | null | undefined
   assigned?: boolean
   description: string 
-  createdAt?: string | Timestamp
-  updatedAt?: string | Timestamp
-  closedAt?: string | Timestamp
+  createdAt?: Timestamp
+  updatedAt?: Timestamp
+  closedAt?: Timestamp
   messages?: [] | null
 }
 
