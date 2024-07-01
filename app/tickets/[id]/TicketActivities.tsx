@@ -4,10 +4,10 @@ import { useAuth } from '@/contexts/authContext'
 import { fetchAllGroupMessage, readMessage } from '@/actions/message-actions'
 import { Ticket } from '@/interface/ticket'
 import { Message } from '@/interface/message'
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import TicketMessages from '@/components/ticket/ticketMessage/TicketMessages'
 import TicketMessageForm from '@/components/ticket/TicketMessageForm'
 import { MessageSquareMore, MessageSquareX } from 'lucide-react'
+import { Card, CardContent, CardHeader } from "../../../components/ui/card"
 
 interface Prop{
   ticket: Ticket

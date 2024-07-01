@@ -2,18 +2,18 @@ import React from 'react'
 import Link from 'next/link'
 import { Ticket } from '@/interface/ticket'
 import TicketDetailUser from './TicketDetailUser'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card"
-import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import TicketCloseButton from '@/components/ticket/TicketCloseButton'
 import FormDialog from '@/components/FormDialog'
 import TicketSeverity from '@/components/ticket/TicketSeverity'
 import { Undo2 } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "../../../components/ui/card"
+import { buttonVariants } from '../../../components/ui/button'
 
 interface TicketProps{
   ticket: Ticket

@@ -6,12 +6,12 @@ import { useAuth } from '@/contexts/authContext'
 import { doSignOut } from '@/actions/auth-actions'
 import { SidebarItems } from '@/interface/sidebarItems'
 // UI components
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
 import { SidebarButtonSheet as SidebarButton } from '@/components/nav/SidebarButton'
-import { Separator } from '@/components/ui/separator'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from '../../components/ui/sheet'
+import { Button } from '../../components/ui/button'
+import { Separator } from '../../components/ui/separator'
+import { Drawer, DrawerContent, DrawerTrigger } from '../../components/ui/drawer'
+import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar'
 import { LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react'
 
 interface SidebarDesktopProps {
