@@ -21,7 +21,7 @@ const TicketDetailUser = ({id, title}: Props) => {
       }
     }
       fetchData()
-  },[])
+  })
   return (
     <>
     <p className='text-xs text-midnight-300'>{title}</p>

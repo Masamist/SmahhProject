@@ -55,7 +55,7 @@ const TicketActivities = ({ticket}: Prop) => {
       await fetchMessageData()
     }
     messageLoad()
-  }, [])
+  })
 
   const handleMessageFormToggle = () => {
     setOpen(!open)

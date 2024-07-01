@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { MessageSquareMore, Pencil, UserRoundPlus } from 'lucide-react'
+import { Pencil, UserRoundPlus } from 'lucide-react'
 
 
 const TicketForm = dynamic(() => import("@/components/ticket/TicketForm"), {

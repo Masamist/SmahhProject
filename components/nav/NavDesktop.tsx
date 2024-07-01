@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/authContext'
 // UI components
-import logo from '@/public/assets/smahhLogo.png'
+import logo from '@/assets/smahhLogo.png'
 import { Button } from '@/components/ui/button'
 import { SidebarButton } from '@/components/nav/SidebarButton'
 import LogoutButton from '@/components/LogoutButton'

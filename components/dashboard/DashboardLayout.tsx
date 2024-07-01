@@ -49,7 +49,7 @@ const DashboardLayout = () => {
       }
     }
     fetchData()
-  }, [])
+  })
 
   return (
     <div className='flex flex-row gap-5 w-full'>

@@ -23,7 +23,7 @@ const UserData = ({page}:PageProp) => {
       setUserData(data)
     }
     fetchData()
-  },[])
+  })
 
   useEffect(() => {
     if (userId) {
