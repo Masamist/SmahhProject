@@ -11,8 +11,7 @@ import { Button } from '@/components/ui/button'
 import { SidebarButtonSheet as SidebarButton } from '@/components/nav/SidebarButton'
 import { Separator } from '@/components/ui/separator'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
-import { AvatarImage } from '@/components/ui/avatar'
-import { Avatar, AvatarFallback } from '@radix-ui/react-avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { LogOut, Menu, MoreHorizontal, Settings, X } from 'lucide-react'
 
 interface SidebarDesktopProps {
@@ -60,6 +59,7 @@ const SidebarMobile = (props: SidebarDesktopProps) => {
                     <div className='flex gap-2'>
                       <Avatar className='h-5 w-5'>
                         <AvatarImage src='https://avatar.iran.liara.run/public/75' />
+                        {/* Fix this */}
                         <AvatarFallback>Masami Stonebridge</AvatarFallback>
                       </Avatar>
                       <span>Masami Stonebridge</span>
