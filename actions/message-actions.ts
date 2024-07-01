@@ -1,5 +1,5 @@
 import { db } from '@/firebase/config'
-import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint, Query, deleteDoc, updateDoc, addDoc, limit } from 'firebase/firestore'
+import { getDocs, collection, query, where, getDoc, doc, orderBy, QueryConstraint, Query, deleteDoc, updateDoc, addDoc, limit, Timestamp } from 'firebase/firestore'
 import { Message } from '@/interface/message'
 import { Ticket } from '@/interface/ticket'
 
@@ -45,13 +45,30 @@ export async function readMessage({ticketId, message}: ReadMessageDataParams): P
   }  
 }
 
-export async function getAllMessagesByAgent(userId: string): Promise<Message[]> {
+export interface MessageWithTicketInfo {
+  id: string
+  senderId: string,
+  senderName: string
+  comment: string,
+  unreadMessage?: boolean
+  createdAt: Timestamp,
+  ticketId?: string,
+  title?: string
+  company?: string
+  category?: string
+  severity?: string
+}
+
+export async function getAllMessagesByAgent(userId: string): Promise<MessageWithTicketInfo[]> {
   try {
+    const tickets: Ticket[] = []
     const q = query(collection(db, "tickets"), where("assignedAgent", "==", userId));
-    const ticketsSnapshot = await getDocs(q);
+    const ticketsSnapshot = await getDocs(q)
+    ticketsSnapshot.forEach((doc) => {
+      tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
+    })
     
     const messages: Message[] = []
-    
     for (const ticketDoc of ticketsSnapshot.docs) {
       //Bug here at orderby and limit
       const messagesRef = query(collection(db, `tickets/${ticketDoc.id}/messages`),orderBy('createdAt', 'desc'), limit(1));
@@ -61,7 +78,25 @@ export async function getAllMessagesByAgent(userId: string): Promise<Message[]> 
       messages.push({ id: doc.id, ticketId: ticketDoc.id, ...(doc.data() as Omit<Message, 'id'>) })
     })
     }
-    return messages
+
+    const messageWithTicketInfo: MessageWithTicketInfo[] = []
+    messages.forEach((message) => {
+      const ticketSelected = tickets.find((ticket) => (ticket.id === message.ticketId))
+      messageWithTicketInfo.push({
+        id: message.id,
+        senderId: message.senderId,
+        senderName: message.senderName,
+        comment: message.comment,
+        unreadMessage: message.unreadMessage,
+        createdAt: message.createdAt,
+        ticketId: message.ticketId?message.ticketId: undefined,
+        title: ticketSelected?.title,
+        company: ticketSelected?.company,
+        category: ticketSelected?.category,
+        severity: ticketSelected?.severity
+      })
+    })
+    return messageWithTicketInfo
 
   } catch (error) {
     console.error("Error getting documents: ", error);

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Message } from '@/interface/message'
+import { MessageWithTicketInfo } from '@/actions/message-actions'
 import {
   Card,
   CardContent,
@@ -8,10 +8,10 @@ import {
 import DashboardTicektActivityMessageCard from './DashboardTicektActivityMessageCard'
 
 interface Props {
-  allMessages: Message[]
+  messagesWithTicketInfo?: MessageWithTicketInfo[]
 }
 
-const DashboardActivity = ({allMessages}: Props) => {
+const DashboardActivity = ({messagesWithTicketInfo}: Props) => {
   return (
     <Card className='lg:p-3'>
       <CardHeader>
@@ -20,12 +20,12 @@ const DashboardActivity = ({allMessages}: Props) => {
         </div>
       </CardHeader>
       <CardContent className='flex flex-col gap-5 px-6'>
-        {!allMessages?
+        {!messagesWithTicketInfo?
           <p>No Messages</p>
           :
-          allMessages.map((message) => (
+          messagesWithTicketInfo.map((message) => (
             <div key={message.id}>
-              <DashboardTicektActivityMessageCard message={message} />
+              <DashboardTicektActivityMessageCard messageWithTicketInfo={message} />
             </div>
             
           ))

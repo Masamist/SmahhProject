@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface Props {
-  severity: string
+  severity: string | undefined
 }
 
 const severitySwitch = (severity: string) => {
@@ -19,7 +19,7 @@ const severitySwitch = (severity: string) => {
 const TicketSeverity = ({severity}: Props) => {
   return (
     <>
-      { severitySwitch(severity) }
+      { severity?severitySwitch(severity):null }
     </>
   )
 }

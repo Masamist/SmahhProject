@@ -14,8 +14,6 @@ const DashboardUnassignedTicketCard = ({ticket}: Props) => {
   const formattedDate = createdAtDate ? format(createdAtDate, "dd/MM/yy") : "Date not Available"
   const daysPassed = createdAtDate ? formatDistance(subDays(createdAtDate, 0), new Date(), { addSuffix: true }) : "";
 
-
-
   return (
     <Card>
       <CardContent className='pt-5'>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import logo from '@/assets/smahhLogo.png'
+import logo from '@/public/assets/smahhLogo.png'
 
 
 const NavMobile = () => {

@@ -7,7 +7,7 @@ export interface Message {
   comment: string,
   unreadMessage?: boolean
   read?: [],
-  createdAt?: Timestamp,
+  createdAt: Timestamp,
   updatedAt?: Timestamp,
-  ticketId?: string,
+  ticketId?: string | undefined,
 }
