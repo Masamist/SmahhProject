@@ -1,6 +1,6 @@
 // utils/firebaseConfig.js
 import { initializeApp, getApps, getApp } from "firebase/app"
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore, initializeFirestore } from 'firebase/firestore'
 import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
@@ -15,8 +15,11 @@ const firebaseConfig = {
 // Initialize Firebase
 //const app = initializeApp(firebaseConfig)
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
-const db  = getFirestore(app)
 const auth = getAuth(app)
+// const db  = getFirestore(app)
+const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true
+  })
 
 export { db, auth }
 
