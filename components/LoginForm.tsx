@@ -44,7 +44,6 @@ const LoginForm = () => {
       if(!isSigningIn) {
         setIsSigningIn(true)
         const credential = await doSignInWithEmailAndPassword(values.email, values.password)
-
         const idToken = await credential.user.getIdToken();
 
         await fetch("/api/login", {

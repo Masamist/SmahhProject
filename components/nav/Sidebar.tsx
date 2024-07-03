@@ -25,7 +25,7 @@ const agentSidebarItems:SidebarItems = {
     {label:'Clients', href:'/clients', icon: BookUser },
     {label:'Agents', href:'/agents', icon: UsersRound },
     {label:'Profile', href:'/profile', icon: UserRound },
-    {label:'Settings', href:'/Settings', icon: Settings },
+    {label:'Settings', href:'/settings', icon: Settings },
   ],
   extras: extrasItam
 }
@@ -36,7 +36,7 @@ const clientSidebarItems:SidebarItems = {
     {label:'Tickets', href:'/tickets', icon: Ticket },
     {label:'Agents', href:'/agents', icon: UsersRound },
     {label:'Profile', href:'/profile', icon: UserRound },
-    {label:'Settings', href:'/Settings', icon: Settings },
+    {label:'Settings', href:'/settings', icon: Settings },
   ],
   extras: extrasItam
 }

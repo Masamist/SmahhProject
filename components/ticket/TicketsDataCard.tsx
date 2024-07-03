@@ -23,7 +23,7 @@ const TicketsDataCard = ({tickets}: Props) => {
               <CardContent>
                 <div className='flex w-full text-lg font-semibold pt-3 pb-2 items-center'>
                   {ticket.title}
-                  {!ticket.assigned ? <TicketUnassignedBadge /> : null}
+                  {!ticket.assigned && <TicketUnassignedBadge />}
                 </div>
                 <div className='flex flex-row'>
                   <p className='w-1/5 text-sm'>

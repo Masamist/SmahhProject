@@ -1,14 +1,14 @@
 import { db } from '@/firebase/config'
-import { getDocs, collection, query, where, getDoc, doc } from 'firebase/firestore'
+import { getDocs, collection, query, where, getDoc, doc, orderBy } from 'firebase/firestore'
 import { User } from '@/interface/users'
 
 export async function fetchUserDataByGroup(page: string): Promise<User[]>{
   let q
   let querySnapshot
   if(page==='AGENT'){
-    q = query(collection(db, "users"), where("role", "==", "AGENT"))
+    q = query(collection(db, "users"), where("role", "==", "AGENT"), orderBy('name', 'asc'))
   }else{
-    q = query(collection(db, "users"), where("role", "==", "CLIENT"))
+    q = query(collection(db, "users"), where("role", "==", "CLIENT"), orderBy('name', 'asc'))
   }
   querySnapshot = await getDocs(q)
   const users: User[] = []

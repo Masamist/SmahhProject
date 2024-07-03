@@ -14,6 +14,7 @@ import {
   CardHeader,
 } from "../../../components/ui/card"
 import { buttonVariants } from '../../../components/ui/button'
+import TicketUnassignedBadge from '@/components/ticket/TicketUnassignedBadge'
 
 interface TicketProps{
   ticket: Ticket

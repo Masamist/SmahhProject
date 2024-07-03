@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/authContext'
 // UI components
-import logo from '@/assets/smahhLogo.png'
+import logo from '@/assets/smahh-logo.png'
 import { Button } from '@/components/ui/button'
 import { SidebarButton } from '@/components/nav/SidebarButton'
 import LogoutButton from '@/components/LogoutButton'
@@ -16,12 +16,12 @@ const NavUserinfoDesktop = () => {
     <div 
       className='flex flex-row px-3 pt-2 w-full fixed top-0 left-0 h-12
         justify-between items-center bg-white'>
-      <div>
+      <div className='w-52 pl-3'>
         <Link href="/">
           <Image 
           src={logo}
-          width="180"
-          height="15"
+          width="150"
+          height="10"
           priority
           alt="Smahh Logo"
           style={{ width: '100%', height: 'auto' }}

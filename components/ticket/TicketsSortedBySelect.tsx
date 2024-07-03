@@ -34,7 +34,7 @@ export function TicketsSortedBySelect({searchParams}: Search) {
         </SelectGroup>
         <SelectGroup>
           <SelectLabel>Date</SelectLabel>
-          <SelectItem value="latest">Latest</SelectItem>
+          <SelectItem value="latest">Newest</SelectItem>
           <SelectItem value="oldest">Oldest</SelectItem>
         </SelectGroup>
         {/* <SelectGroup>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { fetchUnassignedTickets, getAllOpenTicketCount, getYourTicketCount } from '@/actions/ticket-actions'
 import { Ticket } from '@/interface/ticket'
-import { getAllMessagesByAgent, MessageWithTicketInfo } from '@/actions/message-actions'
+import { getAllMessagesByUser, MessageWithTicketInfo } from '@/actions/message-actions'
 import { useAuth } from '@/contexts/authContext'
 import DashboardActivity from './DashboardActivity'
 import DashboardUnassignedTicekt from './DashboardUnassignedTicket'
@@ -21,12 +21,13 @@ const DashboardLayout = () => {
   
   useEffect(()=> {
     async function fetchData() { 
-      if(userId){
-        const messages = await getAllMessagesByAgent(userId)
-      if(messages){
-        setMessagesWithTicketInfo(messages)
+      if(userId && isClient){
+        const messages = await getAllMessagesByUser(userId, isClient)
+        if(messages){
+          setMessagesWithTicketInfo(messages)
+        }
       }
-      }
+
 
       if(userId){
         const yourCount = await getYourTicketCount(userId, isClient)
@@ -57,7 +58,8 @@ const DashboardLayout = () => {
         <DashboardActivity messagesWithTicketInfo={messagesWithTicketInfo} />
       </div>
       <div className='w-1/2 flex flex-col gap-5'>
-          <DashboardUnassignedTicekt unassignedTicket={unassignedTicket} />
+        {!isClient&& <DashboardUnassignedTicekt unassignedTicket={unassignedTicket} />}
+          
           <DashboardTicketCounts
             yourTicketCount={yourTicketCount}
             unassignedTicketCount={unassignedTicketCount}

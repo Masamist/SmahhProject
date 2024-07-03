@@ -16,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog"
 import { buttonVariants } from '../../components/ui/button'
+import { CircleX } from 'lucide-react'
 
 
 const TicketCloseButton = ({ticketId}: {ticketId: string}) => {
@@ -42,6 +43,7 @@ const TicketCloseButton = ({ticketId}: {ticketId: string}) => {
           variant: "destructive",
         })}>
           Close Ticket
+          <CircleX width={23} height={23} className='pl-1'  />
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

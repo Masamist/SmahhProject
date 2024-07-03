@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Search } from '@/interface/search'
 import {  fetchAllTicketData, fetchTicketsDataByTab, fetchTicketsDataByUser } from '@/actions/ticket-actions'
 import { Ticket } from '@/interface/ticket'
@@ -12,7 +11,6 @@ import { TicketsSortedBySelect } from '@/components/ticket/TicketsSortedBySelect
 import TicketsDataCard from '@/components/ticket/TicketsDataCard'
 
 const Tickets = ({searchParams}: Search) => {
-  //const router = useRouter
   const { currentUser, isClient } = useAuth()
   const [ticketData, setTicketData] = useState<Ticket[]>([])
   useEffect(() => {
@@ -64,7 +62,7 @@ const Tickets = ({searchParams}: Search) => {
     <>
       <MainTitle title='Tickets' />
       {!isClient && <TicketsTabs searchParams={searchParams} />   }
-      <div className='p-5 bg-white rounded-b-md'>
+      <div className={`p-5 bg-white ${isClient? 'rounded-md':'rounded-b-md'}`}>
         <div className='flex flex-col gap-3'>
           <div className='flex flex-row justify-between'>
             <OpenCloseDropdown />

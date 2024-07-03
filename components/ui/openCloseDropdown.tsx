@@ -13,7 +13,7 @@ const OpenCloseDropdown = () => {
           <ChevronDown className='inline ml-2' />
         </h2>
         <div className={style.dropdownContent}>
-        <button onClick={() => setIsOpen(isOpen? false:true)}>{isOpen? 'Close Tickets' : 'Open Tickets'}</button>
+        <button onClick={() => setIsOpen(isOpen? false:true)}>{isOpen? 'Closed Tickets' : 'Open Tickets'}</button>
         </div>
       </div>
     </>

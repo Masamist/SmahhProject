@@ -21,6 +21,7 @@ const UserData = ({page}:PageProp) => {
     async function fetchData() {
       const data = await fetchUserDataByGroup(page)
       setUserData(data)
+      setSingleUserData(data[0])
     }
     fetchData()
   })

@@ -59,10 +59,18 @@ export interface MessageWithTicketInfo {
   severity?: string
 }
 
-export async function getAllMessagesByAgent(userId: string): Promise<MessageWithTicketInfo[]> {
+export async function getAllMessagesByUser(userId: string, isClient: boolean): Promise<MessageWithTicketInfo[]> {
   try {
     const tickets: Ticket[] = []
-    const q = query(collection(db, "tickets"), where("assignedAgent", "==", userId));
+    let q:Query
+
+    if(isClient){
+      q = query(collection(db, "tickets"), where("client", "==", userId))
+      
+    } else {
+       q = query(collection(db, "tickets"), where("assignedAgent", "==", userId));
+    }
+
     const ticketsSnapshot = await getDocs(q)
     ticketsSnapshot.forEach((doc) => {
       tickets.push({ id: doc.id, ...(doc.data() as Omit<Ticket, 'id'>) })
@@ -103,43 +111,3 @@ export async function getAllMessagesByAgent(userId: string): Promise<MessageWith
     throw error; // Re-throw the error to ensure the function caller knows about it
   }
 }
-
-// export async function fetchAllMessages(userId: string, isClient: boolean){
-//   // const ticketsRef = db.collection('tickets');
-//   // const ticketsSnapshot = await ticketsRef.get();
-//   const tickets: Ticket[] = []
-//   const messages: Message[] = []
-//   // let q :Query
-//   // if(!isClient){
-//   //   q = query(collection(db, "tickets"), where("assignedAgent", "==", userId))
-//   // } else {
-//   //   q = query(collection(db, "tickets"), where("client", "==", userId))
-//   // }
-//   async function getAllMessagesByAgent(userId) {
-//     try {
-//       const q = query(collection(db, "tickets"), where("assignedAgent", "==", userId));
-//       const ticketsSnapshot = await getDocs(q);
-      
-//       const allMessages = [];
-      
-//       for (const ticketDoc of ticketsSnapshot.docs) {
-//         const messagesRef = collection(db, `tickets/${ticketDoc.id}/messages`);
-//         const messagesSnapshot = await getDocs(messagesRef);
-        
-//         messagesSnapshot.forEach(messageDoc => {
-//           allMessages.push({ 
-//             ticketId: ticketDoc.id, 
-//             messageId: messageDoc.id, 
-//             ...messageDoc.data() 
-//           });
-//         });
-//       }
-      
-//       console.log(allMessages);
-//       return allMessages;
-//     } catch (error) {
-//       console.error("Error getting documents: ", error);
-//     }
-    
-//   }
-// }

@@ -23,7 +23,7 @@ const DashboardTicektActivityMessageCard = ({messageWithTicketInfo}: Props) => {
              / {messageWithTicketInfo.company}</span> 
         </p>
         <p className='text-sm'>
-          Sent at:
+          Sent:
           <span className='font-semibold pl-2'>{daysPassed} </span>({formattedDate}) 
         </p>
         <h3 className='text-md md:text-lg font-medium py-2'>{messageWithTicketInfo.title}</h3>

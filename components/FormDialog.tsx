@@ -64,7 +64,7 @@ const FormDialog = ({formType, ticket, user, message}: Props) => {
           <>
             <DialogTrigger className="text-sm text-gray-600 hover:text-sun-500">
               <span className='font-medium pr-2'>
-                Register a New Staff
+                Register New User
               </span>
               <UserRoundPlus className='inline w-5 h-5' />
             </DialogTrigger>
