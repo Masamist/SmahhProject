@@ -1,5 +1,5 @@
 // utils/firebaseConfig.js
-import { initializeApp, getApps, getApp } from "firebase/app"
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app"
 import { getFirestore, initializeFirestore } from 'firebase/firestore'
 import { getAuth } from "firebase/auth"
 
@@ -20,17 +20,25 @@ const auth = getAuth(app)
 // const db = initializeFirestore(app, {
 //   experimentalAutoDetectLongPolling: true
 //   })
-  let db
 
-  try {
-    console.log("initializing database");
-    db = initializeFirestore(app, { experimentalForceLongPolling: true, });
-    console.log("database initialized");
-   } catch (e) { 
-   console.log("getting database");
-    db = getFirestore(app);
-    console.log("database got");
-   }
+  // Initialize Firebase
+//let firebaseApp: FirebaseApp;
+let db
+try {
+  console.log("initializing database");
+  db = initializeFirestore(app, { experimentalForceLongPolling: true, });
+  console.log("database initialized");
+ } catch (e) { 
+ console.log("getting database");
+  db = getFirestore(app);
+  console.log("database got");
+ }
+
+//export const auth = getAuth(firebaseApp);
+//export const googleProvider = new GoogleAuthProvider();
+//export const database = getFirestore(firebaseApp);
+
+
 
 export { db, auth }
 
