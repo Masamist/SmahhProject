@@ -63,12 +63,13 @@ export async function getAllMessagesByUser(userId: string, isClient: boolean): P
   try {
     const tickets: Ticket[] = []
     let q:Query
+    //q = query(collection(db, "tickets"), where("assignedAgent", "==", userId))
 
-    if(isClient){
-      q = query(collection(db, "tickets"), where("client", "==", userId))
+    if(!isClient){
+      q = query(collection(db, "tickets"), where("assignedAgent", "==", userId))
       
     } else {
-       q = query(collection(db, "tickets"), where("assignedAgent", "==", userId));
+      q = query(collection(db, "tickets"), where("client", "==", userId))
     }
 
     const ticketsSnapshot = await getDocs(q)

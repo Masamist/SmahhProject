@@ -17,9 +17,20 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 const auth = getAuth(app)
 // const db  = getFirestore(app)
-const db = initializeFirestore(app, {
-  experimentalAutoDetectLongPolling: true
-  })
+// const db = initializeFirestore(app, {
+//   experimentalAutoDetectLongPolling: true
+//   })
+  let db
+
+  try {
+    console.log("initializing database");
+    db = initializeFirestore(app, { experimentalForceLongPolling: true, });
+    console.log("database initialized");
+   } catch (e) { 
+   console.log("getting database");
+    db = getFirestore(app);
+    console.log("database got");
+   }
 
 export { db, auth }
 

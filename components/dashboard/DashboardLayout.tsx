@@ -21,7 +21,7 @@ const DashboardLayout = () => {
   
   useEffect(()=> {
     async function fetchData() { 
-      if(userId && isClient){
+      if(userId){
         const messages = await getAllMessagesByUser(userId, isClient)
         if(messages){
           setMessagesWithTicketInfo(messages)

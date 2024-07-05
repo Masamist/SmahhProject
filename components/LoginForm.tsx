@@ -51,8 +51,8 @@ const LoginForm = () => {
             Authorization: `Bearer ${idToken}`
           }
         })
-        router.replace('/')
-        
+        // router.replace('/')
+        router.push('/')
       }
       
     } catch (error){
